@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Governance on 未竟札记</title>
+    <link>http://localhost:1313/research-archive/fields/governance/</link>
+    <description>Recent content in Governance on 未竟札记</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 03 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/research-archive/fields/governance/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why I Began Studying AI and Social Governance</title>
+      <link>http://localhost:1313/research-archive/research/2026/06/why-i-began-studying-ai-and-social-governance/</link>
+      <pubDate>Wed, 03 Jun 2026 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/research-archive/research/2026/06/why-i-began-studying-ai-and-social-governance/</guid>
+      <description>&lt;h2 id=&#34;1-problem-background&#34;&gt;1. Problem Background&lt;/h2&gt;&#xA;&lt;h2 id=&#34;2-why-this-question-matters&#34;&gt;2. Why This Question Matters&lt;/h2&gt;&#xA;&lt;h2 id=&#34;3-current-observations&#34;&gt;3. Current Observations&lt;/h2&gt;&#xA;&lt;h2 id=&#34;4-initial-hypotheses&#34;&gt;4. Initial Hypotheses&lt;/h2&gt;&#xA;&lt;h2 id=&#34;5-research-directions&#34;&gt;5. Research Directions&lt;/h2&gt;&#xA;&lt;h2 id=&#34;6-next-steps&#34;&gt;6. Next Steps&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;&#xA;&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;&#xA;&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;em&gt;Status: Draft. Last updated: 2026-06-03.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
