@@ -1,0 +1,82 @@
+{{ define "main" }}
+<div class="archive-page">
+
+  <div class="archive-page-header">
+    <h1 class="archive-page-title">{{ .Title }}</h1>
+    {{ with .Content }}<div class="archive-page-desc">{{ . }}</div>{{ end }}
+  </div>
+
+  {{/* ── Search bar ── */}}
+  <div class="archive-search-wrap">
+    <input
+      id="archive-search"
+      class="archive-search"
+      type="search"
+      placeholder="Search by title, tag, or field…"
+      aria-label="Search archive"
+    />
+    <span class="archive-search-count" id="search-count"></span>
+  </div>
+
+  {{/* ── Tag cloud ── */}}
+  <div class="tag-cloud" id="tag-cloud">
+    {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
+    {{ $allTags := slice }}
+    {{ range $sections }}
+      {{ range (where $.Site.RegularPages "Section" .) }}
+        {{ range .Params.tags }}
+          {{ $allTags = $allTags | append . }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ range ($allTags | uniq | sort) }}
+    <button class="tag-btn" data-tag="{{ . }}">{{ . }}</button>
+    {{ end }}
+    <button class="tag-btn tag-btn--clear" id="clear-tag">× clear</button>
+  </div>
+
+  {{/* ── Section tabs ── */}}
+  <div class="section-tabs" id="section-tabs">
+    <button class="tab-btn tab-btn--active" data-section="all">All</button>
+    <button class="tab-btn" data-section="research">Research</button>
+    <button class="tab-btn" data-section="reading">Reading</button>
+    <button class="tab-btn" data-section="policy">Policy</button>
+    <button class="tab-btn" data-section="thoughts">Thoughts</button>
+    <button class="tab-btn" data-section="posts">Posts</button>
+  </div>
+
+  {{/* ── Entry list (rendered server-side, filtered client-side) ── */}}
+  <ul class="archive-list" id="archive-list">
+    {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
+    {{ $all := slice }}
+    {{ range $sections }}
+      {{ range (where $.Site.RegularPages "Section" .) }}
+        {{ $all = $all | append . }}
+      {{ end }}
+    {{ end }}
+    {{ range $all.ByDate.Reverse }}
+    <li class="archive-entry"
+        data-title="{{ .Title | lower }}"
+        data-section="{{ .Section }}"
+        data-tags="{{ delimit .Params.tags " " | lower }}"
+        data-fields="{{ delimit .Params.fields " " | lower }}"
+    >
+      <a class="archive-entry-link" href="{{ .Permalink }}">
+        <span class="archive-entry-section">{{ .Section }}</span>
+        <span class="archive-entry-title">{{ .Title }}</span>
+        <span class="archive-entry-date">{{ .Date.Format "2006-01-02" }}</span>
+      </a>
+      <div class="archive-entry-meta">
+        {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+        {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
+      </div>
+    </li>
+    {{ end }}
+  </ul>
+
+  <p class="archive-no-results" id="no-results" style="display:none;">No entries match your search.</p>
+
+</div>
+
+<script src="{{ relURL "assets/search.js" }}"></script>
+{{ end }}

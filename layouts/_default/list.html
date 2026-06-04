@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="list-page">
+
+  <div class="list-header">
+    <h1 class="list-title">{{ .Title }}</h1>
+    {{ with .Content }}<div class="list-desc">{{ . }}</div>{{ end }}
+  </div>
+
+  <ul class="entry-list entry-list--full">
+    {{ range .Pages.ByDate.Reverse }}
+    <li>{{ partial "post-card.html" . }}</li>
+    {{ else }}
+    <li class="entry-empty">Nothing here yet.</li>
+    {{ end }}
+  </ul>
+
+</div>
+{{ end }}

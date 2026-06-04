@@ -1,0 +1,22 @@
+{{- $sections := slice "research" "reading" "policy" "thoughts" "posts" -}}
+{{- $pages := slice -}}
+{{- range $sections -}}
+  {{- range (where $.Site.RegularPages "Section" .) -}}
+    {{- $pages = $pages | append . -}}
+  {{- end -}}
+{{- end -}}
+[
+{{- range $i, $p := $pages.ByDate.Reverse -}}
+{{- if $i }},{{ end }}
+{
+  "title":   {{ $p.Title | jsonify }},
+  "url":     {{ $p.Permalink | jsonify }},
+  "section": {{ $p.Section | jsonify }},
+  "date":    {{ $p.Date.Format "2006-01-02" | jsonify }},
+  "tags":    {{ $p.Params.tags | jsonify }},
+  "fields":  {{ $p.Params.fields | jsonify }},
+  "status":  {{ $p.Params.status | jsonify }},
+  "summary": {{ $p.Summary | plainify | jsonify }}
+}
+{{- end }}
+]

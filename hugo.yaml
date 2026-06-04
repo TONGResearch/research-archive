@@ -1,0 +1,72 @@
+baseURL: "https://tongresearch.github.io/research-archive/"
+locale: "zh-CN"
+title: "未竟札记"
+enableRobotsTXT: true
+hasCJKLanguage: true
+summaryLength: 80
+timeZone: "Asia/Kuala_Lumpur"
+
+params:
+  owner: "Jiatong"
+  subtitle: "Unfinished Notes"
+  description: "A long-term public research archive documenting intellectual development, reading history, research progress, and policy thinking across AI, governance, political economy, sociology, and Marxism."
+  heroImage: "/assets/reading-desk-hero.png"
+  advisorNote: "This archive documents my research interests, reading paths, methodological training, and evolving outputs — intended for open exchange and as a record of intellectual development for academic mentors."
+  archiveLabel: "Research Archive · Reading Archive · Policy Archive · Intellectual Development Log"
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+taxonomies:
+  category: categories
+  tag: tags
+  field: fields
+  status: status
+
+permalinks:
+  posts:    "/posts/:year/:month/:slug/"
+  reading:  "/reading/:year/:month/:slug/"
+  research: "/research/:year/:month/:slug/"
+  thoughts: "/thoughts/:year/:month/:slug/"
+  policy:   "/policy/:year/:month/:slug/"
+
+menu:
+  main:
+    - name: "首页"
+      pageRef: "/"
+      weight: 10
+    - name: "研究进展"
+      pageRef: "/research"
+      weight: 20
+    - name: "研究路线"
+      pageRef: "/about/research-agenda"
+      weight: 25
+    - name: "政策档案"
+      pageRef: "/policy"
+      weight: 30
+    - name: "读书档案"
+      pageRef: "/reading"
+      weight: 40
+    - name: "个人思考"
+      pageRef: "/thoughts"
+      weight: 50
+    - name: "归档"
+      pageRef: "/archive"
+      weight: 60
+    - name: "关于"
+      pageRef: "/about"
+      weight: 70
+
+caches:
+  images:
+    dir: :cacheDir/images
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: false
+  highlight:
+    noClasses: false

@@ -1,0 +1,62 @@
+{{ define "main" }}
+<article class="single-article">
+
+  <header class="article-header">
+    <div class="article-breadcrumb">
+      <a href="{{ relURL (printf "%s/" .Section) }}">{{ .Section | title }}</a>
+    </div>
+    <h1 class="article-title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
+    <div class="article-meta">
+      <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      {{ if .Params.status }}
+        <span class="meta-sep">·</span>
+        {{ range .Params.status }}<span class="status-badge status-{{ . }}">{{ . }}</span>{{ end }}
+      {{ end }}
+      {{ if .Params.tags }}
+        <span class="meta-sep">·</span>
+        {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+      {{ end }}
+      {{ if .Params.fields }}
+        <span class="meta-sep">·</span>
+        {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
+      {{ end }}
+    </div>
+  </header>
+
+  <hr class="article-rule" />
+
+  {{/* Book meta block — only for reading notes */}}
+  {{ with .Params.book }}
+  <aside class="book-meta">
+    {{ with .title }}<div class="book-meta-row"><span class="book-meta-key">Book</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .author }}<div class="book-meta-row"><span class="book-meta-key">Author</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .year }}<div class="book-meta-row"><span class="book-meta-key">Year</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .publisher }}<div class="book-meta-row"><span class="book-meta-key">Publisher</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .rating }}<div class="book-meta-row"><span class="book-meta-key">Rating</span><span>{{ . }}</span></div>{{ end }}
+  </aside>
+  {{ end }}
+
+  <div class="article-body">
+    {{ .Content }}
+  </div>
+
+  <hr class="article-rule" />
+
+  <nav class="article-nav" aria-label="Adjacent articles">
+    {{ with .PrevInSection }}
+    <a class="article-nav-link article-nav-prev" href="{{ .Permalink }}">
+      <span class="nav-dir">← Previous</span>
+      <span class="nav-title">{{ .Title }}</span>
+    </a>
+    {{ end }}
+    {{ with .NextInSection }}
+    <a class="article-nav-link article-nav-next" href="{{ .Permalink }}">
+      <span class="nav-dir">Next →</span>
+      <span class="nav-title">{{ .Title }}</span>
+    </a>
+    {{ end }}
+  </nav>
+
+</article>
+{{ end }}

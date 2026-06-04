@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  <title>{{ if .IsHome }}{{ .Site.Title }} · {{ .Site.Params.subtitle }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+
+  {{/* Fonts */}}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  {{/* CSS — Hugo pipes processes assets/css/site.css */}}
+  {{ $css := resources.Get "css/site.css" | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.Permalink }}" />
+
+  {{/* RSS */}}
+  {{ range .AlternativeOutputFormats -}}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}" />
+  {{ end }}
+
+  {{/* MathJax — only on pages that request it */}}
+  {{ if .Params.math }}
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  {{ end }}
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-logo" href="{{ relURL "" }}">
+        <span class="logo-zh">{{ .Site.Title }}</span>
+        <span class="logo-sep">·</span>
+        <span class="logo-en">{{ .Site.Params.subtitle }}</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        {{ range .Site.Menus.main }}
+        <a class="nav-link{{ if $.IsMenuCurrent "main" . }} nav-link--active{{ end }}"
+           href="{{ .URL }}">{{ .Name }}</a>
+        {{ end }}
+      </nav>
+      <button class="nav-hamburger" aria-label="Toggle menu"
+              onclick="this.closest('header').querySelector('.site-nav').classList.toggle('is-open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="site-main" id="main-content">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <p class="footer-title">{{ .Site.Title }} <span class="footer-en">· {{ .Site.Params.subtitle }}</span></p>
+      <p class="footer-pillars">Research Archive · Reading Archive · Policy Archive · Intellectual Development Log</p>
+      <p class="footer-meta">
+        Built with <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> ·
+        Hosted on <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> ·
+        <a href="{{ relURL "index.xml" }}">RSS</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

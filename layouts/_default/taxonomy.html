@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="taxonomy-page">
+  <div class="list-header">
+    <h1 class="list-title">{{ .Title }}</h1>
+  </div>
+  <ul class="entry-list entry-list--full">
+    {{ range .Pages.ByDate.Reverse }}
+    <li>{{ partial "post-card.html" . }}</li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}
