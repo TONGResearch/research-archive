@@ -1,5 +1,5 @@
 ---
-title: "个人思考 · Thoughts"
+title: "个人思考 / Reflections"
 description: "Intellectual reflections, open questions, and notes on intellectual development."
 ---
 

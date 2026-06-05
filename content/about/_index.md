@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "关于 / About"
 description: "About this archive and its author."
 type: "page"
 layout: "single"

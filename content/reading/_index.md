@@ -1,5 +1,5 @@
 ---
-title: "读书档案 · Reading"
+title: "读书档案 / Reading Archive"
 description: "Book reviews, literature notes, theory reading routes, and reading reflections."
 ---
 

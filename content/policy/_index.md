@@ -1,5 +1,5 @@
 ---
-title: "政策档案 · Policy Archive"
+title: "政策档案 / Policy Archive"
 description: "Policy memos, governance proposals, AI regulation analysis, and institutional design drafts."
 ---
 

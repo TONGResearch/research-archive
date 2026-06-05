@@ -1,11 +1,7 @@
 ---
-title: "Research Agenda"
+title: "研究路线 / Research Agenda"
 description: "My core research interests, current questions, and long-term goals."
 date: 2026-06-03
-menu:
-  main:
-    name: "Research Agenda"
-    weight: 25
 ---
 
 ## Core Research Interests

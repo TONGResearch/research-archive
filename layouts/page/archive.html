@@ -12,8 +12,8 @@
       id="archive-search"
       class="archive-search"
       type="search"
-      placeholder="Search by title, tag, or field…"
-      aria-label="Search archive"
+      placeholder="搜索标题、标签或领域 / Search by title, tag, or field…"
+      aria-label="搜索归档 / Search archive"
     />
     <span class="archive-search-count" id="search-count"></span>
   </div>
@@ -32,28 +32,23 @@
     {{ range ($allTags | uniq | sort) }}
     <button class="tag-btn" data-tag="{{ . }}">{{ . }}</button>
     {{ end }}
-    <button class="tag-btn tag-btn--clear" id="clear-tag">× clear</button>
+    <button class="tag-btn tag-btn--clear" id="clear-tag">× 清除 / Clear</button>
   </div>
 
   {{/* ── Section tabs ── */}}
   <div class="section-tabs" id="section-tabs">
-    <button class="tab-btn tab-btn--active" data-section="all">All</button>
-    <button class="tab-btn" data-section="research">Research</button>
-    <button class="tab-btn" data-section="reading">Reading</button>
-    <button class="tab-btn" data-section="policy">Policy</button>
-    <button class="tab-btn" data-section="thoughts">Thoughts</button>
-    <button class="tab-btn" data-section="posts">Posts</button>
+    <button class="tab-btn tab-btn--active" data-section="all">全部 / All</button>
+    <button class="tab-btn" data-section="research">研究 / Research</button>
+    <button class="tab-btn" data-section="reading">读书 / Reading</button>
+    <button class="tab-btn" data-section="policy">政策 / Policy</button>
+    <button class="tab-btn" data-section="thoughts">思考 / Thoughts</button>
+    <button class="tab-btn" data-section="posts">文章 / Posts</button>
   </div>
 
   {{/* ── Entry list (rendered server-side, filtered client-side) ── */}}
   <ul class="archive-list" id="archive-list">
     {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
-    {{ $all := slice }}
-    {{ range $sections }}
-      {{ range (where $.Site.RegularPages "Section" .) }}
-        {{ $all = $all | append . }}
-      {{ end }}
-    {{ end }}
+    {{ $all := where .Site.RegularPages "Section" "in" $sections }}
     {{ range $all.ByDate.Reverse }}
     <li class="archive-entry"
         data-title="{{ .Title | lower }}"
@@ -61,10 +56,10 @@
         data-tags="{{ delimit .Params.tags " " | lower }}"
         data-fields="{{ delimit .Params.fields " " | lower }}"
     >
-      <a class="archive-entry-link" href="{{ .Permalink }}">
-        <span class="archive-entry-section">{{ .Section }}</span>
+      <a class="archive-entry-link" href="{{ .RelPermalink }}">
+        <span class="archive-entry-section">{{ partial "section-label.html" .Section }}</span>
         <span class="archive-entry-title">{{ .Title }}</span>
-        <span class="archive-entry-date">{{ .Date.Format "2006-01-02" }}</span>
+        <span class="archive-entry-date"><span class="post-date-label">发布 / Published</span> {{ .Date.Format "2006-01-02" }}</span>
       </a>
       <div class="archive-entry-meta">
         {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
@@ -74,7 +69,7 @@
     {{ end }}
   </ul>
 
-  <p class="archive-no-results" id="no-results" style="display:none;">No entries match your search.</p>
+  <p class="archive-no-results" id="no-results" style="display:none;">没有匹配条目 / No entries match your search.</p>
 
 </div>
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
-  <title>{{ if .IsHome }}{{ .Site.Title }} · {{ .Site.Params.subtitle }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+  <title>{{ if .IsHome }}{{ .Title }} · {{ .Site.Params.subtitle }}{{ else if eq .Kind "taxonomy" }}{{ partial "taxonomy-label.html" .Data.Plural }} · {{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
 
   {{/* Fonts */}}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,7 +13,7 @@
 
   {{/* CSS — Hugo pipes processes assets/css/site.css */}}
   {{ $css := resources.Get "css/site.css" | fingerprint }}
-  <link rel="stylesheet" href="{{ $css.Permalink }}" />
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
 
   {{/* RSS */}}
   {{ range .AlternativeOutputFormats -}}
@@ -34,13 +34,13 @@
         <span class="logo-sep">·</span>
         <span class="logo-en">{{ .Site.Params.subtitle }}</span>
       </a>
-      <nav class="site-nav" aria-label="Main navigation">
+      <nav class="site-nav" aria-label="主导航 / Main navigation">
         {{ range .Site.Menus.main }}
         <a class="nav-link{{ if $.IsMenuCurrent "main" . }} nav-link--active{{ end }}"
            href="{{ .URL }}">{{ .Name }}</a>
         {{ end }}
       </nav>
-      <button class="nav-hamburger" aria-label="Toggle menu"
+      <button class="nav-hamburger" aria-label="切换菜单 / Toggle menu"
               onclick="this.closest('header').querySelector('.site-nav').classList.toggle('is-open')">
         <span></span><span></span><span></span>
       </button>
@@ -54,11 +54,11 @@
   <footer class="site-footer">
     <div class="site-footer-inner">
       <p class="footer-title">{{ .Site.Title }} <span class="footer-en">· {{ .Site.Params.subtitle }}</span></p>
-      <p class="footer-pillars">Research Archive · Reading Archive · Policy Archive · Intellectual Development Log</p>
+      <p class="footer-pillars">研究档案 / Research Archive · 读书档案 / Reading Archive · 政策档案 / Policy Archive · 思想发展记录 / Intellectual Development Log</p>
       <p class="footer-meta">
-        Built with <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> ·
-        Hosted on <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> ·
-        <a href="{{ relURL "index.xml" }}">RSS</a>
+        使用 <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> 构建 / Built with Hugo ·
+        托管于 <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> / Hosted on GitHub Pages ·
+        <a href="{{ relURL "index.xml" }}">订阅 / RSS</a>
       </p>
     </div>
   </footer>

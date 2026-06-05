@@ -121,8 +121,8 @@ hugo-blog/
 
 ### Policy section (Part 2)
 
-**What was done:** Added `content/policy/` section with `_index.md`, example policy memo, archetype. Policy added to navigation, homepage grid, archive page, and JSON search index.
-**Files:** `content/policy/_index.md`, `content/policy/2026-06-ai-governance-policy.md`, `archetypes/policy.md`, `hugo.yaml` (permalink), `layouts/index.html`, `layouts/index.json`, `layouts/page/archive.html`.
+**What was done:** Added `content/policy/` section with `_index.md` and an archetype. Policy added to navigation, homepage grid, archive page, and JSON search index.
+**Files:** `content/policy/_index.md`, `archetypes/policy.md`, `hugo.yaml` (permalink), `layouts/index.html`, `layouts/index.json`, `layouts/page/archive.html`.
 **Status:** Complete.
 
 ### Research Agenda page (Part 3)
@@ -490,23 +490,22 @@ Local preview via `hugo server` failed in the sandboxed build environment due to
 
 ### This week
 
-7. Update example content front matter to new English taxonomy
-8. Write your first real entry using `hugo new research/2026-06-TOPIC.md`
-9. Add a hero image or remove `heroImage` param
-10. Test archive search and tag cloud with real entries
+7. Write your first real entry using `hugo new research/2026-06-TOPIC.md`
+8. Add a hero image or remove `heroImage` param
+9. Test archive search and tag cloud with real entries
 
 ### This month
 
-11. Build out reading notes for your current books (*Capital* Vol. I, EU AI Act)
-12. Write first real policy memo using `hugo new policy/2026-06-TOPIC.md`
-13. Complete research-agenda page with your actual reading progress
+10. Build out reading notes for your current books
+11. Write your first real policy memo using `hugo new policy/2026-06-TOPIC.md`
+12. Complete the research-agenda page with your actual reading progress
 
 ### Future
 
-14. Add Mermaid shortcode for diagrams
-15. Add visual timeline for intellectual development
-16. Consider Plausible Analytics (privacy-friendly, GDPR-compliant)
-17. Add academic CV page when relevant
+13. Add Mermaid shortcode for diagrams
+14. Add visual timeline for intellectual development
+15. Consider Plausible Analytics (privacy-friendly, GDPR-compliant)
+16. Add academic CV page when relevant
 
 ---
 

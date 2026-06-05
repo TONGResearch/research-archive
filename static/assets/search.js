@@ -41,7 +41,7 @@
     });
 
     if (searchCount) {
-      searchCount.textContent = visible + ' / ' + entries.length + ' entries';
+      searchCount.textContent = visible + ' / ' + entries.length + ' 条 / entries';
     }
 
     if (noResults) {

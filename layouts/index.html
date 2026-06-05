@@ -1,23 +1,18 @@
 {{ define "main" }}
 {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
-{{ $all := slice }}
-{{ range $sections }}
-  {{ range (where $.Site.RegularPages "Section" .) }}
-    {{ $all = $all | append . }}
-  {{ end }}
-{{ end }}
+{{ $all := where .Site.RegularPages "Section" "in" $sections }}
 
 {{/* ── Hero ─────────────────────────────────────────────────────── */}}
 <section class="hero">
   <div class="hero-text">
-    <h1 class="hero-title">未竟札记</h1>
+    <h1 class="hero-title">{{ .Title }}</h1>
     <p class="hero-title-en">(Unfinished Notes)</p>
-    <p class="hero-desc">A personal research archive documenting AI, governance, political economy, sociology, public policy, and social transformation.</p>
+    <p class="hero-desc">{{ .Description }}</p>
     <ul class="hero-pillars">
-      <li>Research Archive</li>
-      <li>Reading Archive</li>
-      <li>Policy Archive</li>
-      <li>Intellectual Development Log</li>
+      <li>研究档案 / Research Archive</li>
+      <li>读书档案 / Reading Archive</li>
+      <li>政策档案 / Policy Archive</li>
+      <li>思想发展记录 / Intellectual Development Log</li>
     </ul>
   </div>
 </section>
@@ -26,19 +21,19 @@
 <div class="metrics-bar">
   <div class="metric">
     <span class="metric-num">{{ len (where .Site.RegularPages "Section" "research") }}</span>
-    <span class="metric-label">Research Notes</span>
+    <span class="metric-label">研究笔记 / Research</span>
   </div>
   <div class="metric">
     <span class="metric-num">{{ len (where .Site.RegularPages "Section" "reading") }}</span>
-    <span class="metric-label">Reading Notes</span>
+    <span class="metric-label">读书笔记 / Reading</span>
   </div>
   <div class="metric">
     <span class="metric-num">{{ len (where .Site.RegularPages "Section" "policy") }}</span>
-    <span class="metric-label">Policy Memos</span>
+    <span class="metric-label">政策备忘 / Policy</span>
   </div>
   <div class="metric">
     <span class="metric-num">{{ len (where .Site.RegularPages "Section" "thoughts") }}</span>
-    <span class="metric-label">Reflections</span>
+    <span class="metric-label">个人思考 / Thoughts</span>
   </div>
 </div>
 
@@ -48,13 +43,13 @@
   <div class="archive-col">
     <div class="col-header">
       <h2 class="col-title">研究进展 <span class="col-en">Research</span></h2>
-      <a class="col-more" href="{{ relURL "research/" }}">All →</a>
+      <a class="col-more" href="{{ relURL "research/" }}">全部 / All →</a>
     </div>
     <ul class="entry-list">
       {{ range first 6 ((where .Site.RegularPages "Section" "research").ByDate.Reverse) }}
       <li>{{ partial "post-row.html" . }}</li>
       {{ else }}
-      <li class="entry-empty">No entries yet.</li>
+      <li class="entry-empty">暂无条目 / No entries yet.</li>
       {{ end }}
     </ul>
   </div>
@@ -62,13 +57,13 @@
   <div class="archive-col">
     <div class="col-header">
       <h2 class="col-title">读书档案 <span class="col-en">Reading</span></h2>
-      <a class="col-more" href="{{ relURL "reading/" }}">All →</a>
+      <a class="col-more" href="{{ relURL "reading/" }}">全部 / All →</a>
     </div>
     <ul class="entry-list">
       {{ range first 6 ((where .Site.RegularPages "Section" "reading").ByDate.Reverse) }}
       <li>{{ partial "post-row.html" . }}</li>
       {{ else }}
-      <li class="entry-empty">No entries yet.</li>
+      <li class="entry-empty">暂无条目 / No entries yet.</li>
       {{ end }}
     </ul>
   </div>
@@ -76,13 +71,13 @@
   <div class="archive-col">
     <div class="col-header">
       <h2 class="col-title">政策档案 <span class="col-en">Policy</span></h2>
-      <a class="col-more" href="{{ relURL "policy/" }}">All →</a>
+      <a class="col-more" href="{{ relURL "policy/" }}">全部 / All →</a>
     </div>
     <ul class="entry-list">
       {{ range first 6 ((where .Site.RegularPages "Section" "policy").ByDate.Reverse) }}
       <li>{{ partial "post-row.html" . }}</li>
       {{ else }}
-      <li class="entry-empty">No entries yet.</li>
+      <li class="entry-empty">暂无条目 / No entries yet.</li>
       {{ end }}
     </ul>
   </div>
@@ -90,13 +85,13 @@
   <div class="archive-col">
     <div class="col-header">
       <h2 class="col-title">个人思考 <span class="col-en">Thoughts</span></h2>
-      <a class="col-more" href="{{ relURL "thoughts/" }}">All →</a>
+      <a class="col-more" href="{{ relURL "thoughts/" }}">全部 / All →</a>
     </div>
     <ul class="entry-list">
       {{ range first 6 ((where .Site.RegularPages "Section" "thoughts").ByDate.Reverse) }}
       <li>{{ partial "post-row.html" . }}</li>
       {{ else }}
-      <li class="entry-empty">No entries yet.</li>
+      <li class="entry-empty">暂无条目 / No entries yet.</li>
       {{ end }}
     </ul>
   </div>
@@ -106,13 +101,13 @@
 {{/* ── Latest across all sections ───────────────────────────────── */}}
 <section class="latest-section">
   <div class="latest-header">
-    <h2 class="latest-title">最新更新 <span class="col-en">Latest</span></h2>
+    <h2 class="latest-title">最新更新 <span class="col-en">Latest Updates</span></h2>
   </div>
   <ul class="entry-list entry-list--latest">
     {{ range first 6 $all.ByDate.Reverse }}
     <li>{{ partial "post-card.html" . }}</li>
     {{ else }}
-    <li class="entry-empty">No entries yet.</li>
+    <li class="entry-empty">暂无条目 / No entries yet.</li>
     {{ end }}
   </ul>
 </section>

@@ -2,6 +2,7 @@ baseURL: "https://tongresearch.github.io/research-archive/"
 locale: "zh-CN"
 title: "未竟札记"
 enableRobotsTXT: true
+enableGitInfo: true
 hasCJKLanguage: true
 summaryLength: 80
 timeZone: "Asia/Kuala_Lumpur"
@@ -35,28 +36,28 @@ permalinks:
 
 menu:
   main:
-    - name: "首页"
+    - name: "首页 / Home"
       pageRef: "/"
       weight: 10
-    - name: "研究进展"
+    - name: "研究进展 / Research Log"
       pageRef: "/research"
       weight: 20
-    - name: "研究路线"
+    - name: "研究路线 / Research Agenda"
       pageRef: "/about/research-agenda"
       weight: 25
-    - name: "政策档案"
+    - name: "政策档案 / Policy Archive"
       pageRef: "/policy"
       weight: 30
-    - name: "读书档案"
+    - name: "读书档案 / Reading Archive"
       pageRef: "/reading"
       weight: 40
-    - name: "个人思考"
+    - name: "个人思考 / Reflections"
       pageRef: "/thoughts"
       weight: 50
-    - name: "归档"
+    - name: "归档 / Archive"
       pageRef: "/archive"
       weight: 60
-    - name: "关于"
+    - name: "关于 / About"
       pageRef: "/about"
       weight: 70
 

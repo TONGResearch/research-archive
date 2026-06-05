@@ -1,7 +1,10 @@
-<a class="post-card" href="{{ .Permalink }}">
+<a class="post-card" href="{{ .RelPermalink }}">
   <div class="post-card-top">
-    <span class="post-card-section">{{ .Section }}</span>
-    <time class="post-card-date">{{ .Date.Format "2006-01-02" }}</time>
+    <span class="post-card-section">{{ partial "section-label.html" .Section }}</span>
+    <span class="post-card-dates">
+      <span><span class="post-date-label">发布 / Published</span> <time>{{ .Date.Format "2006-01-02" }}</time></span>
+      <span class="post-card-updated"><span class="post-date-label">更新 / Updated</span> <time>{{ .Lastmod.Format "2006-01-02" }}</time></span>
+    </span>
   </div>
   <h3 class="post-card-title">{{ .Title }}</h3>
   {{ with .Params.subtitle }}<p class="post-card-subtitle">{{ . }}</p>{{ end }}

@@ -1,0 +1,9 @@
+{{- $section := . -}}
+{{- if eq $section "research" -}}研究 / Research
+{{- else if eq $section "reading" -}}读书 / Reading
+{{- else if eq $section "policy" -}}政策 / Policy
+{{- else if eq $section "thoughts" -}}思考 / Thoughts
+{{- else if eq $section "posts" -}}文章 / Posts
+{{- else if eq $section "about" -}}关于 / About
+{{- else -}}{{ $section | title }}
+{{- end -}}

@@ -3,6 +3,7 @@
 
   <div class="list-header">
     <h1 class="list-title">{{ .Title }}</h1>
+    <p class="list-kicker">栏目归档 / Section Archive</p>
     {{ with .Content }}<div class="list-desc">{{ . }}</div>{{ end }}
   </div>
 
@@ -10,7 +11,7 @@
     {{ range .Pages.ByDate.Reverse }}
     <li>{{ partial "post-card.html" . }}</li>
     {{ else }}
-    <li class="entry-empty">Nothing here yet.</li>
+    <li class="entry-empty">暂无条目 / Nothing here yet.</li>
     {{ end }}
   </ul>
 

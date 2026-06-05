@@ -94,16 +94,16 @@ Use `status` to track the state of any entry.
 
 ---
 
-## Example Front Matter
+## Front Matter Fields
 
 ```yaml
 ---
-title: "AI Governance Frameworks: A Comparative Analysis"
-subtitle: "EU AI Act vs Chinese AIGC Regulations"
-date: 2026-06-03
-categories: ["Policy"]
-fields: ["Artificial Intelligence", "Governance", "China Studies"]
-tags: ["AI Governance", "Comparative Governance", "AI Regulation"]
-status: ["draft"]
+title: ""
+subtitle: ""
+date:
+categories: []
+fields: []
+tags: []
+status: []
 ---
 ```

@@ -1,5 +1,5 @@
 ---
-title: "研究进展 · Research"
+title: "研究进展 / Research Log"
 description: "Research notes, progress logs, working papers, and methodology notes."
 ---
 

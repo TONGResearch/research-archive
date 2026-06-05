@@ -1,12 +1,13 @@
 {{ define "main" }}
 <div class="terms-page">
   <div class="list-header">
-    <h1 class="list-title">{{ .Title }}</h1>
+    <h1 class="list-title">{{ partial "taxonomy-label.html" .Data.Plural }}</h1>
+    <p class="list-kicker">主题索引 / Term Index</p>
   </div>
   <ul class="terms-list">
     {{ range .Pages }}
     <li class="terms-item">
-      <a href="{{ .Permalink }}" class="terms-link">
+      <a href="{{ .RelPermalink }}" class="terms-link">
         {{ .Title }}
         <span class="terms-count">{{ len .Pages }}</span>
       </a>
