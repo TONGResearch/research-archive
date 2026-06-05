@@ -18,6 +18,33 @@
     <span class="archive-search-count" id="search-count"></span>
   </div>
 
+  {{/* ── Scalable discovery controls ── */}}
+  <div class="section-tabs archive-discovery" id="archive-discovery">
+    <label>
+      <span>Research Area / 研究领域</span>
+      <select id="area-filter">
+        <option value="">All areas / 全部领域</option>
+        {{ range .Site.Taxonomies.research_areas.ByCount }}
+        <option value="{{ .Page.Title | lower }}">{{ .Page.Title }} ({{ .Count }})</option>
+        {{ end }}
+      </select>
+    </label>
+    <label>
+      <span>Year / 年份</span>
+      <select id="year-filter">
+        <option value="">All years / 全部年份</option>
+        {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
+        {{ $all := where .Site.RegularPages "Section" "in" $sections }}
+        {{ range $all.GroupByDate "2006" "desc" }}
+        <option value="{{ .Key }}">{{ .Key }}</option>
+        {{ end }}
+      </select>
+    </label>
+    <a class="tab-btn" href="{{ relURL "research-areas/" }}">Research Areas / 研究领域</a>
+    <a class="tab-btn" href="{{ relURL "tags/" }}">Tags / 标签</a>
+    <a class="tab-btn" href="{{ relURL "timeline/" }}">Timeline / 思想历程</a>
+  </div>
+
   {{/* ── Tag cloud ── */}}
   <div class="tag-cloud" id="tag-cloud">
     {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
@@ -55,6 +82,8 @@
         data-section="{{ .Section }}"
         data-tags="{{ delimit .Params.tags " " | lower }}"
         data-fields="{{ delimit .Params.fields " " | lower }}"
+        data-areas="{{ delimit .Params.research_areas " " | lower }}"
+        data-year="{{ .Date.Format "2006" }}"
     >
       <a class="archive-entry-link" href="{{ .RelPermalink }}">
         <span class="archive-entry-section">{{ partial "section-label.html" .Section }}</span>
@@ -62,6 +91,7 @@
         <span class="archive-entry-date"><span class="post-date-label">发布 / Published</span> {{ .Date.Format "2006-01-02" }}</span>
       </a>
       <div class="archive-entry-meta">
+        {{ range .Params.research_areas }}<span class="field-tag">{{ . }}</span>{{ end }}
         {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
         {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
       </div>

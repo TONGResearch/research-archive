@@ -29,6 +29,11 @@
         <span class="meta-sep">·</span>
         {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
       {{ end }}
+      {{ with .GetTerms "research_areas" }}
+        <span class="meta-sep">·</span>
+        <span class="meta-label">Research Areas / 研究领域</span>
+        {{ range . }}<a class="field-tag" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
+      {{ end }}
     </div>
   </header>
 

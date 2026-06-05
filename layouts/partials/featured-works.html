@@ -1,0 +1,15 @@
+{{- $sections := slice "research" "reading" "policy" "thoughts" "posts" -}}
+{{- $pages := where .Site.RegularPages "Section" "in" $sections -}}
+{{- $featured := where $pages "Params.featured" true -}}
+{{- with $featured -}}
+<section class="latest-section featured-works">
+  <div class="latest-header">
+    <h2 class="latest-title">Featured Works <span class="col-en">重点成果</span></h2>
+  </div>
+  <ul class="entry-list entry-list--latest">
+    {{ range .ByTitle }}
+    <li>{{ partial "post-card.html" . }}</li>
+    {{ end }}
+  </ul>
+</section>
+{{- end -}}

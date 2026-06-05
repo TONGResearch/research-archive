@@ -2,7 +2,9 @@
 title: "{{ replace .File.ContentBaseName "-" " " | title }}"
 subtitle: ""
 date: {{ .Date }}
-categories: ["reflection"]
+featured: false
+research_areas: []
+categories: []
 fields: []
 tags: []
 status: ["draft"]

@@ -13,6 +13,8 @@
   const tagCloud     = document.getElementById('tag-cloud');
   const sectionTabs  = document.getElementById('section-tabs');
   const clearTagBtn  = document.getElementById('clear-tag');
+  const areaFilter   = document.getElementById('area-filter');
+  const yearFilter   = document.getElementById('year-filter');
 
   if (!archiveList) return;
 
@@ -20,6 +22,8 @@
   let activeTag      = null;
   let activeSection  = 'all';
   let searchQuery    = '';
+  let activeArea     = '';
+  let activeYear     = '';
 
   // ── Filter engine ─────────────────────────────────────────────
   function filter() {
@@ -30,12 +34,16 @@
       const section = (entry.dataset.section || '').toLowerCase();
       const tags    = (entry.dataset.tags    || '').toLowerCase();
       const fields  = (entry.dataset.fields  || '').toLowerCase();
+      const areas   = (entry.dataset.areas   || '').toLowerCase();
+      const year    = entry.dataset.year || '';
 
-      const matchQuery   = !searchQuery || title.includes(searchQuery) || tags.includes(searchQuery) || fields.includes(searchQuery);
+      const matchQuery   = !searchQuery || title.includes(searchQuery) || tags.includes(searchQuery) || fields.includes(searchQuery) || areas.includes(searchQuery);
       const matchTag     = !activeTag   || tags.includes(activeTag.toLowerCase());
       const matchSection = activeSection === 'all' || section === activeSection;
+      const matchArea    = !activeArea || areas.includes(activeArea);
+      const matchYear    = !activeYear || year === activeYear;
 
-      const show = matchQuery && matchTag && matchSection;
+      const show = matchQuery && matchTag && matchSection && matchArea && matchYear;
       entry.style.display = show ? '' : 'none';
       if (show) visible++;
     });
@@ -49,10 +57,36 @@
     }
   }
 
+  function readQueryFilters() {
+    const params = new URLSearchParams(window.location.search);
+    searchQuery = (params.get('q') || '').trim().toLowerCase();
+    activeTag = (params.get('tag') || '').trim().toLowerCase() || null;
+    activeArea = (params.get('area') || '').trim().toLowerCase();
+    activeYear = (params.get('year') || '').trim();
+
+    if (searchInput && searchQuery) searchInput.value = searchQuery;
+    if (areaFilter && activeArea) areaFilter.value = activeArea;
+    if (yearFilter && activeYear) yearFilter.value = activeYear;
+  }
+
   // ── Search input ───────────────────────────────────────────────
   if (searchInput) {
     searchInput.addEventListener('input', function () {
       searchQuery = this.value.trim().toLowerCase();
+      filter();
+    });
+  }
+
+  if (areaFilter) {
+    areaFilter.addEventListener('change', function () {
+      activeArea = this.value.toLowerCase();
+      filter();
+    });
+  }
+
+  if (yearFilter) {
+    yearFilter.addEventListener('change', function () {
+      activeYear = this.value;
       filter();
     });
   }
@@ -95,6 +129,7 @@
   }
 
   // ── Initial count ──────────────────────────────────────────────
+  readQueryFilters();
   filter();
 
 })();

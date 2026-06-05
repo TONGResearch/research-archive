@@ -1,0 +1,27 @@
+{{ define "main" }}
+{{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
+{{ $pages := where .Site.RegularPages "Section" "in" $sections }}
+
+<div class="archive-page timeline-page">
+  <div class="archive-page-header">
+    <h1 class="archive-page-title">{{ .Title }}</h1>
+    {{ with .Description }}<p class="archive-page-desc">{{ . }}</p>{{ end }}
+  </div>
+
+  {{ range $pages.GroupByDate "2006" "desc" }}
+  <section class="timeline-year" id="year-{{ .Key }}">
+    <div class="col-header">
+      <h2 class="col-title">{{ .Key }}</h2>
+      <a class="col-more" href="{{ relURL (printf "archive/?year=%s" .Key) }}">View year / 查看年份 →</a>
+    </div>
+    <ul class="entry-list entry-list--full">
+      {{ range .Pages.ByDate.Reverse }}
+      <li>{{ partial "post-card.html" . }}</li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ else }}
+  <p class="entry-empty">No dated entries / 暂无按年份归档的条目</p>
+  {{ end }}
+</div>
+{{ end }}

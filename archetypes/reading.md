@@ -2,8 +2,10 @@
 title: "{{ replace .File.ContentBaseName "-" " " | title }}"
 subtitle: ""
 date: {{ .Date }}
-categories: ["reading-note"]
-fields: ["political-economy"]
+featured: false
+research_areas: []
+categories: []
+fields: []
 tags: []
 status: ["reading"]
 book:

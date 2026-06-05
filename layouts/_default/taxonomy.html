@@ -1,13 +1,31 @@
 {{ define "main" }}
+{{ $termTitle := .Title }}
+{{ $taxonomy := .Data.Singular }}
 <div class="taxonomy-page">
   <div class="list-header">
     <h1 class="list-title">{{ .Title }}</h1>
     <p class="list-kicker">分类归档 / Taxonomy Archive</p>
   </div>
-  <ul class="entry-list entry-list--full">
-    {{ range .Pages.ByDate.Reverse }}
-    <li>{{ partial "post-card.html" . }}</li>
-    {{ end }}
-  </ul>
+  {{ range .Pages.GroupByDate "2006" "desc" }}
+  <section class="timeline-year" id="year-{{ .Key }}">
+    <div class="col-header">
+      <h2 class="col-title">{{ .Key }}</h2>
+      {{ if eq $taxonomy "research_area" }}
+      <a class="col-more" href="{{ relURL (printf "archive/?area=%s&year=%s" ($termTitle | urlquery) .Key) }}">View combination / 查看组合 →</a>
+      {{ else if eq $taxonomy "tag" }}
+      <a class="col-more" href="{{ relURL (printf "archive/?tag=%s&year=%s" ($termTitle | urlquery) .Key) }}">View combination / 查看组合 →</a>
+      {{ else }}
+      <a class="col-more" href="{{ relURL (printf "archive/?year=%s" .Key) }}">View year / 查看年份 →</a>
+      {{ end }}
+    </div>
+    <ul class="entry-list entry-list--full">
+      {{ range .Pages.ByDate.Reverse }}
+      <li>{{ partial "post-card.html" . }}</li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ else }}
+  <p class="entry-empty">No entries / 暂无条目</p>
+  {{ end }}
 </div>
 {{ end }}
