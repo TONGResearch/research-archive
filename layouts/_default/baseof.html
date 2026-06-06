@@ -128,7 +128,7 @@
         </div>
       </div>
 
-      <div class="nav-has-dropdown{{ if or (eq .Section "about") (eq .RelPermalink "/about/") } nav-item--active{{ end }}">
+      <div class="nav-has-dropdown{{ if or (eq .Section "about") (eq .RelPermalink "/about/") }} nav-item--active{{ end }}">
         <a href="{{ "/about" | relURL }}">About</a>
         <div class="nav-dropdown">
           <a class="nav-dropdown-item" href="{{ "/about" | relURL }}">
