@@ -55,7 +55,7 @@
         {{ $all = $all | append . }}
       {{ end }}
     {{ end }}
-    {{ $all = $all | sort "Date" "desc" }}
+    {{ $all = sort $all "Date" "desc" }}
 
     {{ $years := slice }}
     {{ range $all }}

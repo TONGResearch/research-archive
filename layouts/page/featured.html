@@ -12,8 +12,8 @@
     {{ end }}
   {{ end }}
 {{ end }}
-{{ $featured = $featured | sort "Date" "desc" }}
-{{ $recent   = $recent   | sort "Date" "desc" }}
+{{ $featured = sort $featured "Date" "desc" }}
+{{ $recent = sort $recent "Date" "desc" }}
 
 <div class="featured-page">
   {{ partial "section-nav.html" (dict "section" "research" "page" .) }}
