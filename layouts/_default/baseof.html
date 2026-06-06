@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <div class="nav-has-dropdown{{ if or (eq .RelPermalink "/archive/") (eq .RelPermalink "/archive-timeline/") (eq .RelPermalink "/research/featured/") } nav-item--active{{ end }}">
+      <div class="nav-has-dropdown{{ if or (eq .RelPermalink "/archive/") (eq .RelPermalink "/archive-timeline/") (eq .RelPermalink "/research/featured/") }} nav-item--active{{ end }}">
         <a href="{{ "/archive" | relURL }}">Archive</a>
         <div class="nav-dropdown">
           <a class="nav-dropdown-item" href="{{ "/research/featured" | relURL }}">
