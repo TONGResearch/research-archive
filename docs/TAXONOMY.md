@@ -1,36 +1,39 @@
-# Taxonomy System — 未竟札记
+# Taxonomy System — 未竟札记 · Unfinished Notes
 
-Hugo taxonomies are configured in `hugo.yaml`:
+Hugo taxonomies configured in `hugo.yaml`:
 
 ```yaml
 taxonomies:
-  category: categories
   tag: tags
   field: fields
+  area: areas
   status: status
 ```
 
-All taxonomy terms automatically generate browsable archive pages.
+All taxonomy terms automatically generate browsable archive pages at `/tags/`, `/fields/`, `/areas/`, `/status/`.
 
 ---
 
-## Categories
+## Areas
 
-Use `categories` to classify the type of writing.
+Use `areas` to tag the research area an entry belongs to. Drives the Research Areas grid on the homepage and `/areas/` browse pages.
 
-| Value | Purpose |
+| Value | Notes |
 |---|---|
-| `Research` | Research notes, progress logs, working papers |
-| `Reading` | Book reviews, literature notes, reading routes |
-| `Thoughts` | Reflections, open questions, intellectual development |
-| `Policy` | Policy memos, governance proposals, regulatory analysis |
-| `Projects` | Project documentation, technical work |
+| `technology-governance` | |
+| `public-policy` | |
+| `political-economy` | |
+| `sociology` | |
+| `psychology` | |
+| `economics` | |
+| `finance` | |
+| `marxism` | |
 
 ---
 
 ## Fields
 
-Use `fields` to tag the academic discipline or area of inquiry.
+Use `fields` to tag the academic discipline.
 
 | Value |
 |---|
@@ -82,8 +85,6 @@ Urban Governance, Rural Governance
 
 ## Status Values
 
-Use `status` to track the state of any entry.
-
 | Value | Meaning |
 |---|---|
 | `draft` | Working draft, not finalized |
@@ -94,16 +95,53 @@ Use `status` to track the state of any entry.
 
 ---
 
-## Front Matter Fields
+## Example Front Matter
 
 ```yaml
 ---
-title: ""
-subtitle: ""
-date:
-categories: []
-fields: []
-tags: []
-status: []
+title: "[Research Entry Title]"
+subtitle: "Optional subtitle"
+date: 2026-06-03
+featured: false
+categories: ["Research"]
+fields: ["Field Name"]
+areas: ["area-slug"]
+tags: ["Tag One", "Tag Two"]
+status: ["in-progress"]
+---
+```
+
+```yaml
+---
+title: "[Reading Entry Title]"
+subtitle: "Optional subtitle"
+date: 2026-06-03
+featured: false
+categories: ["Reading"]
+fields: ["Field Name"]
+areas: ["area-slug"]
+tags: ["Tag One"]
+status: ["reading"]
+book:
+  title: "Book Title"
+  author: "Author Name"
+  year: "YYYY"
+  publisher: "Publisher"
+  rating: ""
+---
+```
+
+```yaml
+---
+title: "[Policy Entry Title]"
+subtitle: "Optional subtitle"
+date: 2026-06-03
+featured: false
+categories: ["Policy"]
+fields: ["Field Name"]
+areas: ["area-slug"]
+tags: ["Tag One", "Tag Two"]
+status: ["draft"]
+scope: "Comparative"
 ---
 ```

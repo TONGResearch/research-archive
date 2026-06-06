@@ -1,18 +1,31 @@
 {{ define "main" }}
+{{ $taxLabels := dict
+  "tags"   (dict "en" "Tags" "zh" "所有标签")
+  "fields" (dict "en" "Research Fields" "zh" "研究领域")
+  "areas"  (dict "en" "Research Areas" "zh" "研究方向")
+  "status" (dict "en" "Status" "zh" "状态")
+}}
+{{ $label := index $taxLabels .Data.Plural }}
 <div class="terms-page">
-  <div class="list-header">
-    <h1 class="list-title">{{ partial "taxonomy-label.html" .Data.Plural }}</h1>
-    <p class="list-kicker">主题索引 / Term Index</p>
+  <div class="list-page-inner">
+    <header class="terms-header">
+      {{ if $label }}
+      <h1 class="terms-title-en">{{ $label.en }}</h1>
+      <p class="terms-title-zh">{{ $label.zh }}</p>
+      {{ else }}
+      <h1 class="terms-title-en">{{ .Title }}</h1>
+      {{ end }}
+    </header>
+    <ul class="terms-list">
+      {{ range .Pages }}
+      <li class="terms-item">
+        <a class="terms-link" href="{{ .Permalink }}">
+          <span>{{ .Title }}</span>
+          <span class="terms-count">{{ len .Pages }} entries</span>
+        </a>
+      </li>
+      {{ end }}
+    </ul>
   </div>
-  <ul class="terms-list">
-    {{ range .Pages }}
-    <li class="terms-item">
-      <a href="{{ .RelPermalink }}" class="terms-link">
-        {{ .Title }}
-        <span class="terms-count">{{ len .Pages }}</span>
-      </a>
-    </li>
-    {{ end }}
-  </ul>
 </div>
 {{ end }}

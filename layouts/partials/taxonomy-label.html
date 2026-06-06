@@ -1,8 +1,0 @@
-{{- $taxonomy := . -}}
-{{- if eq $taxonomy "categories" -}}分类 / Categories
-{{- else if eq $taxonomy "tags" -}}标签 / Tags
-{{- else if eq $taxonomy "fields" -}}领域 / Fields
-{{- else if eq $taxonomy "research-areas" -}}Research Areas / 研究领域
-{{- else if eq $taxonomy "status" -}}状态 / Status
-{{- else -}}{{ $taxonomy | title }}
-{{- end -}}

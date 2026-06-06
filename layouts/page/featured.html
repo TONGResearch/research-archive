@@ -1,0 +1,80 @@
+{{ define "main" }}
+{{/* Featured = pages with featured: true in front matter, across all sections */}}
+{{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
+{{ $featured := slice }}
+{{ $recent   := slice }}
+{{ range $sections }}
+  {{ range where $.Site.RegularPages "Section" . }}
+    {{ if .Params.featured }}
+      {{ $featured = $featured | append . }}
+    {{ else }}
+      {{ $recent = $recent | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $featured = $featured | sort "Date" "desc" }}
+{{ $recent   = $recent   | sort "Date" "desc" }}
+
+<div class="featured-page">
+  {{ partial "section-nav.html" (dict "section" "research" "page" .) }}
+
+  <div class="featured-wrap">
+    <header class="featured-header">
+      <h1 class="feat-title-en">Featured Works</h1>
+      <p class="feat-title-zh">精选研究</p>
+      <p class="feat-desc">Selected entries pinned independently of publication date.</p>
+    </header>
+
+    {{ if $featured }}
+    <section class="feat-section">
+      <ul class="feat-list">
+        {{ range $featured }}
+        <li class="feat-item">
+          <a class="feat-item-link" href="{{ .Permalink }}">
+            <div class="feat-item-top">
+              <span class="feat-item-section">{{ .Section }}</span>
+              <time class="feat-item-date">{{ .Date.Format "2006-01-02" }}</time>
+            </div>
+            <h2 class="feat-item-title">{{ .Title }}</h2>
+            {{ with .Params.subtitle }}<p class="feat-item-sub">{{ . }}</p>{{ end }}
+            {{ with .Summary }}<p class="feat-item-excerpt">{{ . | plainify | truncate 180 }}</p>{{ end }}
+            <div class="feat-item-tags">
+              {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+              {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
+            </div>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ else }}
+    <div class="feat-empty">
+      <p class="feat-empty-en">No featured works yet.</p>
+      <p class="feat-empty-zh">尚无精选内容。在文章 front matter 中添加 <code>featured: true</code> 即可置顶。</p>
+    </div>
+    {{ end }}
+
+    {{/* Show recent non-featured below */}}
+    {{ if $recent }}
+    <section class="feat-recent">
+      <h2 class="feat-recent-title-en">Recent
+        <span class="feat-recent-title-zh">最新更新</span>
+      </h2>
+      <ul class="list-entries">
+        {{ range first 10 $recent }}
+        <li class="list-entry">
+          <a class="list-entry-link" href="{{ .Permalink }}">
+            <div class="list-entry-top">
+              <span class="list-entry-title">{{ .Title }}</span>
+              <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
+            </div>
+            {{ with .Summary }}<p class="list-entry-excerpt">{{ . | plainify }}</p>{{ end }}
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

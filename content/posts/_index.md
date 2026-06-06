@@ -1,4 +1,4 @@
 ---
-title: "文章 / Posts"
+title: "Posts"
 description: "General posts and updates."
 ---

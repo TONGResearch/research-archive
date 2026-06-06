@@ -1,31 +1,37 @@
 {{ define "main" }}
-{{ $termTitle := .Title }}
-{{ $taxonomy := .Data.Singular }}
+{{ $taxLabels := dict
+  "tags"   (dict "en" "Tag" "zh" "标签")
+  "fields" (dict "en" "Field" "zh" "研究领域")
+  "areas"  (dict "en" "Research Area" "zh" "研究方向")
+  "status" (dict "en" "Status" "zh" "状态")
+}}
+{{ $label := index $taxLabels .Data.Plural }}
 <div class="taxonomy-page">
-  <div class="list-header">
-    <h1 class="list-title">{{ .Title }}</h1>
-    <p class="list-kicker">分类归档 / Taxonomy Archive</p>
-  </div>
-  {{ range .Pages.GroupByDate "2006" "desc" }}
-  <section class="timeline-year" id="year-{{ .Key }}">
-    <div class="col-header">
-      <h2 class="col-title">{{ .Key }}</h2>
-      {{ if eq $taxonomy "research_area" }}
-      <a class="col-more" href="{{ relURL (printf "archive/?area=%s&year=%s" ($termTitle | urlquery) .Key) }}">View combination / 查看组合 →</a>
-      {{ else if eq $taxonomy "tag" }}
-      <a class="col-more" href="{{ relURL (printf "archive/?tag=%s&year=%s" ($termTitle | urlquery) .Key) }}">View combination / 查看组合 →</a>
+  <div class="list-page-inner">
+    <header class="taxonomy-header">
+      {{ if $label }}
+      <h1 class="taxonomy-title-en">{{ $label.en }}: {{ .Title }}</h1>
+      <p class="taxonomy-title-zh">{{ $label.zh }}：{{ .Title }}</p>
       {{ else }}
-      <a class="col-more" href="{{ relURL (printf "archive/?year=%s" .Key) }}">View year / 查看年份 →</a>
+      <h1 class="taxonomy-title-en">{{ .Title }}</h1>
       {{ end }}
-    </div>
-    <ul class="entry-list entry-list--full">
+    </header>
+    <ul class="list-entries">
       {{ range .Pages.ByDate.Reverse }}
-      <li>{{ partial "post-card.html" . }}</li>
+      <li class="list-entry">
+        <a class="list-entry-link" href="{{ .Permalink }}">
+          <div class="list-entry-top">
+            <span class="list-entry-title">{{ .Title }}</span>
+            <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
+          </div>
+          {{ with .Summary }}<p class="list-entry-excerpt">{{ . | plainify }}</p>{{ end }}
+          <div class="list-entry-tags">
+            {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+          </div>
+        </a>
+      </li>
       {{ end }}
     </ul>
-  </section>
-  {{ else }}
-  <p class="entry-empty">No entries / 暂无条目</p>
-  {{ end }}
+  </div>
 </div>
 {{ end }}

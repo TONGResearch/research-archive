@@ -1,6 +1,6 @@
 ---
-title: "归档 / Archive"
-description: "Complete archive of all entries across research, reading, policy, and thoughts."
+title: "Archive"
+description: "Complete archive of all entries, searchable by section, year, and tag."
 type: "page"
 layout: "archive"
 ---

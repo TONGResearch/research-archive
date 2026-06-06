@@ -1,27 +1,88 @@
 {{ define "main" }}
-{{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
-{{ $pages := where .Site.RegularPages "Section" "in" $sections }}
+{{ $filter := .Params.section_filter | default .Section }}
 
-<div class="archive-page timeline-page">
-  <div class="archive-page-header">
-    <h1 class="archive-page-title">{{ .Title }}</h1>
-    {{ with .Description }}<p class="archive-page-desc">{{ . }}</p>{{ end }}
-  </div>
-
-  {{ range $pages.GroupByDate "2006" "desc" }}
-  <section class="timeline-year" id="year-{{ .Key }}">
-    <div class="col-header">
-      <h2 class="col-title">{{ .Key }}</h2>
-      <a class="col-more" href="{{ relURL (printf "archive/?year=%s" .Key) }}">View year / 查看年份 →</a>
-    </div>
-    <ul class="entry-list entry-list--full">
-      {{ range .Pages.ByDate.Reverse }}
-      <li>{{ partial "post-card.html" . }}</li>
-      {{ end }}
-    </ul>
-  </section>
-  {{ else }}
-  <p class="entry-empty">No dated entries / 暂无按年份归档的条目</p>
+{{/* Collect pages */}}
+{{ $pages := slice }}
+{{ if eq $filter "all" }}
+  {{ range slice "research" "reading" "policy" "thoughts" "posts" }}
+    {{ range where $.Site.RegularPages "Section" . }}
+      {{ $pages = $pages | append . }}
+    {{ end }}
   {{ end }}
+{{ else }}
+  {{ $pages = where .Site.RegularPages "Section" $filter }}
+{{ end }}
+{{ $pages = $pages | sort "Date" "desc" }}
+
+{{/* Group by year */}}
+{{ $byYear := dict }}
+{{ range $pages }}
+  {{ $y := .Date.Format "2006" }}
+  {{ $existing := index $byYear $y | default slice }}
+  {{ $byYear = merge $byYear (dict $y ($existing | append .)) }}
+{{ end }}
+{{ $years := slice }}
+{{ range $byYear }}{{ end }}
+{{/* Get sorted years */}}
+{{ $yearList := slice }}
+{{ range $pages }}
+  {{ $y := .Date.Format "2006" }}
+  {{ if not (in $yearList $y) }}
+    {{ $yearList = $yearList | append $y }}
+  {{ end }}
+{{ end }}
+
+<div class="timeline-page">
+  {{ partial "section-nav.html" (dict "section" $filter "page" .) }}
+
+  <div class="timeline-wrap">
+    <header class="timeline-header">
+      <h1 class="tl-title-en">{{ .Title }}</h1>
+      <p class="tl-title-zh">
+        {{ if eq $filter "all" }}完整时间线
+        {{ else if eq $filter "research" }}研究进展时间线
+        {{ else if eq $filter "reading" }}读书档案时间线
+        {{ else if eq $filter "policy" }}政策档案时间线
+        {{ else }}时间线{{ end }}
+      </p>
+    </header>
+
+    {{ if not $pages }}
+    <p class="tl-empty">No entries yet. Start writing to build the timeline.</p>
+    {{ else }}
+    <div class="tl-body">
+      {{ range $yearList }}
+      {{ $yr := . }}
+      {{ $yPages := index $byYear $yr }}
+      <div class="tl-year-block" id="year-{{ $yr }}">
+        <div class="tl-year-label">{{ $yr }}</div>
+        <ul class="tl-entries">
+          {{ range $yPages }}
+          <li class="tl-entry">
+            <time class="tl-entry-date">{{ .Date.Format "Jan 02" }}</time>
+            <div class="tl-entry-body">
+              <a class="tl-entry-title" href="{{ .Permalink }}">{{ .Title }}</a>
+              {{ if ne $filter .Section }}
+              <span class="tl-entry-section">{{ .Section }}</span>
+              {{ end }}
+              <div class="tl-entry-tags">
+                {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+              </div>
+            </div>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </div>
+
+    {{/* Year jump nav */}}
+    <aside class="tl-year-nav" aria-label="Jump to year">
+      {{ range $yearList }}
+      <a class="tl-year-jump" href="#year-{{ . }}">{{ . }}</a>
+      {{ end }}
+    </aside>
+    {{ end }}
+  </div>
 </div>
 {{ end }}

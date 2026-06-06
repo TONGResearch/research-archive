@@ -1,75 +1,73 @@
 {{ define "main" }}
-<article class="single-article">
+{{ $sectionLabels := dict
+  "research" "Research"
+  "reading"  "Reading"
+  "policy"   "Policy"
+  "thoughts" "Reflections"
+  "posts"    "Posts"
+  "about"    "About"
+}}
+{{ $sectionLabel := index $sectionLabels .Section | default (.Section | title) }}
 
-  <header class="article-header">
-    <div class="article-breadcrumb">
-      <a href="{{ relURL (printf "%s/" .Section) }}">{{ partial "section-label.html" .Section }}</a>
-    </div>
-    <h1 class="article-title">{{ .Title }}</h1>
-    {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
-    <div class="article-meta">
-      <span class="meta-item">
-        <span class="meta-label">发布 / Published</span>
-        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
-      </span>
-      <span class="meta-sep">·</span>
-      <span class="meta-item meta-item--updated">
-        <span class="meta-label">更新 / Last Updated</span>
-        <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time>
-      </span>
-      {{ if .Params.status }}
-        <span class="meta-sep">·</span>
-        {{ range .Params.status }}<span class="status-badge status-{{ . | urlize }}">{{ . }}</span>{{ end }}
-      {{ end }}
-      {{ if .Params.tags }}
-        <span class="meta-sep">·</span>
-        {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
-      {{ end }}
-      {{ if .Params.fields }}
-        <span class="meta-sep">·</span>
-        {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
-      {{ end }}
-      {{ with .GetTerms "research_areas" }}
-        <span class="meta-sep">·</span>
-        <span class="meta-label">Research Areas / 研究领域</span>
-        {{ range . }}<a class="field-tag" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
-      {{ end }}
-    </div>
-  </header>
+<div class="article-page">
 
-  <hr class="article-rule" />
+  <nav class="article-breadcrumb" aria-label="Breadcrumb">
+    <a href="{{ "/" | relURL }}">Home</a>
+    <span class="article-breadcrumb-sep">/</span>
+    <a href="{{ (.Section) | relURL }}">{{ $sectionLabel }}</a>
+    <span class="article-breadcrumb-sep">/</span>
+    <span>{{ .Title | truncate 60 }}</span>
+  </nav>
 
-  {{/* Book meta block — only for reading notes */}}
+  <h1 class="article-title">{{ .Title }}</h1>
+  {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
+
+  <div class="article-meta">
+    <time>{{ .Date.Format "2006-01-02" }}</time>
+    {{ if .Params.status }}
+      <span class="article-meta-sep">·</span>
+      {{ range .Params.status }}<span class="status-badge status-{{ . }}">{{ . }}</span>{{ end }}
+    {{ end }}
+    {{ if .Params.tags }}
+      <span class="article-meta-sep">·</span>
+      {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+    {{ end }}
+    {{ if .Params.fields }}
+      <span class="article-meta-sep">·</span>
+      {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
+    {{ end }}
+    {{ if .GitInfo }}
+      <span class="article-meta-sep">·</span>
+      <span class="article-git-info">Last updated {{ .GitInfo.AuthorDate.Format "2006-01-02" }}</span>
+    {{ end }}
+  </div>
+
   {{ with .Params.book }}
   <aside class="book-meta">
-    {{ with .title }}<div class="book-meta-row"><span class="book-meta-key">书名 / Book</span><span>{{ . }}</span></div>{{ end }}
-    {{ with .author }}<div class="book-meta-row"><span class="book-meta-key">作者 / Author</span><span>{{ . }}</span></div>{{ end }}
-    {{ with .year }}<div class="book-meta-row"><span class="book-meta-key">年份 / Year</span><span>{{ . }}</span></div>{{ end }}
-    {{ with .publisher }}<div class="book-meta-row"><span class="book-meta-key">出版 / Publisher</span><span>{{ . }}</span></div>{{ end }}
-    {{ with .rating }}<div class="book-meta-row"><span class="book-meta-key">评分 / Rating</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .title }}<div class="book-meta-row"><span class="book-meta-key">Book</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .author }}<div class="book-meta-row"><span class="book-meta-key">Author</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .year }}<div class="book-meta-row"><span class="book-meta-key">Year</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .publisher }}<div class="book-meta-row"><span class="book-meta-key">Publisher</span><span>{{ . }}</span></div>{{ end }}
+    {{ with .rating }}<div class="book-meta-row"><span class="book-meta-key">Rating</span><span>{{ . }}</span></div>{{ end }}
   </aside>
   {{ end }}
 
-  <div class="article-body">
-    {{ .Content }}
-  </div>
+  <div class="article-body">{{ .Content }}</div>
 
-  <hr class="article-rule" />
-
-  <nav class="article-nav" aria-label="相邻文章 / Adjacent articles">
+  <nav class="article-nav" aria-label="Adjacent articles">
     {{ with .PrevInSection }}
-    <a class="article-nav-link article-nav-prev" href="{{ .RelPermalink }}">
-      <span class="nav-dir">← 上一篇 / Previous</span>
+    <a class="article-nav-link article-nav-prev" href="{{ .Permalink }}">
+      <span class="nav-dir">← Previous</span>
       <span class="nav-title">{{ .Title }}</span>
     </a>
     {{ end }}
     {{ with .NextInSection }}
-    <a class="article-nav-link article-nav-next" href="{{ .RelPermalink }}">
-      <span class="nav-dir">下一篇 / Next →</span>
+    <a class="article-nav-link article-nav-next" href="{{ .Permalink }}">
+      <span class="nav-dir">Next →</span>
       <span class="nav-title">{{ .Title }}</span>
     </a>
     {{ end }}
   </nav>
 
-</article>
+</div>
 {{ end }}

@@ -1,135 +1,98 @@
-/* search.js — Archive page client-side filter
-   Handles: text search, tag filter, section tab filter
-   Works with the server-rendered list in layouts/page/archive.html
-*/
-
+/* search.js — Archive page: text + section + tag + year combined filtering */
 (function () {
   'use strict';
 
-  const searchInput  = document.getElementById('archive-search');
-  const searchCount  = document.getElementById('search-count');
-  const archiveList  = document.getElementById('archive-list');
-  const noResults    = document.getElementById('no-results');
-  const tagCloud     = document.getElementById('tag-cloud');
-  const sectionTabs  = document.getElementById('section-tabs');
-  const clearTagBtn  = document.getElementById('clear-tag');
-  const areaFilter   = document.getElementById('area-filter');
-  const yearFilter   = document.getElementById('year-filter');
+  var searchInput = document.getElementById('archive-search');
+  var searchCount = document.getElementById('search-count');
+  var listEl      = document.getElementById('archive-list');
+  var noResults   = document.getElementById('no-results');
+  var tagCloud    = document.getElementById('tag-cloud');
+  var tabsEl      = document.getElementById('section-tabs');
+  var yearsEl     = document.getElementById('year-filters');
+  var clearBtn    = document.getElementById('clear-tag');
 
-  if (!archiveList) return;
+  if (!listEl) return;
 
-  const entries      = Array.from(archiveList.querySelectorAll('.archive-entry'));
-  let activeTag      = null;
-  let activeSection  = 'all';
-  let searchQuery    = '';
-  let activeArea     = '';
-  let activeYear     = '';
+  var entries       = Array.from(listEl.querySelectorAll('.archive-entry'));
+  var activeTag     = null;
+  var activeSection = 'all';
+  var activeYear    = 'all';
+  var query         = '';
 
-  // ── Filter engine ─────────────────────────────────────────────
-  function filter() {
-    let visible = 0;
+  function run() {
+    var visible = 0;
+    entries.forEach(function (el) {
+      var ok =
+        (!query       || (el.dataset.title  || '').includes(query)
+                      || (el.dataset.tags   || '').includes(query)
+                      || (el.dataset.fields || '').includes(query)) &&
+        (!activeTag   || (el.dataset.tags   || '').includes(activeTag.toLowerCase())) &&
+        (activeSection === 'all' || el.dataset.section === activeSection) &&
+        (activeYear   === 'all' || el.dataset.year    === activeYear);
 
-    entries.forEach(function (entry) {
-      const title   = (entry.dataset.title   || '').toLowerCase();
-      const section = (entry.dataset.section || '').toLowerCase();
-      const tags    = (entry.dataset.tags    || '').toLowerCase();
-      const fields  = (entry.dataset.fields  || '').toLowerCase();
-      const areas   = (entry.dataset.areas   || '').toLowerCase();
-      const year    = entry.dataset.year || '';
-
-      const matchQuery   = !searchQuery || title.includes(searchQuery) || tags.includes(searchQuery) || fields.includes(searchQuery) || areas.includes(searchQuery);
-      const matchTag     = !activeTag   || tags.includes(activeTag.toLowerCase());
-      const matchSection = activeSection === 'all' || section === activeSection;
-      const matchArea    = !activeArea || areas.includes(activeArea);
-      const matchYear    = !activeYear || year === activeYear;
-
-      const show = matchQuery && matchTag && matchSection && matchArea && matchYear;
-      entry.style.display = show ? '' : 'none';
-      if (show) visible++;
+      el.style.display = ok ? '' : 'none';
+      if (ok) visible++;
     });
-
-    if (searchCount) {
-      searchCount.textContent = visible + ' / ' + entries.length + ' 条 / entries';
-    }
-
-    if (noResults) {
-      noResults.style.display = visible === 0 ? '' : 'none';
-    }
+    if (searchCount) searchCount.textContent = visible + ' / ' + entries.length;
+    if (noResults)   noResults.style.display = visible === 0 ? '' : 'none';
   }
 
-  function readQueryFilters() {
-    const params = new URLSearchParams(window.location.search);
-    searchQuery = (params.get('q') || '').trim().toLowerCase();
-    activeTag = (params.get('tag') || '').trim().toLowerCase() || null;
-    activeArea = (params.get('area') || '').trim().toLowerCase();
-    activeYear = (params.get('year') || '').trim();
-
-    if (searchInput && searchQuery) searchInput.value = searchQuery;
-    if (areaFilter && activeArea) areaFilter.value = activeArea;
-    if (yearFilter && activeYear) yearFilter.value = activeYear;
-  }
-
-  // ── Search input ───────────────────────────────────────────────
+  /* Search input */
   if (searchInput) {
     searchInput.addEventListener('input', function () {
-      searchQuery = this.value.trim().toLowerCase();
-      filter();
+      query = this.value.trim().toLowerCase();
+      run();
     });
   }
 
-  if (areaFilter) {
-    areaFilter.addEventListener('change', function () {
-      activeArea = this.value.toLowerCase();
-      filter();
+  /* Section tabs */
+  if (tabsEl) {
+    tabsEl.querySelectorAll('.tab-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        tabsEl.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('tab-btn--active'); });
+        this.classList.add('tab-btn--active');
+        activeSection = this.dataset.section;
+        run();
+      });
     });
   }
 
-  if (yearFilter) {
-    yearFilter.addEventListener('change', function () {
-      activeYear = this.value;
-      filter();
+  /* Year filter */
+  if (yearsEl) {
+    yearsEl.querySelectorAll('.year-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        yearsEl.querySelectorAll('.year-btn').forEach(function (b) { b.classList.remove('year-btn--active'); });
+        this.classList.add('year-btn--active');
+        activeYear = this.dataset.year;
+        run();
+      });
     });
   }
 
-  // ── Tag cloud ──────────────────────────────────────────────────
+  /* Tag cloud */
   if (tagCloud) {
     tagCloud.querySelectorAll('.tag-btn[data-tag]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        if (activeTag === this.dataset.tag) {
+        var t = this.dataset.tag;
+        if (activeTag === t) {
           activeTag = null;
-          this.classList.remove('is-active');
-        } else {
           tagCloud.querySelectorAll('.tag-btn').forEach(function (b) { b.classList.remove('is-active'); });
-          activeTag = this.dataset.tag;
+        } else {
+          activeTag = t;
+          tagCloud.querySelectorAll('.tag-btn').forEach(function (b) { b.classList.remove('is-active'); });
           this.classList.add('is-active');
         }
-        filter();
+        run();
       });
     });
-
-    if (clearTagBtn) {
-      clearTagBtn.addEventListener('click', function () {
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
         activeTag = null;
         tagCloud.querySelectorAll('.tag-btn').forEach(function (b) { b.classList.remove('is-active'); });
-        filter();
+        run();
       });
     }
   }
 
-  // ── Section tabs ───────────────────────────────────────────────
-  if (sectionTabs) {
-    sectionTabs.querySelectorAll('.tab-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        sectionTabs.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('tab-btn--active'); });
-        this.classList.add('tab-btn--active');
-        activeSection = this.dataset.section;
-        filter();
-      });
-    });
-  }
-
-  // ── Initial count ──────────────────────────────────────────────
-  readQueryFilters();
-  filter();
-
+  run();
 })();

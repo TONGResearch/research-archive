@@ -2,10 +2,31 @@
 title: "{{ replace .File.ContentBaseName "-" " " | title }}"
 subtitle: ""
 date: {{ .Date }}
+draft: false
 featured: false
-research_areas: []
-categories: []
+categories: ["Thoughts"]
 fields: []
+areas: []
 tags: []
 status: ["draft"]
 ---
+
+## The Question
+
+
+
+---
+
+## Where I Am Now
+
+
+
+---
+
+## What I Don't Know Yet
+
+
+
+---
+
+*Written: {{ .Date | time.Format "2006-01-02" }}. Provisional.*

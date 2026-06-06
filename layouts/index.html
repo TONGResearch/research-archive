@@ -1,117 +1,268 @@
 {{ define "main" }}
 {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
-{{ $all := where .Site.RegularPages "Section" "in" $sections }}
 
-{{/* ── Hero ─────────────────────────────────────────────────────── */}}
-<section class="hero">
-  <div class="hero-text">
-    <h1 class="hero-title">{{ .Title }}</h1>
-    <p class="hero-title-en">(Unfinished Notes)</p>
-    <p class="hero-desc">{{ .Description }}</p>
-    <ul class="hero-pillars">
-      <li>研究档案 / Research Archive</li>
-      <li>读书档案 / Reading Archive</li>
-      <li>政策档案 / Policy Archive</li>
-      <li>思想发展记录 / Intellectual Development Log</li>
-    </ul>
-  </div>
-</section>
+{{/* Collect all published pages */}}
+{{ $all := slice }}
+{{ range $sections }}
+  {{ range where $.Site.RegularPages "Section" . }}
+    {{ $all = $all | append . }}
+  {{ end }}
+{{ end }}
+{{ $all = $all | sort "Date" "desc" }}
 
-{{/* ── Metrics bar ──────────────────────────────────────────────── */}}
-<div class="metrics-bar">
-  <div class="metric">
-    <span class="metric-num">{{ len (where .Site.RegularPages "Section" "research") }}</span>
-    <span class="metric-label">研究笔记 / Research</span>
-  </div>
-  <div class="metric">
-    <span class="metric-num">{{ len (where .Site.RegularPages "Section" "reading") }}</span>
-    <span class="metric-label">读书笔记 / Reading</span>
-  </div>
-  <div class="metric">
-    <span class="metric-num">{{ len (where .Site.RegularPages "Section" "policy") }}</span>
-    <span class="metric-label">政策备忘 / Policy</span>
-  </div>
-  <div class="metric">
-    <span class="metric-num">{{ len (where .Site.RegularPages "Section" "thoughts") }}</span>
-    <span class="metric-label">个人思考 / Thoughts</span>
-  </div>
-</div>
+{{/* Split featured / recent */}}
+{{ $featured := slice }}
+{{ $recent   := slice }}
+{{ range $all }}
+  {{ if .Params.featured }}
+    {{ $featured = $featured | append . }}
+  {{ else }}
+    {{ $recent = $recent | append . }}
+  {{ end }}
+{{ end }}
 
-{{ partial "featured-works.html" . }}
+<div class="home-wrap">
 
-{{/* ── Four archive columns ─────────────────────────────────────── */}}
-<section class="archive-grid">
-
-  <div class="archive-col">
-    <div class="col-header">
-      <h2 class="col-title">研究进展 <span class="col-en">Research</span></h2>
-      <a class="col-more" href="{{ relURL "research/" }}">全部 / All →</a>
+  {{/* ── 1. HERO ─────────────────────────────────────── */}}
+  <section class="home-hero">
+    <div class="home-hero-text">
+      <h1 class="home-hero-title">{{ .Site.Title }}</h1>
+      <span class="home-hero-sub">Unfinished Notes</span>
+      <p class="home-hero-desc">{{ .Site.Params.description }}</p>
+      <div class="home-pillars">
+        <span class="home-pillar">Research Archive</span>
+        <span class="home-pillar">Reading Archive</span>
+        <span class="home-pillar">Policy Archive</span>
+        <span class="home-pillar">Intellectual Development Log</span>
+      </div>
     </div>
-    <ul class="entry-list">
-      {{ range first 6 ((where .Site.RegularPages "Section" "research").ByDate.Reverse) }}
-      <li>{{ partial "post-row.html" . }}</li>
-      {{ else }}
-      <li class="entry-empty">暂无条目 / No entries yet.</li>
+    <div class="home-hero-counts">
+      {{ $countData := slice
+        (dict "s" "research" "en" "Research Notes" "zh" "研究进展")
+        (dict "s" "reading"  "en" "Reading Notes"  "zh" "读书档案")
+        (dict "s" "policy"   "en" "Policy Memos"   "zh" "政策档案")
+        (dict "s" "thoughts" "en" "Reflections"    "zh" "个人思考")
+      }}
+      {{ range $countData }}
+      <div class="hero-count">
+        <span class="hero-count-num">{{ len (where $.Site.RegularPages "Section" .s) }}</span>
+        <span class="hero-count-en">{{ .en }}</span>
+        <span class="hero-count-zh">{{ .zh }}</span>
+      </div>
       {{ end }}
-    </ul>
-  </div>
-
-  <div class="archive-col">
-    <div class="col-header">
-      <h2 class="col-title">读书档案 <span class="col-en">Reading</span></h2>
-      <a class="col-more" href="{{ relURL "reading/" }}">全部 / All →</a>
     </div>
-    <ul class="entry-list">
-      {{ range first 6 ((where .Site.RegularPages "Section" "reading").ByDate.Reverse) }}
-      <li>{{ partial "post-row.html" . }}</li>
-      {{ else }}
-      <li class="entry-empty">暂无条目 / No entries yet.</li>
-      {{ end }}
-    </ul>
-  </div>
+  </section>
 
-  <div class="archive-col">
-    <div class="col-header">
-      <h2 class="col-title">政策档案 <span class="col-en">Policy</span></h2>
-      <a class="col-more" href="{{ relURL "policy/" }}">全部 / All →</a>
+  {{/* ── 2. PERSONAL INTRODUCTION ────────────────────── */}}
+  <section class="home-intro">
+    <div class="home-intro-inner">
+      <div class="home-intro-label">
+        <span class="home-intro-label-en">About the Researcher</span>
+        <span class="home-intro-label-zh">研究者简介</span>
+      </div>
+      <p class="home-intro-text">{{ .Site.Params.introShort }}</p>
+      <a class="home-intro-cta" href="{{ "/about" | relURL }}">Read Full Profile →</a>
     </div>
-    <ul class="entry-list">
-      {{ range first 6 ((where .Site.RegularPages "Section" "policy").ByDate.Reverse) }}
-      <li>{{ partial "post-row.html" . }}</li>
-      {{ else }}
-      <li class="entry-empty">暂无条目 / No entries yet.</li>
-      {{ end }}
-    </ul>
-  </div>
+  </section>
 
-  <div class="archive-col">
-    <div class="col-header">
-      <h2 class="col-title">个人思考 <span class="col-en">Thoughts</span></h2>
-      <a class="col-more" href="{{ relURL "thoughts/" }}">全部 / All →</a>
+  {{/* ── 3. FEATURED WORKS ───────────────────────────── */}}
+  <section class="home-section">
+    <div class="home-section-header">
+      <div class="home-section-label">
+        <span class="hsl-en">Featured Works</span>
+        <span class="hsl-zh">精选研究</span>
+      </div>
+      <a class="home-section-more" href="{{ "/research/featured" | relURL }}">View all →</a>
     </div>
-    <ul class="entry-list">
-      {{ range first 6 ((where .Site.RegularPages "Section" "thoughts").ByDate.Reverse) }}
-      <li>{{ partial "post-row.html" . }}</li>
-      {{ else }}
-      <li class="entry-empty">暂无条目 / No entries yet.</li>
+
+    {{ if $featured }}
+    <div class="featured-grid">
+      {{ range first 3 $featured }}
+      <a class="feat-card" href="{{ .Permalink }}">
+        <div class="feat-card-top">
+          <span class="feat-card-section">{{ .Section }}</span>
+          <span class="feat-card-badge">Featured</span>
+        </div>
+        <h2 class="feat-card-title">{{ .Title }}</h2>
+        {{ with .Params.subtitle }}<p class="feat-card-sub">{{ . }}</p>{{ end }}
+        {{ with .Summary }}<p class="feat-card-excerpt">{{ . | plainify | truncate 160 }}</p>{{ end }}
+        <div class="feat-card-tags">
+          {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+        </div>
+      </a>
       {{ end }}
-    </ul>
-  </div>
-
-</section>
-
-{{/* ── Latest across all sections ───────────────────────────────── */}}
-<section class="latest-section">
-  <div class="latest-header">
-    <h2 class="latest-title">最新更新 <span class="col-en">Latest Updates</span></h2>
-  </div>
-  <ul class="entry-list entry-list--latest">
-    {{ range first 6 $all.ByDate.Reverse }}
-    <li>{{ partial "post-card.html" . }}</li>
+    </div>
     {{ else }}
-    <li class="entry-empty">暂无条目 / No entries yet.</li>
+    <div class="home-empty-state">
+      <p class="home-empty-en">No featured works yet.</p>
+      <p class="home-empty-zh">在文章 front matter 中添加 <code>featured: true</code> 即可置顶显示，不受发布日期影响。</p>
+    </div>
     {{ end }}
-  </ul>
-</section>
+  </section>
 
+  {{/* ── 4. RESEARCH AGENDA SNAPSHOT ─────────────────── */}}
+  <section class="home-section">
+    <div class="home-section-header">
+      <div class="home-section-label">
+        <span class="hsl-en">Research Agenda</span>
+        <span class="hsl-zh">研究路线</span>
+      </div>
+      <a class="home-section-more" href="{{ "/about/research-agenda" | relURL }}">Full agenda →</a>
+    </div>
+    <div class="home-agenda">
+      <div class="home-agenda-q">
+        <p class="home-agenda-qlabel">Current questions</p>
+        <ul class="home-agenda-qlist">
+          <li>How does AI reshape production relations?</li>
+          <li>How do algorithmic systems influence governance capacity?</li>
+          <li>What forms of regulation are appropriate for platform economies?</li>
+          <li>How should states respond to emerging AI systems?</li>
+        </ul>
+      </div>
+      <div class="home-agenda-goal">
+        <p class="home-agenda-qlabel">Long-term goal</p>
+        <p class="home-agenda-goaltext">To study the interaction between technology, institutions, and social organization, and contribute to policy-oriented research in digital governance and public policy.</p>
+      </div>
+    </div>
+  </section>
+
+  {{/* ── 5. RESEARCH AREAS ───────────────────────────── */}}
+  <section class="home-section">
+    <div class="home-section-header">
+      <div class="home-section-label">
+        <span class="hsl-en">Research Areas</span>
+        <span class="hsl-zh">研究领域</span>
+      </div>
+      <a class="home-section-more" href="{{ "/areas" | relURL }}">All areas →</a>
+    </div>
+    <div class="areas-grid">
+      {{ range .Site.Params.researchAreas }}
+      {{ $areaPages := where $.Site.RegularPages "Params.areas" "intersect" (slice .slug) }}
+      <a class="area-card" href="{{ printf "/areas/%s/" .slug | relURL }}">
+        <span class="area-card-name">{{ .name }}</span>
+        <span class="area-card-count">{{ len $areaPages }} entries</span>
+      </a>
+      {{ end }}
+    </div>
+  </section>
+
+  {{/* ── 6. ARCHIVE DISCOVERY ────────────────────────── */}}
+  <section class="home-section">
+    <div class="home-section-header">
+      <div class="home-section-label">
+        <span class="hsl-en">Archive Discovery</span>
+        <span class="hsl-zh">档案导航</span>
+      </div>
+    </div>
+    <div class="home-discovery">
+      <a class="disc-item disc-item--primary" href="{{ "/research/featured" | relURL }}">
+        <span class="disc-en">Featured Works</span>
+        <span class="disc-zh">精选研究</span>
+        <span class="disc-desc">Pinned entries, independent of date</span>
+      </a>
+      <a class="disc-item" href="{{ "/areas" | relURL }}">
+        <span class="disc-en">Research Areas</span>
+        <span class="disc-zh">研究领域</span>
+        <span class="disc-desc">Browse by topic</span>
+      </a>
+      <a class="disc-item" href="{{ "/tags" | relURL }}">
+        <span class="disc-en">Tags</span>
+        <span class="disc-zh">标签</span>
+        <span class="disc-desc">Browse by keyword</span>
+      </a>
+      <a class="disc-item" href="{{ "/archive-timeline" | relURL }}">
+        <span class="disc-en">Timeline</span>
+        <span class="disc-zh">时间线</span>
+        <span class="disc-desc">Ideas organised by year</span>
+      </a>
+      <a class="disc-item" href="{{ "/archive" | relURL }}">
+        <span class="disc-en">Full Archive</span>
+        <span class="disc-zh">完整归档</span>
+        <span class="disc-desc">Search and filter all entries</span>
+      </a>
+    </div>
+  </section>
+
+  {{/* ── 7. TIMELINE SNAPSHOT ────────────────────────── */}}
+  {{ $years := slice }}
+  {{ range $all }}
+    {{ $y := .Date.Format "2006" }}
+    {{ if not (in $years $y) }}{{ $years = $years | append $y }}{{ end }}
+  {{ end }}
+
+  <section class="home-section">
+    <div class="home-section-header">
+      <div class="home-section-label">
+        <span class="hsl-en">Timeline</span>
+        <span class="hsl-zh">时间线</span>
+      </div>
+      <a class="home-section-more" href="{{ "/archive-timeline" | relURL }}">Full timeline →</a>
+    </div>
+    {{ if $years }}
+    <div class="tl-snapshot">
+      {{ range first 2 $years }}
+      {{ $yr := . }}
+      <div class="tl-snap-year">
+        <span class="tl-snap-year-label">{{ $yr }}</span>
+        <ul class="tl-snap-list">
+          {{ range first 4 $all }}
+          {{ if eq (.Date.Format "2006") $yr }}
+          <li class="tl-snap-item">
+            <time class="tl-snap-date">{{ .Date.Format "Jan" }}</time>
+            <a class="tl-snap-title" href="{{ .Permalink }}">{{ .Title }}</a>
+          </li>
+          {{ end }}
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </div>
+    {{ else }}
+    <p class="home-tl-empty">Timeline builds as entries are published.</p>
+    {{ end }}
+  </section>
+
+  {{/* ── 8. RECENT UPDATES ───────────────────────────── */}}
+  <section class="home-section">
+    <div class="home-section-header">
+      <div class="home-section-label">
+        <span class="hsl-en">Recent Updates</span>
+        <span class="hsl-zh">最新更新</span>
+      </div>
+      <a class="home-section-more" href="{{ "/archive" | relURL }}">Full archive →</a>
+    </div>
+    <div class="recent-cols">
+      {{ $colData := slice
+        (dict "s" "research" "en" "Research" "zh" "研究进展" "url" "/research/")
+        (dict "s" "reading"  "en" "Reading"  "zh" "读书档案" "url" "/reading/")
+        (dict "s" "policy"   "en" "Policy"   "zh" "政策档案" "url" "/policy/")
+        (dict "s" "thoughts" "en" "Reflections" "zh" "个人思考" "url" "/thoughts/")
+      }}
+      {{ range $colData }}
+      {{ $colPages := where $.Site.RegularPages "Section" .s }}
+      <div class="recent-col">
+        <div class="recent-col-head">
+          <a class="recent-col-title" href="{{ .url | relURL }}">
+            <span class="rct-en">{{ .en }}</span>
+            <span class="rct-zh">{{ .zh }}</span>
+          </a>
+        </div>
+        <ul class="post-row-list">
+          {{ range first 5 $colPages }}
+          <li>
+            <a class="post-row" href="{{ .Permalink }}">
+              <span class="post-row-title">{{ .Title }}</span>
+              <time class="post-row-date">{{ .Date.Format "01-02" }}</time>
+            </a>
+          </li>
+          {{ else }}
+          <li class="post-row-empty">No entries yet.</li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+
+</div>
 {{ end }}

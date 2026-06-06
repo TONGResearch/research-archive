@@ -1,16 +1,19 @@
 {{- $sections := slice "research" "reading" "policy" "thoughts" "posts" -}}
-{{- $pages := where site.RegularPages "Section" "in" $sections -}}
+{{- $pages := slice -}}
+{{- range $sections -}}
+  {{- range where $.Site.RegularPages "Section" . -}}
+    {{- $pages = $pages | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $pages = $pages | sort "Date" "desc" -}}
 [
-{{- range $i, $p := $pages.ByDate.Reverse -}}
+{{- range $i, $p := $pages -}}
 {{- if $i }},{{ end }}
 {
   "title":   {{ $p.Title | jsonify }},
-  "url":     {{ $p.RelPermalink | jsonify }},
+  "url":     {{ $p.Permalink | jsonify }},
   "section": {{ $p.Section | jsonify }},
   "date":    {{ $p.Date.Format "2006-01-02" | jsonify }},
-  "year":    {{ $p.Date.Format "2006" | jsonify }},
-  "featured": {{ default false $p.Params.featured | jsonify }},
-  "researchAreas": {{ $p.Params.research_areas | jsonify }},
   "tags":    {{ $p.Params.tags | jsonify }},
   "fields":  {{ $p.Params.fields | jsonify }},
   "status":  {{ $p.Params.status | jsonify }},

@@ -1,6 +1,6 @@
 baseURL: "https://tongresearch.github.io/research-archive/"
-locale: "zh-CN"
-title: "未竟札记"
+languageCode: "en"
+title: "未竟札記"
 enableRobotsTXT: true
 enableGitInfo: true
 hasCJKLanguage: true
@@ -8,12 +8,31 @@ summaryLength: 80
 timeZone: "Asia/Kuala_Lumpur"
 
 params:
-  owner: "Jiatong"
   subtitle: "Unfinished Notes"
-  description: "A long-term public research archive documenting intellectual development, reading history, research progress, and policy thinking across AI, governance, political economy, sociology, and Marxism."
-  heroImage: "/assets/reading-desk-hero.png"
-  advisorNote: "This archive documents my research interests, reading paths, methodological training, and evolving outputs — intended for open exchange and as a record of intellectual development for academic mentors."
-  archiveLabel: "Research Archive · Reading Archive · Policy Archive · Intellectual Development Log"
+  description: "A long-term public research archive documenting intellectual development across AI, governance, political economy, sociology, and public policy."
+  author: "Jiatong"
+
+  # Short intro shown on homepage — edit freely
+  introShort: "I am a university student working at the intersection of artificial intelligence, governance, and political economy. This archive records my research, reading, and evolving understanding of technology and society."
+
+  # Research areas — drives homepage grid and /areas/ browse pages
+  researchAreas:
+    - name: "Technology Governance"
+      slug: "technology-governance"
+    - name: "Public Policy"
+      slug: "public-policy"
+    - name: "Political Economy"
+      slug: "political-economy"
+    - name: "Sociology"
+      slug: "sociology"
+    - name: "Psychology"
+      slug: "psychology"
+    - name: "Economics"
+      slug: "economics"
+    - name: "Finance"
+      slug: "finance"
+    - name: "Marxism"
+      slug: "marxism"
 
 outputs:
   home:
@@ -22,10 +41,9 @@ outputs:
     - JSON
 
 taxonomies:
-  category: categories
   tag: tags
   field: fields
-  research_area: research-areas
+  area: areas
   status: status
 
 permalinks:
@@ -34,33 +52,29 @@ permalinks:
   research: "/research/:year/:month/:slug/"
   thoughts: "/thoughts/:year/:month/:slug/"
   policy:   "/policy/:year/:month/:slug/"
+  projects: "/projects/:year/:month/:slug/"
 
+# Primary nav — exactly 6 items
 menu:
   main:
-    - name: "首页 / Home"
+    - name: "Home"
       pageRef: "/"
       weight: 10
-    - name: "研究进展 / Research Log"
+    - name: "Research"
       pageRef: "/research"
       weight: 20
-    - name: "研究路线 / Research Agenda"
-      pageRef: "/about/research-agenda"
-      weight: 25
-    - name: "政策档案 / Policy Archive"
-      pageRef: "/policy"
-      weight: 30
-    - name: "读书档案 / Reading Archive"
+    - name: "Reading"
       pageRef: "/reading"
+      weight: 30
+    - name: "Policy"
+      pageRef: "/policy"
       weight: 40
-    - name: "个人思考 / Reflections"
-      pageRef: "/thoughts"
-      weight: 50
-    - name: "归档 / Archive"
+    - name: "Archive"
       pageRef: "/archive"
-      weight: 60
-    - name: "关于 / About"
+      weight: 50
+    - name: "About"
       pageRef: "/about"
-      weight: 70
+      weight: 60
 
 caches:
   images:

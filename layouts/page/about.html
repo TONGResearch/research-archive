@@ -1,0 +1,106 @@
+{{ define "main" }}
+<div class="about-page">
+
+  <div class="about-inner">
+
+    {{/* ── Header ── */}}
+    <header class="about-header">
+      <div class="about-header-text">
+        <h1 class="about-title-en">About</h1>
+        <p class="about-title-zh">关于</p>
+      </div>
+    </header>
+
+    {{/* ── Biography ── */}}
+    <section class="about-section" id="biography">
+      <h2 class="about-sec-en">Biography <span class="about-sec-zh">简介</span></h2>
+      <div class="about-body">
+        <p>I am a university student working at the intersection of artificial intelligence, governance, and political economy. My research draws on political science, sociology, and economics to examine how technology reshapes institutions, labour, and social organization.</p>
+        <p>This archive documents my intellectual development from the start of my sophomore year. It is intended as a long-term record of reading, research, and evolving understanding — a public account of how my thinking changes over time.</p>
+      </div>
+    </section>
+
+    {{/* ── Research Interests ── */}}
+    <section class="about-section" id="research">
+      <h2 class="about-sec-en">Research Interests <span class="about-sec-zh">研究兴趣</span></h2>
+      <div class="about-interests">
+        <div class="about-interest-item">
+          <span class="aii-en">AI and Social Transformation</span>
+          <span class="aii-zh">人工智能与社会变革</span>
+        </div>
+        <div class="about-interest-item">
+          <span class="aii-en">Digital Governance</span>
+          <span class="aii-zh">数字治理</span>
+        </div>
+        <div class="about-interest-item">
+          <span class="aii-en">Platform Economies</span>
+          <span class="aii-zh">平台经济</span>
+        </div>
+        <div class="about-interest-item">
+          <span class="aii-en">Public Policy Design</span>
+          <span class="aii-zh">公共政策设计</span>
+        </div>
+        <div class="about-interest-item">
+          <span class="aii-en">Marxist Political Economy</span>
+          <span class="aii-zh">马克思主义政治经济学</span>
+        </div>
+        <div class="about-interest-item">
+          <span class="aii-en">Computational Social Science</span>
+          <span class="aii-zh">计算社会科学</span>
+        </div>
+      </div>
+    </section>
+
+    {{/* ── Research Agenda ── */}}
+    <section class="about-section" id="agenda">
+      <h2 class="about-sec-en">Research Agenda <span class="about-sec-zh">研究路线</span></h2>
+      <div class="about-body">
+        <p>My current research focuses on how AI systems reshape production relations, governance capacity, and regulatory frameworks — particularly in comparative perspective between the EU and China.</p>
+      </div>
+      <div class="about-questions">
+        <p class="about-q-label">Current questions</p>
+        <ul class="about-q-list">
+          <li>How does AI reshape production relations?</li>
+          <li>How do algorithmic systems influence governance capacity?</li>
+          <li>What forms of regulation are appropriate for platform economies?</li>
+          <li>How should states respond to emerging AI systems?</li>
+        </ul>
+      </div>
+      <p class="about-agenda-link"><a href="{{ "/about/research-agenda" | relURL }}">Full research agenda →</a></p>
+    </section>
+
+    {{/* ── Current Projects ── */}}
+    <section class="about-section" id="projects">
+      <h2 class="about-sec-en">Current Projects <span class="about-sec-zh">当前项目</span></h2>
+      <div class="about-body">
+        <p class="about-empty-note">Projects will be listed here as they develop.</p>
+      </div>
+    </section>
+
+    {{/* ── Research Philosophy ── */}}
+    <section class="about-section" id="philosophy">
+      <h2 class="about-sec-en">Research Philosophy <span class="about-sec-zh">研究理念</span></h2>
+      <div class="about-body">
+        <p>I believe that rigorous long-form thinking requires public accountability. Every note here is a work in progress. The name <em>未竟</em> — "unfinished" — is deliberate. Research is never complete.</p>
+        <p>I favour interdisciplinary approaches, primary sources over summaries, and policy documents as empirical material. I try to hold hypotheses lightly and revise them publicly.</p>
+      </div>
+    </section>
+
+    {{/* ── Contact ── */}}
+    <section class="about-section" id="contact">
+      <h2 class="about-sec-en">Contact <span class="about-sec-zh">联系方式</span></h2>
+      <div class="about-contact">
+        <div class="about-contact-row">
+          <span class="about-contact-key">GitHub</span>
+          <a class="about-contact-val" href="https://github.com/TONGResearch" target="_blank" rel="noopener">TONGResearch</a>
+        </div>
+        <div class="about-contact-row">
+          <span class="about-contact-key">Archive</span>
+          <span class="about-contact-val">tongresearch.github.io/research-archive</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+{{ end }}

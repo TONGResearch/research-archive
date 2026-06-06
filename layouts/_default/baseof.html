@@ -1,67 +1,208 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
-  <title>{{ if .IsHome }}{{ .Title }} · {{ .Site.Params.subtitle }}{{ else if eq .Kind "taxonomy" }}{{ partial "taxonomy-label.html" .Data.Plural }} · {{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
-
-  {{/* Fonts */}}
+  <title>{{ if .IsHome }}{{ .Site.Title }} · {{ .Site.Params.subtitle }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  {{/* CSS — Hugo pipes processes assets/css/site.css */}}
   {{ $css := resources.Get "css/site.css" | fingerprint }}
-  <link rel="stylesheet" href="{{ $css.RelPermalink }}" />
-
-  {{/* RSS */}}
+  <link rel="stylesheet" href="{{ $css.Permalink }}" />
   {{ range .AlternativeOutputFormats -}}
   <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}" />
   {{ end }}
-
-  {{/* MathJax — only on pages that request it */}}
   {{ if .Params.math }}
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   {{ end }}
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="site-header-inner">
-      <a class="site-logo" href="{{ relURL "" }}">
-        <span class="logo-zh">{{ .Site.Title }}</span>
-        <span class="logo-sep">·</span>
-        <span class="logo-en">{{ .Site.Params.subtitle }}</span>
-      </a>
-      <nav class="site-nav" aria-label="主导航 / Main navigation">
-        {{ range .Site.Menus.main }}
-        <a class="nav-link{{ if $.IsMenuCurrent "main" . }} nav-link--active{{ end }}"
-           href="{{ .URL }}">{{ .Name }}</a>
-        {{ end }}
-      </nav>
-      <button class="nav-hamburger" aria-label="切换菜单 / Toggle menu"
-              onclick="this.closest('header').querySelector('.site-nav').classList.toggle('is-open')">
-        <span></span><span></span><span></span>
-      </button>
+<header class="site-header" id="site-header">
+  <div class="site-header-inner">
+
+    <a class="site-logo" href="{{ "/" | relURL }}">
+      <span class="logo-primary">{{ .Site.Title }}</span>
+      <span class="logo-secondary">{{ .Site.Params.subtitle }}</span>
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+
+      <a class="nav-item{{ if .IsHome }} nav-item--active{{ end }}"
+         href="{{ "/" | relURL }}">Home</a>
+
+      <div class="nav-has-dropdown{{ if eq .Section "research" }} nav-item--active{{ end }}">
+        <a href="{{ "/research" | relURL }}">Research</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-item" href="{{ "/research" | relURL }}">
+            <span class="ddi-en">Overview</span>
+            <span class="ddi-zh">研究进展概览</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/research/featured" | relURL }}">
+            <span class="ddi-en">Featured Works</span>
+            <span class="ddi-zh">精选研究</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/areas" | relURL }}">
+            <span class="ddi-en">Research Areas</span>
+            <span class="ddi-zh">研究领域</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/tags" | relURL }}">
+            <span class="ddi-en">Tags</span>
+            <span class="ddi-zh">标签</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/research/timeline" | relURL }}">
+            <span class="ddi-en">Timeline</span>
+            <span class="ddi-zh">时间线</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-has-dropdown{{ if eq .Section "reading" }} nav-item--active{{ end }}">
+        <a href="{{ "/reading" | relURL }}">Reading</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-item" href="{{ "/reading" | relURL }}">
+            <span class="ddi-en">Overview</span>
+            <span class="ddi-zh">读书档案概览</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/tags" | relURL }}">
+            <span class="ddi-en">Tags</span>
+            <span class="ddi-zh">标签</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/reading/timeline" | relURL }}">
+            <span class="ddi-en">Timeline</span>
+            <span class="ddi-zh">时间线</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/archive" | relURL }}">
+            <span class="ddi-en">Archive</span>
+            <span class="ddi-zh">归档</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-has-dropdown{{ if eq .Section "policy" }} nav-item--active{{ end }}">
+        <a href="{{ "/policy" | relURL }}">Policy</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-item" href="{{ "/policy" | relURL }}">
+            <span class="ddi-en">Overview</span>
+            <span class="ddi-zh">政策档案概览</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/tags" | relURL }}">
+            <span class="ddi-en">Tags</span>
+            <span class="ddi-zh">标签</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/policy/timeline" | relURL }}">
+            <span class="ddi-en">Timeline</span>
+            <span class="ddi-zh">时间线</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/archive" | relURL }}">
+            <span class="ddi-en">Archive</span>
+            <span class="ddi-zh">归档</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-has-dropdown{{ if or (eq .RelPermalink "/archive/") (eq .RelPermalink "/archive-timeline/") (eq .RelPermalink "/research/featured/") } nav-item--active{{ end }}">
+        <a href="{{ "/archive" | relURL }}">Archive</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-item" href="{{ "/research/featured" | relURL }}">
+            <span class="ddi-en">Featured Works</span>
+            <span class="ddi-zh">精选研究</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/areas" | relURL }}">
+            <span class="ddi-en">Research Areas</span>
+            <span class="ddi-zh">研究领域</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/tags" | relURL }}">
+            <span class="ddi-en">Tags</span>
+            <span class="ddi-zh">标签</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/archive-timeline" | relURL }}">
+            <span class="ddi-en">Timeline</span>
+            <span class="ddi-zh">时间线</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/archive" | relURL }}">
+            <span class="ddi-en">Full Archive</span>
+            <span class="ddi-zh">完整归档</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-has-dropdown{{ if or (eq .Section "about") (eq .RelPermalink "/about/") } nav-item--active{{ end }}">
+        <a href="{{ "/about" | relURL }}">About</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-item" href="{{ "/about" | relURL }}">
+            <span class="ddi-en">About</span>
+            <span class="ddi-zh">关于</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/about/research-agenda" | relURL }}">
+            <span class="ddi-en">Research Agenda</span>
+            <span class="ddi-zh">研究路线</span>
+          </a>
+        </div>
+      </div>
+
+    </nav>
+
+    <button class="nav-hamburger" id="nav-hamburger"
+            aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+    </button>
+  </div>
+</header>
+
+<main class="site-main" id="main-content">
+  {{ block "main" . }}{{ end }}
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-left">
+      <p class="footer-brand">{{ .Site.Title }} <span class="footer-brand-en">· {{ .Site.Params.subtitle }}</span></p>
+      <p class="footer-tagline">Research Archive · Reading Archive · Policy Archive · Intellectual Development Log</p>
     </div>
-  </header>
-
-  <main class="site-main" id="main-content">
-    {{ block "main" . }}{{ end }}
-  </main>
-
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <p class="footer-title">{{ .Site.Title }} <span class="footer-en">· {{ .Site.Params.subtitle }}</span></p>
-      <p class="footer-pillars">研究档案 / Research Archive · 读书档案 / Reading Archive · 政策档案 / Policy Archive · 思想发展记录 / Intellectual Development Log</p>
+    <div class="footer-right">
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="{{ "/research" | relURL }}">Research</a>
+        <a href="{{ "/reading" | relURL }}">Reading</a>
+        <a href="{{ "/policy" | relURL }}">Policy</a>
+        <a href="{{ "/archive" | relURL }}">Archive</a>
+        <a href="{{ "/about" | relURL }}">About</a>
+        <a href="{{ "/index.xml" | relURL }}">RSS</a>
+      </nav>
       <p class="footer-meta">
-        使用 <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> 构建 / Built with Hugo ·
-        托管于 <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> / Hosted on GitHub Pages ·
-        <a href="{{ relURL "index.xml" }}">订阅 / RSS</a>
+        Built with <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> ·
+        <a href="https://github.com/TONGResearch/research-archive" target="_blank" rel="noopener">GitHub</a>
       </p>
     </div>
-  </footer>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('nav-hamburger');
+  var nav = document.getElementById('site-nav');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function (e) {
+    if (!btn.contains(e.target) && !nav.contains(e.target)) {
+      nav.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      nav.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+</script>
 
 </body>
 </html>

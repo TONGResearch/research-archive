@@ -1,24 +1,24 @@
-# Writing System — 未竟札记
+# Writing System — 未竟札记 · Unfinished Notes
 
 ## Creating a New Entry
 
-Use Hugo archetypes to generate correctly pre-filled front matter:
+Use Hugo archetypes to generate pre-filled front matter:
 
 ```bash
 # Research note
-hugo new research/2026-06-topic-name.md
+hugo new research/YYYY-MM-DD-slug.md
 
 # Reading note
-hugo new reading/2026-06-book-title.md
+hugo new reading/YYYY-MM-DD-slug.md
 
 # Policy memo
-hugo new policy/2026-06-policy-topic.md
+hugo new policy/YYYY-MM-DD-slug.md
 
-# Reflection / thought
-hugo new thoughts/2026-06-topic.md
+# Reflection
+hugo new thoughts/YYYY-MM-DD-slug.md
 ```
 
-Each archetype pre-fills the correct front matter fields.
+Each archetype pre-fills the correct front matter fields for that section.
 
 ---
 
@@ -28,8 +28,6 @@ Each archetype pre-fills the correct front matter fields.
 YYYY-MM-DD-slug-with-hyphens.md
 ```
 
-Example: `2026-06-03-capital-vol1-reading-note.md`
-
 ---
 
 ## Front Matter Reference
@@ -38,12 +36,15 @@ Example: `2026-06-03-capital-vol1-reading-note.md`
 
 ```yaml
 ---
-title: "Title"
-subtitle: "Optional subtitle"
-date: 2026-06-03
+title: "[Research Entry Title]"
+subtitle: ""
+date: YYYY-MM-DD
+draft: false
+featured: false
 categories: ["Research"]
-fields: ["Artificial Intelligence", "Governance"]
-tags: ["AI Governance", "State Capacity"]
+fields: ["Field Name"]
+areas: ["area-slug"]
+tags: ["Tag One", "Tag Two"]
 status: ["in-progress"]
 ---
 ```
@@ -52,18 +53,21 @@ status: ["in-progress"]
 
 ```yaml
 ---
-title: "Reading: Capital Vol. I (Marx)"
-subtitle: "Labour, Value, and the Limits of the Classical Framework"
-date: 2026-06-03
+title: "[Reading Entry Title]"
+subtitle: ""
+date: YYYY-MM-DD
+draft: false
+featured: false
 categories: ["Reading"]
-fields: ["Marxism", "Political Economy"]
-tags: ["Marxism", "Political Economy", "Labour Studies"]
+fields: ["Field Name"]
+areas: ["area-slug"]
+tags: ["Tag One"]
 status: ["reading"]
 book:
-  title: "Capital: A Critique of Political Economy, Vol. I"
-  author: "Karl Marx"
-  year: "1867"
-  publisher: "Penguin Classics"
+  title: "Book Title"
+  author: "Author Name"
+  year: "YYYY"
+  publisher: "Publisher Name"
   rating: ""
 ---
 ```
@@ -72,48 +76,60 @@ book:
 
 ```yaml
 ---
-title: "Policy Memo: AI Governance Frameworks"
-subtitle: "A comparative analysis"
-date: 2026-06-03
+title: "[Policy Entry Title]"
+subtitle: ""
+date: YYYY-MM-DD
+draft: false
+featured: false
 categories: ["Policy"]
-fields: ["Artificial Intelligence", "Governance", "Public Policy"]
-tags: ["AI Governance", "AI Regulation", "Comparative Governance"]
+fields: ["Field Name"]
+areas: ["area-slug"]
+tags: ["Tag One", "Tag Two"]
 status: ["draft"]
 scope: "Comparative"
 ---
 ```
 
-### Thought / reflection
+### Reflection
 
 ```yaml
 ---
-title: "On the limits of technical solutions to political problems"
+title: "[Reflection Title]"
 subtitle: ""
-date: 2026-06-03
+date: YYYY-MM-DD
+draft: false
+featured: false
 categories: ["Thoughts"]
-fields: ["Governance", "Technology Studies"]
-tags: ["AI", "Governance", "Technology"]
+fields: ["Field Name"]
+areas: []
+tags: ["Tag One"]
 status: ["draft"]
 ---
 ```
 
 ---
 
-## Research Article Template
+## Pinning to Featured Works
 
-A reusable template structure is available at:
+Add `featured: true` to any entry's front matter to pin it to the Featured Works page and the homepage Featured section. Featured entries appear independently of publication date.
 
+---
+
+## Tagging for Research Areas
+
+Add one or more area slugs to the `areas` field to make an entry appear under that Research Area:
+
+```yaml
+areas: ["technology-governance", "political-economy"]
 ```
-content/research/templates/research-template.md
-```
 
-Copy and rename it before writing. Do not edit the template file directly.
+Valid area slugs: `technology-governance`, `public-policy`, `political-economy`, `sociology`, `psychology`, `economics`, `finance`, `marxism`.
 
 ---
 
 ## Enabling MathJax
 
-For entries with mathematical notation, add to front matter:
+Add to front matter for LaTeX rendering:
 
 ```yaml
 math: true
@@ -121,6 +137,19 @@ math: true
 
 ---
 
-## Taxonomy Reference
+## Writing Template
 
-See `docs/TAXONOMY.md` for the complete list of valid categories, fields, tags, and status values.
+A reusable structural template is available at:
+
+```
+content/research/templates/research-template.md
+```
+
+Copy and rename before writing. Do not edit the template directly. It is marked `draft: true` and will never be published by Hugo.
+
+---
+
+## Reference
+
+See `docs/TAXONOMY.md` for the complete list of valid fields, areas, tags, and status values.
+See `docs/GITHUB_PAGES.md` for deployment instructions.

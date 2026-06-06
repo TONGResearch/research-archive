@@ -1,0 +1,51 @@
+{{/*
+  section-nav.html — secondary navigation strip rendered inside each section.
+  Usage: {{ partial "section-nav.html" (dict "section" "research" "page" .) }}
+*/}}
+{{ $section := .section }}
+{{ $page    := .page }}
+
+{{ $navs := dict
+  "research" (slice
+    (dict "label" "Overview"       "label_zh" "概览"     "url" "/research/")
+    (dict "label" "Featured"       "label_zh" "精选"     "url" "/research/featured/")
+    (dict "label" "Research Areas" "label_zh" "研究领域" "url" "/areas/")
+    (dict "label" "Tags"           "label_zh" "标签"     "url" "/tags/")
+    (dict "label" "Timeline"       "label_zh" "时间线"   "url" "/research/timeline/")
+  )
+  "reading" (slice
+    (dict "label" "Overview"  "label_zh" "概览"   "url" "/reading/")
+    (dict "label" "Tags"      "label_zh" "标签"   "url" "/tags/")
+    (dict "label" "Timeline"  "label_zh" "时间线" "url" "/reading/timeline/")
+    (dict "label" "Archive"   "label_zh" "归档"   "url" "/archive/")
+  )
+  "policy" (slice
+    (dict "label" "Overview"  "label_zh" "概览"   "url" "/policy/")
+    (dict "label" "Tags"      "label_zh" "标签"   "url" "/tags/")
+    (dict "label" "Timeline"  "label_zh" "时间线" "url" "/policy/timeline/")
+    (dict "label" "Archive"   "label_zh" "归档"   "url" "/archive/")
+  )
+  "archive" (slice
+    (dict "label" "Featured"       "label_zh" "精选"     "url" "/research/featured/")
+    (dict "label" "Research Areas" "label_zh" "研究领域" "url" "/areas/")
+    (dict "label" "Tags"           "label_zh" "标签"     "url" "/tags/")
+    (dict "label" "Timeline"       "label_zh" "时间线"   "url" "/archive-timeline/")
+    (dict "label" "Full Archive"   "label_zh" "完整归档" "url" "/archive/")
+  )
+}}
+
+{{ $items := index $navs $section }}
+{{ if $items }}
+<nav class="section-nav" aria-label="{{ $section | title }} navigation">
+  <div class="section-nav-inner">
+    {{ range $items }}
+    {{ $active := eq $page.RelPermalink (.url) }}
+    <a class="section-nav-item{{ if $active }} section-nav-item--active{{ end }}"
+       href="{{ .url | relURL }}">
+      <span class="sni-en">{{ .label }}</span>
+      <span class="sni-zh">{{ .label_zh }}</span>
+    </a>
+    {{ end }}
+  </div>
+</nav>
+{{ end }}

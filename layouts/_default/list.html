@@ -1,19 +1,54 @@
 {{ define "main" }}
+{{ $sectionMeta := dict
+  "research" (dict "en" "Research"    "zh" "研究进展")
+  "reading"  (dict "en" "Reading"     "zh" "读书档案")
+  "policy"   (dict "en" "Policy"      "zh" "政策档案")
+  "thoughts" (dict "en" "Reflections" "zh" "个人思考")
+  "posts"    (dict "en" "Posts"       "zh" "文章")
+  "about"    (dict "en" "About"       "zh" "关于")
+}}
+{{ $meta := index $sectionMeta .Section }}
+
 <div class="list-page">
 
-  <div class="list-header">
-    <h1 class="list-title">{{ .Title }}</h1>
-    <p class="list-kicker">栏目归档 / Section Archive</p>
-    {{ with .Content }}<div class="list-desc">{{ . }}</div>{{ end }}
+  {{ if or (eq .Section "research") (eq .Section "reading") (eq .Section "policy") }}
+    {{ partial "section-nav.html" (dict "section" .Section "page" .) }}
+  {{ end }}
+
+  <div class="list-page-inner">
+    <header class="list-header">
+      {{ if $meta }}
+      <h1 class="list-title-en">{{ $meta.en }}</h1>
+      <p class="list-title-zh">{{ $meta.zh }}</p>
+      {{ else }}
+      <h1 class="list-title-en">{{ .Title }}</h1>
+      {{ end }}
+      {{ with .Content }}<div class="list-desc">{{ . }}</div>{{ end }}
+    </header>
+
+    <ul class="list-entries">
+      {{ range .Pages.ByDate.Reverse }}
+      <li class="list-entry">
+        <a class="list-entry-link" href="{{ .Permalink }}">
+          <div class="list-entry-top">
+            <span class="list-entry-title">{{ .Title }}</span>
+            <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
+          </div>
+          {{ with .Params.subtitle }}<p class="list-entry-sub">{{ . }}</p>{{ end }}
+          {{ with .Summary }}<p class="list-entry-excerpt">{{ . | plainify }}</p>{{ end }}
+          <div class="list-entry-tags">
+            {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+            {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
+          </div>
+        </a>
+      </li>
+      {{ else }}
+      <li class="list-empty">
+        <p class="list-empty-en">No entries yet.</p>
+        <p class="list-empty-zh">暂无内容。</p>
+      </li>
+      {{ end }}
+    </ul>
   </div>
-
-  <ul class="entry-list entry-list--full">
-    {{ range .Pages.ByDate.Reverse }}
-    <li>{{ partial "post-card.html" . }}</li>
-    {{ else }}
-    <li class="entry-empty">暂无条目 / Nothing here yet.</li>
-    {{ end }}
-  </ul>
-
 </div>
 {{ end }}
