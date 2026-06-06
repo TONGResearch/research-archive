@@ -12,7 +12,7 @@
 {{ else }}
   {{ $pages = where .Site.RegularPages "Section" $filter }}
 {{ end }}
-{{ $pages = $pages | sort "Date" "desc" }}
+{{ $pages = sort $pages "Date" "desc" }}
 
 {{/* Group by year */}}
 {{ $byYear := dict }}
