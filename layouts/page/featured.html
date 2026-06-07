@@ -1,19 +1,20 @@
 {{ define "main" }}
-{{/* Featured = pages with featured: true in front matter, across all sections */}}
 {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
 {{ $featured := slice }}
 {{ $recent   := slice }}
 {{ range $sections }}
   {{ range where $.Site.RegularPages "Section" . }}
-    {{ if .Params.featured }}
-      {{ $featured = $featured | append . }}
-    {{ else }}
-      {{ $recent = $recent | append . }}
+    {{ if and (not .Params.system_page) (gt .Date.Year 1) }}
+      {{ if .Params.featured }}
+        {{ $featured = $featured | append . }}
+      {{ else }}
+        {{ $recent = $recent | append . }}
+      {{ end }}
     {{ end }}
   {{ end }}
 {{ end }}
-{{ $featured = sort $featured "Date" "desc" }}
-{{ $recent = sort $recent "Date" "desc" }}
+{{ $featured = $featured | sort "Date" "desc" }}
+{{ $recent   = $recent   | sort "Date" "desc" }}
 
 <div class="featured-page">
   {{ partial "section-nav.html" (dict "section" "research" "page" .) }}
@@ -22,7 +23,7 @@
     <header class="featured-header">
       <h1 class="feat-title-en">Featured Works</h1>
       <p class="feat-title-zh">精选研究</p>
-      <p class="feat-desc">Selected entries pinned independently of publication date.</p>
+      <p class="feat-desc">Selected entries pinned independently of publication date. Add <code>featured: true</code> to any article's front matter to pin it here.</p>
     </header>
 
     {{ if $featured }}
@@ -50,11 +51,10 @@
     {{ else }}
     <div class="feat-empty">
       <p class="feat-empty-en">No featured works yet.</p>
-      <p class="feat-empty-zh">尚无精选内容。在文章 front matter 中添加 <code>featured: true</code> 即可置顶。</p>
+      <p class="feat-empty-zh">在文章 front matter 中添加 <code>featured: true</code> 即可在此置顶显示。</p>
     </div>
     {{ end }}
 
-    {{/* Show recent non-featured below */}}
     {{ if $recent }}
     <section class="feat-recent">
       <h2 class="feat-recent-title-en">Recent

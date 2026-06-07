@@ -1,0 +1,26 @@
+{{ define "main" }}
+{{ $cat := .Params.project_category }}
+{{ $allProjects := where (where $.Site.RegularPages "Section" "projects") "Params.system_page" "ne" true }}
+{{ $catPages := where $allProjects "Params.project_category" $cat }}
+{{ $catPages = $catPages | sort "Date" "desc" }}
+
+<div class="projects-page">
+  {{ partial "section-nav.html" (dict "section" "projects" "page" .) }}
+  <div class="projects-wrap">
+    <header class="projects-header">
+      <h1 class="proj-title-en">{{ .Title }}</h1>
+      <p class="proj-title-zh">{{ .Params.description }}</p>
+    </header>
+    {{ if $catPages }}
+    <div class="proj-grid">
+      {{ range $catPages }}{{ partial "project-card.html" . }}{{ end }}
+    </div>
+    {{ else }}
+    <div class="proj-empty">
+      <p class="proj-empty-en">No projects in this category yet.</p>
+      <p class="proj-empty-zh">添加 <code>project_category: "{{ $cat }}"</code> 即可在此分类下显示。</p>
+    </div>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

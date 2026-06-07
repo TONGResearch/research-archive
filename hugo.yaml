@@ -15,6 +15,22 @@ params:
   # Short intro shown on homepage — edit freely
   introShort: "I am a university student working at the intersection of artificial intelligence, governance, and political economy. This archive records my research, reading, and evolving understanding of technology and society."
 
+  # GitHub — shown on GitHub Hub page
+  githubProfile: "https://github.com/TONGResearch"
+  githubUsername: "TONGResearch"
+
+  # Project categories — drives Projects section nav
+  projectCategories:
+    - name: "AI & Agent Systems"
+      slug: "ai-agent-systems"
+      desc: "AI agents, multi-agent systems, RAG applications, LLM tooling"
+    - name: "Research Tools"
+      slug: "research-tools"
+      desc: "Policy research assistants, knowledge graphs, data analysis tools"
+    - name: "Experiments"
+      slug: "experiments"
+      desc: "Prototypes, technical explorations, and ongoing experiments"
+
   # Research areas — drives homepage grid and /areas/ browse pages
   researchAreas:
     - name: "Technology Governance"
@@ -54,7 +70,7 @@ permalinks:
   policy:   "/policy/:year/:month/:slug/"
   projects: "/projects/:year/:month/:slug/"
 
-# Primary nav — exactly 6 items
+# Primary nav — 7 items
 menu:
   main:
     - name: "Home"
@@ -69,6 +85,9 @@ menu:
     - name: "Policy"
       pageRef: "/policy"
       weight: 40
+    - name: "Projects"
+      pageRef: "/projects"
+      weight: 45
     - name: "Archive"
       pageRef: "/archive"
       weight: 50

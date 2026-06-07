@@ -1,0 +1,98 @@
+{{ define "main" }}
+{{ $allProjects := where (where $.Site.RegularPages "Section" "projects") "Params.system_page" "ne" true }}
+{{ $featured := where $allProjects "Params.featured" true }}
+{{ $recent := $allProjects | sort "Date" "desc" }}
+
+<div class="projects-page">
+  {{ partial "section-nav.html" (dict "section" "projects" "page" .) }}
+
+  <div class="projects-wrap">
+    <header class="projects-header">
+      <h1 class="proj-title-en">Projects</h1>
+      <p class="proj-title-zh">技术项目</p>
+      <p class="proj-desc">Technical implementation alongside intellectual research — AI systems, research tools, experiments, and engineering work.</p>
+    </header>
+
+    {{/* Featured */}}
+    {{ if $featured }}
+    <section class="proj-section">
+      <div class="proj-section-hd">
+        <h2 class="proj-section-en">Featured Projects <span class="proj-section-zh">精选项目</span></h2>
+        <a class="proj-section-more" href="{{ "/projects/featured/" | relURL }}">All →</a>
+      </div>
+      <div class="proj-grid">
+        {{ range first 3 $featured }}
+        {{ partial "project-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+    {{ else }}
+    <section class="proj-section">
+      <div class="proj-section-hd">
+        <h2 class="proj-section-en">Featured Projects <span class="proj-section-zh">精选项目</span></h2>
+      </div>
+      <div class="proj-empty">
+        <p class="proj-empty-en">No featured projects yet.</p>
+        <p class="proj-empty-zh">添加 <code>featured: true</code> 将项目置顶显示。</p>
+      </div>
+    </section>
+    {{ end }}
+
+    {{/* Category grid */}}
+    <section class="proj-section">
+      <div class="proj-section-hd">
+        <h2 class="proj-section-en">Browse by Category <span class="proj-section-zh">按类别浏览</span></h2>
+      </div>
+      <div class="proj-cat-grid">
+        {{ range .Site.Params.projectCategories }}
+        {{ $catPages := where $allProjects "Params.project_category" .slug }}
+        <a class="proj-cat-card" href="{{ printf "/projects/%s/" .slug | relURL }}">
+          <span class="proj-cat-name">{{ .name }}</span>
+          <span class="proj-cat-desc">{{ .desc }}</span>
+          <span class="proj-cat-count">{{ len $catPages }} projects</span>
+        </a>
+        {{ end }}
+        <a class="proj-cat-card proj-cat-card--github" href="{{ "/projects/github/" | relURL }}">
+          <span class="proj-cat-name">GitHub Hub</span>
+          <span class="proj-cat-desc">Source code and repositories</span>
+          <span class="proj-cat-count">{{ .Site.Params.githubUsername }}</span>
+        </a>
+      </div>
+    </section>
+
+    {{/* Recent */}}
+    <section class="proj-section">
+      <div class="proj-section-hd">
+        <h2 class="proj-section-en">Recent Projects <span class="proj-section-zh">最新项目</span></h2>
+        <a class="proj-section-more" href="{{ "/projects/archive/" | relURL }}">All →</a>
+      </div>
+      {{ if $recent }}
+      <ul class="list-entries">
+        {{ range first 6 $recent }}
+        <li class="list-entry">
+          <a class="list-entry-link" href="{{ .Permalink }}">
+            <div class="list-entry-top">
+              <span class="list-entry-title">{{ .Title }}</span>
+              <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
+            </div>
+            {{ with .Params.subtitle }}<p class="list-entry-sub">{{ . }}</p>{{ end }}
+            <div class="list-entry-tags">
+              {{ with .Params.project_category }}<span class="proj-cat-tag">{{ . }}</span>{{ end }}
+              {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+              {{ with .Params.github_url }}<span class="proj-gh-tag">GitHub</span>{{ end }}
+            </div>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+      {{ else }}
+      <div class="proj-empty">
+        <p class="proj-empty-en">No projects yet.</p>
+        <p class="proj-empty-zh">使用 <code>hugo new projects/YYYY-MM-DD-project-name.md</code> 创建第一个项目。</p>
+      </div>
+      {{ end }}
+    </section>
+
+  </div>
+</div>
+{{ end }}

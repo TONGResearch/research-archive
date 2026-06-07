@@ -1,14 +1,16 @@
 {{ define "main" }}
 {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
 
-{{/* Collect all published pages */}}
+{{/* Collect REAL pages only — exclude system/nav pages */}}
 {{ $all := slice }}
 {{ range $sections }}
   {{ range where $.Site.RegularPages "Section" . }}
-    {{ $all = $all | append . }}
+    {{ if not .Params.system_page }}
+      {{ $all = $all | append . }}
+    {{ end }}
   {{ end }}
 {{ end }}
-{{ $all = sort $all "Date" "desc" }}
+{{ $all = $all | sort "Date" "desc" }}
 
 {{/* Split featured / recent */}}
 {{ $featured := slice }}
@@ -44,8 +46,10 @@
         (dict "s" "thoughts" "en" "Reflections"    "zh" "个人思考")
       }}
       {{ range $countData }}
+      {{/* Count only real entries, not system pages */}}
+      {{ $realPages := where (where $.Site.RegularPages "Section" .s) "Params.system_page" "ne" true }}
       <div class="hero-count">
-        <span class="hero-count-num">{{ len (where $.Site.RegularPages "Section" .s) }}</span>
+        <span class="hero-count-num">{{ len $realPages }}</span>
         <span class="hero-count-en">{{ .en }}</span>
         <span class="hero-count-zh">{{ .zh }}</span>
       </div>
@@ -72,7 +76,7 @@
         <span class="hsl-en">Featured Works</span>
         <span class="hsl-zh">精选研究</span>
       </div>
-      <a class="home-section-more" href="{{ "/research/featured" | relURL }}">View all →</a>
+      <a class="home-section-more" href="{{ "/research/featured/" | relURL }}">View all →</a>
     </div>
 
     {{ if $featured }}
@@ -95,7 +99,7 @@
     {{ else }}
     <div class="home-empty-state">
       <p class="home-empty-en">No featured works yet.</p>
-      <p class="home-empty-zh">在文章 front matter 中添加 <code>featured: true</code> 即可置顶显示，不受发布日期影响。</p>
+      <p class="home-empty-zh">在文章 front matter 中添加 <code>featured: true</code> 即可置顶显示。</p>
     </div>
     {{ end }}
   </section>
@@ -155,7 +159,7 @@
       </div>
     </div>
     <div class="home-discovery">
-      <a class="disc-item disc-item--primary" href="{{ "/research/featured" | relURL }}">
+      <a class="disc-item disc-item--primary" href="{{ "/research/featured/" | relURL }}">
         <span class="disc-en">Featured Works</span>
         <span class="disc-zh">精选研究</span>
         <span class="disc-desc">Pinned entries, independent of date</span>
@@ -170,12 +174,12 @@
         <span class="disc-zh">标签</span>
         <span class="disc-desc">Browse by keyword</span>
       </a>
-      <a class="disc-item" href="{{ "/archive-timeline" | relURL }}">
+      <a class="disc-item" href="{{ "/archive-timeline/" | relURL }}">
         <span class="disc-en">Timeline</span>
         <span class="disc-zh">时间线</span>
         <span class="disc-desc">Ideas organised by year</span>
       </a>
-      <a class="disc-item" href="{{ "/archive" | relURL }}">
+      <a class="disc-item" href="{{ "/archive/" | relURL }}">
         <span class="disc-en">Full Archive</span>
         <span class="disc-zh">完整归档</span>
         <span class="disc-desc">Search and filter all entries</span>
@@ -183,9 +187,16 @@
     </div>
   </section>
 
-  {{/* ── 7. TIMELINE SNAPSHOT ────────────────────────── */}}
-  {{ $years := slice }}
+  {{/* ── 7. TIMELINE SNAPSHOT — real entries only ───── */}}
+  {{ $realForTimeline := slice }}
   {{ range $all }}
+    {{ if and (not .Params.system_page) (gt .Date.Year 1) }}
+      {{ $realForTimeline = $realForTimeline | append . }}
+    {{ end }}
+  {{ end }}
+
+  {{ $years := slice }}
+  {{ range $realForTimeline }}
     {{ $y := .Date.Format "2006" }}
     {{ if not (in $years $y) }}{{ $years = $years | append $y }}{{ end }}
   {{ end }}
@@ -196,7 +207,7 @@
         <span class="hsl-en">Timeline</span>
         <span class="hsl-zh">时间线</span>
       </div>
-      <a class="home-section-more" href="{{ "/archive-timeline" | relURL }}">Full timeline →</a>
+      <a class="home-section-more" href="{{ "/archive-timeline/" | relURL }}">Full timeline →</a>
     </div>
     {{ if $years }}
     <div class="tl-snapshot">
@@ -205,7 +216,7 @@
       <div class="tl-snap-year">
         <span class="tl-snap-year-label">{{ $yr }}</span>
         <ul class="tl-snap-list">
-          {{ range first 4 $all }}
+          {{ range first 4 $realForTimeline }}
           {{ if eq (.Date.Format "2006") $yr }}
           <li class="tl-snap-item">
             <time class="tl-snap-date">{{ .Date.Format "Jan" }}</time>
@@ -222,14 +233,14 @@
     {{ end }}
   </section>
 
-  {{/* ── 8. RECENT UPDATES ───────────────────────────── */}}
+  {{/* ── 8. RECENT UPDATES — real entries only ──────── */}}
   <section class="home-section">
     <div class="home-section-header">
       <div class="home-section-label">
         <span class="hsl-en">Recent Updates</span>
         <span class="hsl-zh">最新更新</span>
       </div>
-      <a class="home-section-more" href="{{ "/archive" | relURL }}">Full archive →</a>
+      <a class="home-section-more" href="{{ "/archive/" | relURL }}">Full archive →</a>
     </div>
     <div class="recent-cols">
       {{ $colData := slice
@@ -239,7 +250,8 @@
         (dict "s" "thoughts" "en" "Reflections" "zh" "个人思考" "url" "/thoughts/")
       }}
       {{ range $colData }}
-      {{ $colPages := where $.Site.RegularPages "Section" .s }}
+      {{/* Only real entries */}}
+      {{ $colPages := where (where $.Site.RegularPages "Section" .s) "Params.system_page" "ne" true }}
       <div class="recent-col">
         <div class="recent-col-head">
           <a class="recent-col-title" href="{{ .url | relURL }}">

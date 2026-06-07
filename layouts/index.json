@@ -5,7 +5,7 @@
     {{- $pages = $pages | append . -}}
   {{- end -}}
 {{- end -}}
-{{- $pages = sort $pages "Date" "desc" -}}
+{{- $pages = $pages | sort "Date" "desc" -}}
 [
 {{- range $i, $p := $pages -}}
 {{- if $i }},{{ end }}

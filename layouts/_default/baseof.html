@@ -33,25 +33,29 @@
          href="{{ "/" | relURL }}">Home</a>
 
       <div class="nav-has-dropdown{{ if eq .Section "research" }} nav-item--active{{ end }}">
-        <a href="{{ "/research" | relURL }}">Research</a>
+        <a href="{{ "/research/" | relURL }}">Research</a>
         <div class="nav-dropdown">
-          <a class="nav-dropdown-item" href="{{ "/research" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/research/" | relURL }}">
             <span class="ddi-en">Overview</span>
             <span class="ddi-zh">研究进展概览</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/research/featured" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/research/questions/" | relURL }}">
+            <span class="ddi-en">Questions</span>
+            <span class="ddi-zh">研究问题</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/research/featured/" | relURL }}">
             <span class="ddi-en">Featured Works</span>
             <span class="ddi-zh">精选研究</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/areas" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/areas/" | relURL }}">
             <span class="ddi-en">Research Areas</span>
             <span class="ddi-zh">研究领域</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/tags" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/tags/" | relURL }}">
             <span class="ddi-en">Tags</span>
             <span class="ddi-zh">标签</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/research/timeline" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/research/timeline/" | relURL }}">
             <span class="ddi-en">Timeline</span>
             <span class="ddi-zh">时间线</span>
           </a>
@@ -59,21 +63,21 @@
       </div>
 
       <div class="nav-has-dropdown{{ if eq .Section "reading" }} nav-item--active{{ end }}">
-        <a href="{{ "/reading" | relURL }}">Reading</a>
+        <a href="{{ "/reading/" | relURL }}">Reading</a>
         <div class="nav-dropdown">
-          <a class="nav-dropdown-item" href="{{ "/reading" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/reading/" | relURL }}">
             <span class="ddi-en">Overview</span>
             <span class="ddi-zh">读书档案概览</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/tags" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/tags/" | relURL }}">
             <span class="ddi-en">Tags</span>
             <span class="ddi-zh">标签</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/reading/timeline" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/reading/timeline/" | relURL }}">
             <span class="ddi-en">Timeline</span>
             <span class="ddi-zh">时间线</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/archive" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/archive/" | relURL }}">
             <span class="ddi-en">Archive</span>
             <span class="ddi-zh">归档</span>
           </a>
@@ -81,47 +85,81 @@
       </div>
 
       <div class="nav-has-dropdown{{ if eq .Section "policy" }} nav-item--active{{ end }}">
-        <a href="{{ "/policy" | relURL }}">Policy</a>
+        <a href="{{ "/policy/" | relURL }}">Policy</a>
         <div class="nav-dropdown">
-          <a class="nav-dropdown-item" href="{{ "/policy" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/policy/" | relURL }}">
             <span class="ddi-en">Overview</span>
             <span class="ddi-zh">政策档案概览</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/tags" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/tags/" | relURL }}">
             <span class="ddi-en">Tags</span>
             <span class="ddi-zh">标签</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/policy/timeline" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/policy/timeline/" | relURL }}">
             <span class="ddi-en">Timeline</span>
             <span class="ddi-zh">时间线</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/archive" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/archive/" | relURL }}">
             <span class="ddi-en">Archive</span>
             <span class="ddi-zh">归档</span>
           </a>
         </div>
       </div>
 
-      <div class="nav-has-dropdown{{ if or (eq .RelPermalink "/archive/") (eq .RelPermalink "/archive-timeline/") (eq .RelPermalink "/research/featured/") }} nav-item--active{{ end }}">
-        <a href="{{ "/archive" | relURL }}">Archive</a>
+      <div class="nav-has-dropdown{{ if eq .Section "projects" }} nav-item--active{{ end }}">
+        <a href="{{ "/projects/" | relURL }}">Projects</a>
         <div class="nav-dropdown">
-          <a class="nav-dropdown-item" href="{{ "/research/featured" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/projects/" | relURL }}">
+            <span class="ddi-en">Overview</span>
+            <span class="ddi-zh">项目概览</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/projects/featured/" | relURL }}">
+            <span class="ddi-en">Featured Projects</span>
+            <span class="ddi-zh">精选项目</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/projects/ai-systems/" | relURL }}">
+            <span class="ddi-en">AI &amp; Agent Systems</span>
+            <span class="ddi-zh">AI 系统</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/projects/research-tools/" | relURL }}">
+            <span class="ddi-en">Research Tools</span>
+            <span class="ddi-zh">研究工具</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/projects/experiments/" | relURL }}">
+            <span class="ddi-en">Experiments</span>
+            <span class="ddi-zh">实验</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/projects/timeline/" | relURL }}">
+            <span class="ddi-en">Technical Timeline</span>
+            <span class="ddi-zh">时间线</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "/projects/github/" | relURL }}">
+            <span class="ddi-en">GitHub Hub</span>
+            <span class="ddi-zh">代码库</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-has-dropdown{{ if or (eq .RelPermalink "/archive/") (eq .RelPermalink "/archive-timeline/") (eq .RelPermalink "/research/featured/") }} nav-item--active{{ end }}">
+        <a href="{{ "/archive/" | relURL }}">Archive</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-item" href="{{ "/research/featured/" | relURL }}">
             <span class="ddi-en">Featured Works</span>
             <span class="ddi-zh">精选研究</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/areas" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/areas/" | relURL }}">
             <span class="ddi-en">Research Areas</span>
             <span class="ddi-zh">研究领域</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/tags" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/tags/" | relURL }}">
             <span class="ddi-en">Tags</span>
             <span class="ddi-zh">标签</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/archive-timeline" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/archive-timeline/" | relURL }}">
             <span class="ddi-en">Timeline</span>
             <span class="ddi-zh">时间线</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/archive" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/archive/" | relURL }}">
             <span class="ddi-en">Full Archive</span>
             <span class="ddi-zh">完整归档</span>
           </a>
@@ -129,13 +167,13 @@
       </div>
 
       <div class="nav-has-dropdown{{ if or (eq .Section "about") (eq .RelPermalink "/about/") }} nav-item--active{{ end }}">
-        <a href="{{ "/about" | relURL }}">About</a>
+        <a href="{{ "/about/" | relURL }}">About</a>
         <div class="nav-dropdown">
-          <a class="nav-dropdown-item" href="{{ "/about" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/about/" | relURL }}">
             <span class="ddi-en">About</span>
             <span class="ddi-zh">关于</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "/about/research-agenda" | relURL }}">
+          <a class="nav-dropdown-item" href="{{ "/about/research-agenda/" | relURL }}">
             <span class="ddi-en">Research Agenda</span>
             <span class="ddi-zh">研究路线</span>
           </a>

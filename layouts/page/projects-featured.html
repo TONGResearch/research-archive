@@ -1,0 +1,26 @@
+{{ define "main" }}
+{{ $allProjects := where (where $.Site.RegularPages "Section" "projects") "Params.system_page" "ne" true }}
+{{ $featured := where $allProjects "Params.featured" true }}
+{{ $featured = $featured | sort "Date" "desc" }}
+
+<div class="projects-page">
+  {{ partial "section-nav.html" (dict "section" "projects" "page" .) }}
+  <div class="projects-wrap">
+    <header class="projects-header">
+      <h1 class="proj-title-en">Featured Projects</h1>
+      <p class="proj-title-zh">精选项目</p>
+      <p class="proj-desc">Flagship technical work. Add <code>featured: true</code> to any project's front matter to pin it here.</p>
+    </header>
+    {{ if $featured }}
+    <div class="proj-grid">
+      {{ range $featured }}{{ partial "project-card.html" . }}{{ end }}
+    </div>
+    {{ else }}
+    <div class="proj-empty">
+      <p class="proj-empty-en">No featured projects yet.</p>
+      <p class="proj-empty-zh">添加 <code>featured: true</code> 将项目置顶。</p>
+    </div>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,38 @@
+{{ define "main" }}
+{{ $allProjects := where (where $.Site.RegularPages "Section" "projects") "Params.system_page" "ne" true }}
+{{ $allProjects = $allProjects | sort "Date" "desc" }}
+
+<div class="projects-page">
+  {{ partial "section-nav.html" (dict "section" "projects" "page" .) }}
+  <div class="projects-wrap">
+    <header class="projects-header">
+      <h1 class="proj-title-en">Project Archive</h1>
+      <p class="proj-title-zh">项目归档</p>
+    </header>
+    {{ if $allProjects }}
+    <ul class="list-entries">
+      {{ range $allProjects }}
+      <li class="list-entry">
+        <a class="list-entry-link" href="{{ .Permalink }}">
+          <div class="list-entry-top">
+            <span class="list-entry-title">{{ .Title }}</span>
+            <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
+          </div>
+          {{ with .Params.subtitle }}<p class="list-entry-sub">{{ . }}</p>{{ end }}
+          <div class="list-entry-tags">
+            {{ with .Params.project_category }}<span class="proj-cat-tag">{{ . }}</span>{{ end }}
+            {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+            {{ with .Params.github_url }}<span class="proj-gh-tag">GitHub</span>{{ end }}
+          </div>
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+    {{ else }}
+    <div class="proj-empty">
+      <p class="proj-empty-en">No projects yet.</p>
+    </div>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

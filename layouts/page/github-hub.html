@@ -1,0 +1,106 @@
+{{ define "main" }}
+{{ $allProjects := where (where $.Site.RegularPages "Section" "projects") "Params.system_page" "ne" true }}
+{{ $withGithub := slice }}
+{{ range $allProjects }}
+  {{ if .Params.github_url }}
+    {{ $withGithub = $withGithub | append . }}
+  {{ end }}
+{{ end }}
+
+<div class="projects-page">
+  {{ partial "section-nav.html" (dict "section" "projects" "page" .) }}
+
+  <div class="projects-wrap">
+    <header class="projects-header">
+      <h1 class="proj-title-en">GitHub Hub</h1>
+      <p class="proj-title-zh">代码库</p>
+      <p class="proj-desc">Source code, repositories, and technical work. All projects with public repositories are listed here.</p>
+    </header>
+
+    {{/* GitHub profile link */}}
+    <div class="gh-profile-block">
+      <div class="gh-profile-inner">
+        <div class="gh-profile-info">
+          <span class="gh-profile-label">GitHub Profile</span>
+          <a class="gh-profile-link" href="{{ .Site.Params.githubProfile }}" target="_blank" rel="noopener">
+            {{ .Site.Params.githubUsername }}
+          </a>
+        </div>
+        <a class="gh-profile-cta" href="{{ .Site.Params.githubProfile }}" target="_blank" rel="noopener">
+          View on GitHub →
+        </a>
+      </div>
+    </div>
+
+    {{/* Projects with repos */}}
+    {{ if $withGithub }}
+    <section class="proj-section">
+      <div class="proj-section-hd">
+        <h2 class="proj-section-en">Repositories <span class="proj-section-zh">项目代码库</span></h2>
+      </div>
+      <div class="gh-repo-list">
+        {{ range $withGithub }}
+        <div class="gh-repo-card">
+          <div class="gh-repo-top">
+            <a class="gh-repo-title" href="{{ .Permalink }}">{{ .Title }}</a>
+            {{ with .Params.project_category }}<span class="proj-cat-tag">{{ . }}</span>{{ end }}
+          </div>
+          {{ with .Params.subtitle }}<p class="gh-repo-desc">{{ . }}</p>{{ end }}
+          <div class="gh-repo-links">
+            {{ with .Params.github_url }}
+            <a class="gh-repo-link gh-repo-link--github" href="{{ . }}" target="_blank" rel="noopener">
+              ⌥ {{ .Params.github_repo | default "Repository" }}
+            </a>
+            {{ end }}
+            {{ with .Params.demo_url }}
+            <a class="gh-repo-link gh-repo-link--demo" href="{{ . }}" target="_blank" rel="noopener">
+              ↗ Demo
+            </a>
+            {{ end }}
+          </div>
+          {{ with .Params.tech_stack }}
+          <div class="gh-repo-stack">
+            {{ range . }}<span class="proj-stack-tag">{{ . }}</span>{{ end }}
+          </div>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </section>
+    {{ else }}
+    <div class="proj-empty" style="margin-top:2rem">
+      <p class="proj-empty-en">No repositories linked yet.</p>
+      <p class="proj-empty-zh">在项目 front matter 中添加 <code>github_url: "https://github.com/..."</code> 即可在此显示代码库链接。</p>
+    </div>
+    {{ end }}
+
+    {{/* All projects without repos */}}
+    {{ $withoutGithub := slice }}
+    {{ range $allProjects }}
+      {{ if not .Params.github_url }}
+        {{ $withoutGithub = $withoutGithub | append . }}
+      {{ end }}
+    {{ end }}
+    {{ if $withoutGithub }}
+    <section class="proj-section">
+      <div class="proj-section-hd">
+        <h2 class="proj-section-en">Other Projects <span class="proj-section-zh">其他项目</span></h2>
+      </div>
+      <ul class="list-entries">
+        {{ range $withoutGithub }}
+        <li class="list-entry">
+          <a class="list-entry-link" href="{{ .Permalink }}">
+            <div class="list-entry-top">
+              <span class="list-entry-title">{{ .Title }}</span>
+              <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
+            </div>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+
+  </div>
+</div>
+{{ end }}

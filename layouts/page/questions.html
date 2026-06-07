@@ -1,0 +1,93 @@
+{{ define "main" }}
+<div class="questions-page">
+  {{ partial "section-nav.html" (dict "section" "research" "page" .) }}
+
+  <div class="questions-wrap">
+    <header class="questions-header">
+      <h1 class="q-title-en">Research Questions</h1>
+      <p class="q-title-zh">研究问题</p>
+      <p class="q-desc">This archive is organised around questions, not articles. Each question drives a thread of reading, research, and policy analysis. Follow any question to trace the full arc of inquiry.</p>
+    </header>
+
+    {{/* Active questions — tagged with question_status: active */}}
+    {{ $activeQs := where $.Site.RegularPages "Params.question_status" "active" }}
+    {{ $resolvedQs := where $.Site.RegularPages "Params.question_status" "resolved" }}
+
+    <section class="q-section">
+      <div class="q-section-header">
+        <h2 class="q-section-en">Current Questions <span class="q-section-zh">进行中的问题</span></h2>
+      </div>
+
+      {{ if $activeQs }}
+      <ul class="q-list">
+        {{ range $activeQs }}
+        <li class="q-item">
+          <a class="q-item-link" href="{{ .Permalink }}">
+            <span class="q-item-text">{{ .Title }}</span>
+            <span class="q-item-meta">
+              {{ with .Params.areas }}
+              {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+              {{ end }}
+            </span>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+      {{ else }}
+      {{/* Hardcoded current questions from research agenda */}}
+      <ul class="q-list">
+        <li class="q-item q-item--static">
+          <span class="q-item-text">How does AI reshape production relations?</span>
+          <span class="q-badge q-badge--active">Active</span>
+        </li>
+        <li class="q-item q-item--static">
+          <span class="q-item-text">How do algorithmic systems influence governance capacity?</span>
+          <span class="q-badge q-badge--active">Active</span>
+        </li>
+        <li class="q-item q-item--static">
+          <span class="q-item-text">What forms of regulation are appropriate for platform economies?</span>
+          <span class="q-badge q-badge--active">Active</span>
+        </li>
+        <li class="q-item q-item--static">
+          <span class="q-item-text">How should states respond to emerging AI systems?</span>
+          <span class="q-badge q-badge--active">Active</span>
+        </li>
+      </ul>
+      <p class="q-note">To link articles to a question, create a dedicated question page and tag related articles with <code>question: "question-slug"</code>.</p>
+      {{ end }}
+    </section>
+
+    {{ if $resolvedQs }}
+    <section class="q-section">
+      <div class="q-section-header">
+        <h2 class="q-section-en">Resolved Questions <span class="q-section-zh">已解答的问题</span></h2>
+      </div>
+      <ul class="q-list">
+        {{ range $resolvedQs }}
+        <li class="q-item">
+          <a class="q-item-link" href="{{ .Permalink }}">
+            <span class="q-item-text">{{ .Title }}</span>
+            <span class="q-badge q-badge--resolved">Resolved</span>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+
+    <section class="q-how">
+      <h2 class="q-section-en">How This Works <span class="q-section-zh">如何使用</span></h2>
+      <div class="q-how-body">
+        <p>Each question is a hub page. Tag your notes, readings, and policy memos with the question they address. The question hub then automatically collects:</p>
+        <ul>
+          <li><strong>Reading Notes</strong> — what you read to investigate</li>
+          <li><strong>Research Notes</strong> — analysis and hypotheses</li>
+          <li><strong>Policy Notes</strong> — policy implications</li>
+          <li><strong>Conclusions</strong> — where your thinking landed</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</div>
+{{ end }}

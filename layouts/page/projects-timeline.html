@@ -1,0 +1,117 @@
+{{ define "main" }}
+{{ $allProjects := where (where $.Site.RegularPages "Section" "projects") "Params.system_page" "ne" true }}
+{{ $allProjects = where $allProjects "Date.Year" "gt" 1 }}
+
+{{ $yearList := slice }}
+{{ range ($allProjects | sort "Date" "desc") }}
+  {{ $y := .Date.Format "2006" }}
+  {{ if not (in $yearList $y) }}{{ $yearList = $yearList | append $y }}{{ end }}
+{{ end }}
+
+<div class="projects-page">
+  {{ partial "section-nav.html" (dict "section" "projects" "page" .) }}
+
+  <div class="projects-wrap">
+    <header class="projects-header">
+      <h1 class="proj-title-en">Technical Timeline</h1>
+      <p class="proj-title-zh">技术时间线</p>
+    </header>
+
+    {{/* Controls — sort and year filter (client-side JS) */}}
+    <div class="tl-controls" id="tl-controls">
+      <div class="tl-ctrl-group">
+        <span class="tl-ctrl-label">Sort</span>
+        <button class="tl-sort-btn tl-sort-btn--active" data-sort="desc">Newest first</button>
+        <button class="tl-sort-btn" data-sort="asc">Oldest first</button>
+      </div>
+      <div class="tl-ctrl-group">
+        <span class="tl-ctrl-label">Year</span>
+        <button class="tl-year-btn tl-year-btn--active" data-year="all">All</button>
+        {{ range $yearList }}
+        <button class="tl-year-btn" data-year="{{ . }}">{{ . }}</button>
+        {{ end }}
+      </div>
+    </div>
+
+    {{ if not $allProjects }}
+    <p class="tl-empty">No projects yet. The timeline builds as projects are added.</p>
+    {{ else }}
+    <div class="tl-body" id="tl-body">
+      {{ range $yearList }}
+      {{ $yr := . }}
+      {{ $yPages := where ($allProjects | sort "Date" "desc") "Date.Year" (int $yr) }}
+      <div class="tl-year-block" id="tl-yr-{{ $yr }}" data-year="{{ $yr }}">
+        <div class="tl-year-label">{{ $yr }}</div>
+        <ul class="tl-entries">
+          {{ range $yPages }}
+          <li class="tl-entry" data-date="{{ .Date.Format "2006-01-02" }}" data-year="{{ .Date.Format "2006" }}">
+            <time class="tl-entry-date">{{ .Date.Format "Jan 02" }}</time>
+            <div class="tl-entry-body">
+              <a class="tl-entry-title" href="{{ .Permalink }}">{{ .Title }}</a>
+              {{ with .Params.project_category }}<span class="proj-cat-tag">{{ . }}</span>{{ end }}
+              <div class="tl-entry-tags">
+                {{ range .Params.tech_stack }}<span class="proj-stack-tag">{{ . }}</span>{{ end }}
+                {{ with .Params.github_url }}<span class="proj-gh-tag">GitHub</span>{{ end }}
+              </div>
+            </div>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+
+  </div>
+</div>
+
+<script>
+(function() {
+  var sortBtns = document.querySelectorAll('.tl-sort-btn');
+  var yearBtns = document.querySelectorAll('.tl-year-btn');
+  var body = document.getElementById('tl-body');
+  if (!body) return;
+
+  var currentSort = 'desc';
+  var currentYear = 'all';
+
+  function applyFilters() {
+    var blocks = Array.from(body.querySelectorAll('.tl-year-block'));
+
+    // Year filter
+    blocks.forEach(function(block) {
+      if (currentYear === 'all' || block.dataset.year === currentYear) {
+        block.style.display = '';
+      } else {
+        block.style.display = 'none';
+      }
+    });
+
+    // Sort — reverse DOM order of visible blocks
+    var visible = blocks.filter(function(b) { return b.style.display !== 'none'; });
+    if (currentSort === 'asc') {
+      visible.reverse();
+    }
+    visible.forEach(function(b) { body.appendChild(b); });
+  }
+
+  sortBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      sortBtns.forEach(function(b) { b.classList.remove('tl-sort-btn--active'); });
+      this.classList.add('tl-sort-btn--active');
+      currentSort = this.dataset.sort;
+      applyFilters();
+    });
+  });
+
+  yearBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      yearBtns.forEach(function(b) { b.classList.remove('tl-year-btn--active'); });
+      this.classList.add('tl-year-btn--active');
+      currentYear = this.dataset.year;
+      applyFilters();
+    });
+  });
+})();
+</script>
+{{ end }}

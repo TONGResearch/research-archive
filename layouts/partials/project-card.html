@@ -1,0 +1,20 @@
+<a class="proj-card" href="{{ .Permalink }}">
+  <div class="proj-card-top">
+    <span class="proj-card-cat">{{ .Params.project_category | default .Section }}</span>
+    {{ if .Params.featured }}<span class="proj-card-badge">Featured</span>{{ end }}
+    {{ with .Params.status }}{{ range first 1 . }}<span class="status-badge status-{{ . }}">{{ . }}</span>{{ end }}{{ end }}
+  </div>
+  <h3 class="proj-card-title">{{ .Title }}</h3>
+  {{ with .Params.subtitle }}<p class="proj-card-sub">{{ . }}</p>{{ end }}
+  {{ with .Summary }}<p class="proj-card-excerpt">{{ . | plainify | truncate 140 }}</p>{{ end }}
+  <div class="proj-card-meta">
+    {{ with .Params.tech_stack }}
+    <div class="proj-card-stack">
+      {{ range first 4 . }}<span class="proj-stack-tag">{{ . }}</span>{{ end }}
+    </div>
+    {{ end }}
+    {{ with .Params.github_url }}
+    <span class="proj-card-gh">⌥ GitHub</span>
+    {{ end }}
+  </div>
+</a>

@@ -11,7 +11,7 @@
 
 <div class="list-page">
 
-  {{ if or (eq .Section "research") (eq .Section "reading") (eq .Section "policy") }}
+  {{ if or (eq .Section "research") (eq .Section "reading") (eq .Section "policy") (eq .Section "projects") }}
     {{ partial "section-nav.html" (dict "section" .Section "page" .) }}
   {{ end }}
 
@@ -26,8 +26,16 @@
       {{ with .Content }}<div class="list-desc">{{ . }}</div>{{ end }}
     </header>
 
+    {{/* Filter out system pages — only show real content entries */}}
+    {{ $realPages := slice }}
+    {{ range .Pages.ByDate.Reverse }}
+      {{ if and (not .Params.system_page) (gt .Date.Year 1) }}
+        {{ $realPages = $realPages | append . }}
+      {{ end }}
+    {{ end }}
+
     <ul class="list-entries">
-      {{ range .Pages.ByDate.Reverse }}
+      {{ range $realPages }}
       <li class="list-entry">
         <a class="list-entry-link" href="{{ .Permalink }}">
           <div class="list-entry-top">
