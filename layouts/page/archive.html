@@ -55,7 +55,7 @@
         {{ $all = $all | append . }}
       {{ end }}
     {{ end }}
-    {{ $all = $all | sort "Date" "desc" }}
+    {{ $all = sort $all "Date" "desc" }}
 
     {{ $years := slice }}
     {{ range $all }}
@@ -77,8 +77,8 @@
       <li class="archive-entry"
           data-title="{{ .Title | lower }}"
           data-section="{{ .Section }}"
-          data-tags="{{ delimit .Params.tags " " | lower }}"
-          data-fields="{{ delimit .Params.fields " " | lower }}"
+          data-tags="{{ delimit (.Params.tags | default (slice)) " " | lower }}"
+          data-fields="{{ delimit (.Params.fields | default (slice)) " " | lower }}"
           data-year="{{ .Date.Format "2006" }}"
       >
         <a class="archive-entry-link" href="{{ .Permalink }}">

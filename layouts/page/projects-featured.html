@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ $allProjects := where (where $.Site.RegularPages "Section" "projects") "Params.system_page" "ne" true }}
 {{ $featured := where $allProjects "Params.featured" true }}
-{{ $featured = $featured | sort "Date" "desc" }}
+{{ $featured = sort $featured "Date" "desc" }}
 
 <div class="projects-page">
   {{ partial "section-nav.html" (dict "section" "projects" "page" .) }}

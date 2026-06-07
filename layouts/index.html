@@ -10,7 +10,7 @@
     {{ end }}
   {{ end }}
 {{ end }}
-{{ $all = $all | sort "Date" "desc" }}
+{{ $all = sort $all "Date" "desc" }}
 
 {{/* Split featured / recent */}}
 {{ $featured := slice }}

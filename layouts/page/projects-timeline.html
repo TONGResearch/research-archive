@@ -3,7 +3,7 @@
 {{ $allProjects = where $allProjects "Date.Year" "gt" 1 }}
 
 {{ $yearList := slice }}
-{{ range ($allProjects | sort "Date" "desc") }}
+{{ range (sort $allProjects "Date" "desc") }}
   {{ $y := .Date.Format "2006" }}
   {{ if not (in $yearList $y) }}{{ $yearList = $yearList | append $y }}{{ end }}
 {{ end }}
@@ -39,7 +39,7 @@
     <div class="tl-body" id="tl-body">
       {{ range $yearList }}
       {{ $yr := . }}
-      {{ $yPages := where ($allProjects | sort "Date" "desc") "Date.Year" (int $yr) }}
+      {{ $yPages := where (sort $allProjects "Date" "desc") "Date.Year" (int $yr) }}
       <div class="tl-year-block" id="tl-yr-{{ $yr }}" data-year="{{ $yr }}">
         <div class="tl-year-label">{{ $yr }}</div>
         <ul class="tl-entries">

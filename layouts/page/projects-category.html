@@ -2,7 +2,7 @@
 {{ $cat := .Params.project_category }}
 {{ $allProjects := where (where $.Site.RegularPages "Section" "projects") "Params.system_page" "ne" true }}
 {{ $catPages := where $allProjects "Params.project_category" $cat }}
-{{ $catPages = $catPages | sort "Date" "desc" }}
+{{ $catPages = sort $catPages "Date" "desc" }}
 
 <div class="projects-page">
   {{ partial "section-nav.html" (dict "section" "projects" "page" .) }}
