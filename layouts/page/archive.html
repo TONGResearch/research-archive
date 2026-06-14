@@ -31,12 +31,15 @@
     </div>
 
     {{/* Tag cloud */}}
+    {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
+    {{ $realPages := partial "real-pages.html" .Site.RegularPages }}
+    {{ $all := where $realPages "Section" "in" $sections }}
+    {{ $all = sort $all "Date" "desc" }}
+
     {{ $allTags := slice }}
-    {{ range slice "research" "reading" "policy" "thoughts" "posts" }}
-      {{ range (where $.Site.RegularPages "Section" .) }}
-        {{ range .Params.tags }}
-          {{ $allTags = $allTags | append . }}
-        {{ end }}
+    {{ range $all }}
+      {{ range .Params.tags }}
+        {{ $allTags = $allTags | append . }}
       {{ end }}
     {{ end }}
     {{ if $allTags }}
@@ -49,14 +52,6 @@
     {{ end }}
 
     {{/* Year filter */}}
-    {{ $all := slice }}
-    {{ range slice "research" "reading" "policy" "thoughts" "posts" }}
-      {{ range where $.Site.RegularPages "Section" . }}
-        {{ $all = $all | append . }}
-      {{ end }}
-    {{ end }}
-    {{ $all = sort $all "Date" "desc" }}
-
     {{ $years := slice }}
     {{ range $all }}
       {{ $y := .Date.Format "2006" }}
@@ -100,5 +95,5 @@
     </p>
   </div>
 </div>
-<script src="{{ "/assets/search.js" | relURL }}"></script>
+<script src="{{ "assets/search.js" | relURL }}"></script>
 {{ end }}

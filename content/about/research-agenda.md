@@ -2,6 +2,7 @@
 title: "Research Agenda"
 description: "My core research interests, current questions, and long-term goals."
 date: 2026-06-03
+system_page: true
 menu:
   main:
     name: "Research Agenda"

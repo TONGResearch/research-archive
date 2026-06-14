@@ -1,16 +1,14 @@
 {{ define "main" }}
 {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
+{{ $realPages := partial "real-pages.html" .Site.RegularPages }}
+{{ $all := where $realPages "Section" "in" $sections }}
 {{ $featured := slice }}
 {{ $recent   := slice }}
-{{ range $sections }}
-  {{ range where $.Site.RegularPages "Section" . }}
-    {{ if and (not .Params.system_page) (gt .Date.Year 1) }}
-      {{ if .Params.featured }}
-        {{ $featured = $featured | append . }}
-      {{ else }}
-        {{ $recent = $recent | append . }}
-      {{ end }}
-    {{ end }}
+{{ range $all }}
+  {{ if .Params.featured }}
+    {{ $featured = $featured | append . }}
+  {{ else }}
+    {{ $recent = $recent | append . }}
   {{ end }}
 {{ end }}
 {{ $featured = sort $featured "Date" "desc" }}

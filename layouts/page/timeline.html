@@ -1,22 +1,13 @@
 {{ define "main" }}
 {{ $filter := .Params.section_filter | default .Section }}
+{{ $realPages := partial "real-pages.html" .Site.RegularPages }}
 
 {{/* Collect real pages only */}}
 {{ $pages := slice }}
 {{ if eq $filter "all" }}
-  {{ range slice "research" "reading" "policy" "thoughts" "posts" }}
-    {{ range where $.Site.RegularPages "Section" . }}
-      {{ if and (not .Params.system_page) (gt .Date.Year 1) }}
-        {{ $pages = $pages | append . }}
-      {{ end }}
-    {{ end }}
-  {{ end }}
+  {{ $pages = where $realPages "Section" "in" (slice "research" "reading" "policy" "thoughts" "posts") }}
 {{ else }}
-  {{ range where $.Site.RegularPages "Section" $filter }}
-    {{ if and (not .Params.system_page) (gt .Date.Year 1) }}
-      {{ $pages = $pages | append . }}
-    {{ end }}
-  {{ end }}
+  {{ $pages = where $realPages "Section" $filter }}
 {{ end }}
 {{ $pages = sort $pages "Date" "desc" }}
 

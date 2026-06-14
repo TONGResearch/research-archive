@@ -1,10 +1,6 @@
 {{- $sections := slice "research" "reading" "policy" "thoughts" "posts" -}}
-{{- $pages := slice -}}
-{{- range $sections -}}
-  {{- range where $.Site.RegularPages "Section" . -}}
-    {{- $pages = $pages | append . -}}
-  {{- end -}}
-{{- end -}}
+{{- $realPages := partial "real-pages.html" site.RegularPages -}}
+{{- $pages := where $realPages "Section" "in" $sections -}}
 {{- $pages = sort $pages "Date" "desc" -}}
 [
 {{- range $i, $p := $pages -}}

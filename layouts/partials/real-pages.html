@@ -1,0 +1,7 @@
+{{- $pages := slice -}}
+{{- range . -}}
+  {{- if and (not .Params.system_page) (gt .Date.Year 1) -}}
+    {{- $pages = $pages | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $pages -}}

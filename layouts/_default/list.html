@@ -27,12 +27,8 @@
     </header>
 
     {{/* Filter out system pages — only show real content entries */}}
-    {{ $realPages := slice }}
-    {{ range .Pages.ByDate.Reverse }}
-      {{ if and (not .Params.system_page) (gt .Date.Year 1) }}
-        {{ $realPages = $realPages | append . }}
-      {{ end }}
-    {{ end }}
+    {{ $realPages := partial "real-pages.html" .Pages }}
+    {{ $realPages = sort $realPages "Date" "desc" }}
 
     <ul class="list-entries">
       {{ range $realPages }}

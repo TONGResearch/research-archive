@@ -18,7 +18,7 @@
     <section class="proj-section">
       <div class="proj-section-hd">
         <h2 class="proj-section-en">Featured Projects <span class="proj-section-zh">精选项目</span></h2>
-        <a class="proj-section-more" href="{{ "/projects/featured/" | relURL }}">All →</a>
+        <a class="proj-section-more" href="{{ "projects/featured/" | relURL }}">All →</a>
       </div>
       <div class="proj-grid">
         {{ range first 3 $featured }}
@@ -46,13 +46,13 @@
       <div class="proj-cat-grid">
         {{ range .Site.Params.projectCategories }}
         {{ $catPages := where $allProjects "Params.project_category" .slug }}
-        <a class="proj-cat-card" href="{{ printf "/projects/%s/" .slug | relURL }}">
+        <a class="proj-cat-card" href="{{ printf "projects/%s/" .slug | relURL }}">
           <span class="proj-cat-name">{{ .name }}</span>
           <span class="proj-cat-desc">{{ .desc }}</span>
           <span class="proj-cat-count">{{ len $catPages }} projects</span>
         </a>
         {{ end }}
-        <a class="proj-cat-card proj-cat-card--github" href="{{ "/projects/github/" | relURL }}">
+        <a class="proj-cat-card proj-cat-card--github" href="{{ "projects/github/" | relURL }}">
           <span class="proj-cat-name">GitHub Hub</span>
           <span class="proj-cat-desc">Source code and repositories</span>
           <span class="proj-cat-count">{{ .Site.Params.githubUsername }}</span>
@@ -64,7 +64,7 @@
     <section class="proj-section">
       <div class="proj-section-hd">
         <h2 class="proj-section-en">Recent Projects <span class="proj-section-zh">最新项目</span></h2>
-        <a class="proj-section-more" href="{{ "/projects/archive/" | relURL }}">All →</a>
+        <a class="proj-section-more" href="{{ "projects/archive/" | relURL }}">All →</a>
       </div>
       {{ if $recent }}
       <ul class="list-entries">

@@ -1,15 +1,7 @@
 {{ define "main" }}
 {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
-
-{{/* Collect REAL pages only — exclude system/nav pages */}}
-{{ $all := slice }}
-{{ range $sections }}
-  {{ range where $.Site.RegularPages "Section" . }}
-    {{ if not .Params.system_page }}
-      {{ $all = $all | append . }}
-    {{ end }}
-  {{ end }}
-{{ end }}
+{{ $realPages := partial "real-pages.html" .Site.RegularPages }}
+{{ $all := where $realPages "Section" "in" $sections }}
 {{ $all = sort $all "Date" "desc" }}
 
 {{/* Split featured / recent */}}
@@ -46,10 +38,9 @@
         (dict "s" "thoughts" "en" "Reflections"    "zh" "个人思考")
       }}
       {{ range $countData }}
-      {{/* Count only real entries, not system pages */}}
-      {{ $realPages := where (where $.Site.RegularPages "Section" .s) "Params.system_page" "ne" true }}
+      {{ $sectionPages := where $all "Section" .s }}
       <div class="hero-count">
-        <span class="hero-count-num">{{ len $realPages }}</span>
+        <span class="hero-count-num">{{ len $sectionPages }}</span>
         <span class="hero-count-en">{{ .en }}</span>
         <span class="hero-count-zh">{{ .zh }}</span>
       </div>
@@ -65,7 +56,7 @@
         <span class="home-intro-label-zh">研究者简介</span>
       </div>
       <p class="home-intro-text">{{ .Site.Params.introShort }}</p>
-      <a class="home-intro-cta" href="{{ "/about" | relURL }}">Read Full Profile →</a>
+      <a class="home-intro-cta" href="{{ "about" | relURL }}">Read Full Profile →</a>
     </div>
   </section>
 
@@ -76,7 +67,7 @@
         <span class="hsl-en">Featured Works</span>
         <span class="hsl-zh">精选研究</span>
       </div>
-      <a class="home-section-more" href="{{ "/research/featured/" | relURL }}">View all →</a>
+      <a class="home-section-more" href="{{ "research/featured/" | relURL }}">View all →</a>
     </div>
 
     {{ if $featured }}
@@ -111,7 +102,7 @@
         <span class="hsl-en">Research Agenda</span>
         <span class="hsl-zh">研究路线</span>
       </div>
-      <a class="home-section-more" href="{{ "/about/research-agenda" | relURL }}">Full agenda →</a>
+      <a class="home-section-more" href="{{ "about/research-agenda" | relURL }}">Full agenda →</a>
     </div>
     <div class="home-agenda">
       <div class="home-agenda-q">
@@ -137,12 +128,12 @@
         <span class="hsl-en">Research Areas</span>
         <span class="hsl-zh">研究领域</span>
       </div>
-      <a class="home-section-more" href="{{ "/areas" | relURL }}">All areas →</a>
+      <a class="home-section-more" href="{{ "areas" | relURL }}">All areas →</a>
     </div>
     <div class="areas-grid">
       {{ range .Site.Params.researchAreas }}
-      {{ $areaPages := where $.Site.RegularPages "Params.areas" "intersect" (slice .slug) }}
-      <a class="area-card" href="{{ printf "/areas/%s/" .slug | relURL }}">
+      {{ $areaPages := where $all "Params.areas" "intersect" (slice .slug) }}
+      <a class="area-card" href="{{ printf "areas/%s/" .slug | relURL }}">
         <span class="area-card-name">{{ .name }}</span>
         <span class="area-card-count">{{ len $areaPages }} entries</span>
       </a>
@@ -159,27 +150,27 @@
       </div>
     </div>
     <div class="home-discovery">
-      <a class="disc-item disc-item--primary" href="{{ "/research/featured/" | relURL }}">
+      <a class="disc-item disc-item--primary" href="{{ "research/featured/" | relURL }}">
         <span class="disc-en">Featured Works</span>
         <span class="disc-zh">精选研究</span>
         <span class="disc-desc">Pinned entries, independent of date</span>
       </a>
-      <a class="disc-item" href="{{ "/areas" | relURL }}">
+      <a class="disc-item" href="{{ "areas" | relURL }}">
         <span class="disc-en">Research Areas</span>
         <span class="disc-zh">研究领域</span>
         <span class="disc-desc">Browse by topic</span>
       </a>
-      <a class="disc-item" href="{{ "/tags" | relURL }}">
+      <a class="disc-item" href="{{ "tags" | relURL }}">
         <span class="disc-en">Tags</span>
         <span class="disc-zh">标签</span>
         <span class="disc-desc">Browse by keyword</span>
       </a>
-      <a class="disc-item" href="{{ "/archive-timeline/" | relURL }}">
+      <a class="disc-item" href="{{ "archive-timeline/" | relURL }}">
         <span class="disc-en">Timeline</span>
         <span class="disc-zh">时间线</span>
         <span class="disc-desc">Ideas organised by year</span>
       </a>
-      <a class="disc-item" href="{{ "/archive/" | relURL }}">
+      <a class="disc-item" href="{{ "archive/" | relURL }}">
         <span class="disc-en">Full Archive</span>
         <span class="disc-zh">完整归档</span>
         <span class="disc-desc">Search and filter all entries</span>
@@ -188,12 +179,7 @@
   </section>
 
   {{/* ── 7. TIMELINE SNAPSHOT — real entries only ───── */}}
-  {{ $realForTimeline := slice }}
-  {{ range $all }}
-    {{ if and (not .Params.system_page) (gt .Date.Year 1) }}
-      {{ $realForTimeline = $realForTimeline | append . }}
-    {{ end }}
-  {{ end }}
+  {{ $realForTimeline := $all }}
 
   {{ $years := slice }}
   {{ range $realForTimeline }}
@@ -207,7 +193,7 @@
         <span class="hsl-en">Timeline</span>
         <span class="hsl-zh">时间线</span>
       </div>
-      <a class="home-section-more" href="{{ "/archive-timeline/" | relURL }}">Full timeline →</a>
+      <a class="home-section-more" href="{{ "archive-timeline/" | relURL }}">Full timeline →</a>
     </div>
     {{ if $years }}
     <div class="tl-snapshot">
@@ -240,18 +226,17 @@
         <span class="hsl-en">Recent Updates</span>
         <span class="hsl-zh">最新更新</span>
       </div>
-      <a class="home-section-more" href="{{ "/archive/" | relURL }}">Full archive →</a>
+      <a class="home-section-more" href="{{ "archive/" | relURL }}">Full archive →</a>
     </div>
     <div class="recent-cols">
       {{ $colData := slice
-        (dict "s" "research" "en" "Research" "zh" "研究进展" "url" "/research/")
-        (dict "s" "reading"  "en" "Reading"  "zh" "读书档案" "url" "/reading/")
-        (dict "s" "policy"   "en" "Policy"   "zh" "政策档案" "url" "/policy/")
-        (dict "s" "thoughts" "en" "Reflections" "zh" "个人思考" "url" "/thoughts/")
+        (dict "s" "research" "en" "Research" "zh" "研究进展" "url" "research/")
+        (dict "s" "reading"  "en" "Reading"  "zh" "读书档案" "url" "reading/")
+        (dict "s" "policy"   "en" "Policy"   "zh" "政策档案" "url" "policy/")
+        (dict "s" "thoughts" "en" "Reflections" "zh" "个人思考" "url" "thoughts/")
       }}
       {{ range $colData }}
-      {{/* Only real entries */}}
-      {{ $colPages := where (where $.Site.RegularPages "Section" .s) "Params.system_page" "ne" true }}
+      {{ $colPages := where $all "Section" .s }}
       <div class="recent-col">
         <div class="recent-col-head">
           <a class="recent-col-title" href="{{ .url | relURL }}">

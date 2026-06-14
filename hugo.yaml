@@ -1,5 +1,5 @@
 baseURL: "https://tongresearch.github.io/research-archive/"
-languageCode: "en"
+locale: "en"
 title: "未竟札記"
 enableRobotsTXT: true
 enableGitInfo: true
@@ -22,7 +22,7 @@ params:
   # Project categories — drives Projects section nav
   projectCategories:
     - name: "AI & Agent Systems"
-      slug: "ai-agent-systems"
+      slug: "ai-systems"
       desc: "AI agents, multi-agent systems, RAG applications, LLM tooling"
     - name: "Research Tools"
       slug: "research-tools"
