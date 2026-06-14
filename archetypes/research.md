@@ -9,6 +9,8 @@ fields: []
 areas: []
 tags: []
 status: ["in-progress"]
+questions: []
+retrospective_notes: []
 ---
 
 ## Overview

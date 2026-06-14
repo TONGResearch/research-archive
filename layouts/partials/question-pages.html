@@ -1,0 +1,7 @@
+{{- $questions := slice -}}
+{{- range .Site.RegularPages -}}
+  {{- if .Params.question_id -}}
+    {{- $questions = $questions | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $questions -}}

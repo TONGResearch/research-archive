@@ -9,6 +9,8 @@ fields: []
 areas: []
 tags: []
 status: ["reading"]
+questions: []
+retrospective_notes: []
 book:
   title: ""
   author: ""

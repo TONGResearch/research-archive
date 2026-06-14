@@ -9,6 +9,8 @@ fields: []
 areas: []
 tags: []
 status: ["draft"]
+questions: []
+retrospective_notes: []
 ---
 
 ## The Question

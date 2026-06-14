@@ -25,7 +25,8 @@
       var ok =
         (!query       || (el.dataset.title  || '').includes(query)
                       || (el.dataset.tags   || '').includes(query)
-                      || (el.dataset.fields || '').includes(query)) &&
+                      || (el.dataset.fields || '').includes(query)
+                      || (el.dataset.questions || '').includes(query)) &&
         (!activeTag   || (el.dataset.tags   || '').includes(activeTag.toLowerCase())) &&
         (activeSection === 'all' || el.dataset.section === activeSection) &&
         (activeYear   === 'all' || el.dataset.year    === activeYear);

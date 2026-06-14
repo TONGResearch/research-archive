@@ -3,6 +3,8 @@
 {{ $realPages := partial "real-pages.html" .Site.RegularPages }}
 {{ $all := where $realPages "Section" "in" $sections }}
 {{ $all = sort $all "Date" "desc" }}
+{{ $questionPages := partial "question-pages.html" . }}
+{{ $featuredQuestions := where $questionPages "Params.featured_question" true }}
 
 {{/* Split featured / recent */}}
 {{ $featured := slice }}
@@ -60,7 +62,23 @@
     </div>
   </section>
 
-  {{/* ── 3. FEATURED WORKS ───────────────────────────── */}}
+  {{/* ── 3. FEATURED QUESTIONS ───────────────────────── */}}
+  <section class="home-section home-featured-questions">
+    <div class="home-section-header">
+      <div class="home-section-label">
+        <span class="hsl-en">Featured Questions</span>
+        <span class="hsl-zh">重点问题</span>
+      </div>
+      <a class="home-section-more" href="{{ "research/questions/featured/" | relURL }}">View all →</a>
+    </div>
+    {{ partial "question-list.html" (dict
+      "questions" $featuredQuestions
+      "emptyEn" "No featured questions yet."
+      "emptyZh" "尚未设置重点问题。"
+    ) }}
+  </section>
+
+  {{/* ── 4. FEATURED WORKS ───────────────────────────── */}}
   <section class="home-section">
     <div class="home-section-header">
       <div class="home-section-label">
@@ -95,32 +113,6 @@
     {{ end }}
   </section>
 
-  {{/* ── 4. RESEARCH AGENDA SNAPSHOT ─────────────────── */}}
-  <section class="home-section">
-    <div class="home-section-header">
-      <div class="home-section-label">
-        <span class="hsl-en">Research Agenda</span>
-        <span class="hsl-zh">研究路线</span>
-      </div>
-      <a class="home-section-more" href="{{ "about/research-agenda" | relURL }}">Full agenda →</a>
-    </div>
-    <div class="home-agenda">
-      <div class="home-agenda-q">
-        <p class="home-agenda-qlabel">Current questions</p>
-        <ul class="home-agenda-qlist">
-          <li>How does AI reshape production relations?</li>
-          <li>How do algorithmic systems influence governance capacity?</li>
-          <li>What forms of regulation are appropriate for platform economies?</li>
-          <li>How should states respond to emerging AI systems?</li>
-        </ul>
-      </div>
-      <div class="home-agenda-goal">
-        <p class="home-agenda-qlabel">Long-term goal</p>
-        <p class="home-agenda-goaltext">To study the interaction between technology, institutions, and social organization, and contribute to policy-oriented research in digital governance and public policy.</p>
-      </div>
-    </div>
-  </section>
-
   {{/* ── 5. RESEARCH AREAS ───────────────────────────── */}}
   <section class="home-section">
     <div class="home-section-header">
@@ -150,7 +142,17 @@
       </div>
     </div>
     <div class="home-discovery">
-      <a class="disc-item disc-item--primary" href="{{ "research/featured/" | relURL }}">
+      <a class="disc-item disc-item--primary" href="{{ "research/questions/featured/" | relURL }}">
+        <span class="disc-en">Featured Questions</span>
+        <span class="disc-zh">重点问题</span>
+        <span class="disc-desc">Priority research programmes</span>
+      </a>
+      <a class="disc-item" href="{{ "research/questions/" | relURL }}">
+        <span class="disc-en">Research Questions</span>
+        <span class="disc-zh">研究问题</span>
+        <span class="disc-desc">The complete question database</span>
+      </a>
+      <a class="disc-item" href="{{ "research/featured/" | relURL }}">
         <span class="disc-en">Featured Works</span>
         <span class="disc-zh">精选研究</span>
         <span class="disc-desc">Pinned entries, independent of date</span>

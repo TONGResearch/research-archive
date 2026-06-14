@@ -1,0 +1,28 @@
+{{- $questions := .questions -}}
+{{- if $questions -}}
+<ul class="q-list">
+  {{- range sort $questions "Title" "asc" -}}
+  <li class="q-item"
+      data-question-title="{{ .Title | lower }}"
+      data-question-status="{{ .Params.question_status | default "open" }}"
+      data-question-featured="{{ .Params.featured_question | default false }}"
+      data-question-areas="{{ delimit (.Params.areas | default (slice)) " " | lower }}">
+    <a class="q-item-link" href="{{ .RelPermalink }}">
+      <span class="q-item-main">
+        <span class="q-item-text">{{ .Title }}</span>
+        {{ with .Description }}<span class="q-item-desc">{{ . }}</span>{{ end }}
+      </span>
+      <span class="q-item-meta">
+        {{ if .Params.featured_question }}<span class="q-badge q-badge--featured">Featured / 重点</span>{{ end }}
+        {{ partial "question-status.html" .Params.question_status }}
+      </span>
+    </a>
+  </li>
+  {{- end -}}
+</ul>
+{{- else -}}
+<div class="list-empty">
+  <p class="list-empty-en">{{ .emptyEn }}</p>
+  <p class="list-empty-zh">{{ .emptyZh }}</p>
+</div>
+{{- end -}}

@@ -40,16 +40,16 @@
             <span class="ddi-zh">研究进展概览</span>
           </a>
           <a class="nav-dropdown-item" href="{{ "research/questions/" | relURL }}">
-            <span class="ddi-en">Questions</span>
+            <span class="ddi-en">Research Questions</span>
             <span class="ddi-zh">研究问题</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "research/questions/current/" | relURL }}">
-            <span class="ddi-en">Current Questions</span>
-            <span class="ddi-zh">进行中的问题</span>
+          <a class="nav-dropdown-item" href="{{ "research/questions/featured/" | relURL }}">
+            <span class="ddi-en">Featured Questions</span>
+            <span class="ddi-zh">重点问题</span>
           </a>
-          <a class="nav-dropdown-item" href="{{ "research/questions/resolved/" | relURL }}">
-            <span class="ddi-en">Resolved Questions</span>
-            <span class="ddi-zh">已解答的问题</span>
+          <a class="nav-dropdown-item" href="{{ "research/questions/closed/" | relURL }}">
+            <span class="ddi-en">Closed Questions</span>
+            <span class="ddi-zh">已结题问题</span>
           </a>
           <a class="nav-dropdown-item" href="{{ "research/featured/" | relURL }}">
             <span class="ddi-en">Featured Works</span>
@@ -151,6 +151,14 @@
       <div class="nav-has-dropdown{{ if or (eq .RelPermalink ("archive/" | relURL)) (eq .RelPermalink ("archive-timeline/" | relURL)) (eq .RelPermalink ("research/featured/" | relURL)) }} nav-item--active{{ end }}">
         <a href="{{ "archive/" | relURL }}">Archive</a>
         <div class="nav-dropdown">
+          <a class="nav-dropdown-item" href="{{ "research/questions/featured/" | relURL }}">
+            <span class="ddi-en">Featured Questions</span>
+            <span class="ddi-zh">重点问题</span>
+          </a>
+          <a class="nav-dropdown-item" href="{{ "research/questions/" | relURL }}">
+            <span class="ddi-en">Research Questions</span>
+            <span class="ddi-zh">研究问题</span>
+          </a>
           <a class="nav-dropdown-item" href="{{ "research/featured/" | relURL }}">
             <span class="ddi-en">Featured Works</span>
             <span class="ddi-zh">精选研究</span>

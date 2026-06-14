@@ -15,7 +15,7 @@
         id="archive-search"
         class="archive-search"
         type="search"
-        placeholder="Search by title, tag, or field…"
+        placeholder="Search title, question, tag, or field…"
         aria-label="Search archive"
       />
       <span class="archive-search-count" id="search-count"></span>
@@ -33,6 +33,7 @@
     {{/* Tag cloud */}}
     {{ $sections := slice "research" "reading" "policy" "thoughts" "posts" }}
     {{ $realPages := partial "real-pages.html" .Site.RegularPages }}
+    {{ $questionPages := partial "question-pages.html" . }}
     {{ $all := where $realPages "Section" "in" $sections }}
     {{ $all = sort $all "Date" "desc" }}
 
@@ -69,11 +70,19 @@
     {{/* Entry list */}}
     <ul class="archive-list" id="archive-list">
       {{ range $all }}
+      {{ $questionSearchTerms := slice }}
+      {{ $entryQuestionIDs := .Params.questions | default (slice) }}
+      {{ range $questionPages }}
+        {{ if in $entryQuestionIDs .Params.question_id }}
+          {{ $questionSearchTerms = $questionSearchTerms | append .Title }}
+        {{ end }}
+      {{ end }}
       <li class="archive-entry"
           data-title="{{ .Title | lower }}"
           data-section="{{ .Section }}"
           data-tags="{{ delimit (.Params.tags | default (slice)) " " | lower }}"
           data-fields="{{ delimit (.Params.fields | default (slice)) " " | lower }}"
+          data-questions="{{ delimit $entryQuestionIDs " " | lower }} {{ delimit $questionSearchTerms " " | lower }}"
           data-year="{{ .Date.Format "2006" }}"
       >
         <a class="archive-entry-link" href="{{ .Permalink }}">

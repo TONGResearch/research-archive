@@ -26,6 +26,22 @@
       {{ with .Content }}<div class="list-desc">{{ . }}</div>{{ end }}
     </header>
 
+    {{ if eq .Section "research" }}
+      {{ $questionPages := partial "question-pages.html" . }}
+      {{ $featuredQuestions := where $questionPages "Params.featured_question" true }}
+      <section class="research-featured-questions">
+        <div class="q-section-header research-question-header">
+          <h2 class="q-section-en">Featured Questions <span class="q-section-zh">重点问题</span></h2>
+          <a href="{{ "research/questions/" | relURL }}">Entire Question Database / 完整问题档案 →</a>
+        </div>
+        {{ partial "question-list.html" (dict
+          "questions" $featuredQuestions
+          "emptyEn" "No featured questions yet."
+          "emptyZh" "尚未设置重点问题。"
+        ) }}
+      </section>
+    {{ end }}
+
     {{/* Filter out system pages — only show real content entries */}}
     {{ $realPages := partial "real-pages.html" .Pages }}
     {{ $realPages = sort $realPages "Date" "desc" }}

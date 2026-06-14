@@ -95,6 +95,26 @@ Urban Governance, Rural Governance
 
 ---
 
+## Question Relationships
+
+Question Hubs use a stable `question_id`. Entries connect to Question Hubs through:
+
+```yaml
+questions: ["question-slug"]
+```
+
+Question lifecycle values are separate from article status values:
+
+| Value | Meaning |
+|---|---|
+| `open` | Ongoing question |
+| `partial` | Partially answered, still active |
+| `closed` | Research objective substantially complete |
+
+Use `featured_question: true` to place a Question Hub in Featured Questions.
+
+---
+
 ## Example Front Matter
 
 ```yaml
@@ -108,6 +128,8 @@ fields: ["Field Name"]
 areas: ["area-slug"]
 tags: ["Tag One", "Tag Two"]
 status: ["in-progress"]
+questions: []
+retrospective_notes: []
 ---
 ```
 
@@ -122,6 +144,8 @@ fields: ["Field Name"]
 areas: ["area-slug"]
 tags: ["Tag One"]
 status: ["reading"]
+questions: []
+retrospective_notes: []
 book:
   title: "Book Title"
   author: "Author Name"
@@ -142,6 +166,8 @@ fields: ["Field Name"]
 areas: ["area-slug"]
 tags: ["Tag One", "Tag Two"]
 status: ["draft"]
+questions: []
+retrospective_notes: []
 scope: "Comparative"
 ---
 ```

@@ -1,0 +1,138 @@
+{{ define "main" }}
+{{ $questionID := .Params.question_id }}
+{{ $related := partial "question-related-pages.html" (dict "site" .Site "questionID" $questionID) }}
+{{ $related = sort $related "Date" "desc" }}
+{{ $sections := slice
+  (dict "id" "reading" "en" "Reading Notes" "zh" "读书笔记")
+  (dict "id" "research" "en" "Research Notes" "zh" "研究笔记")
+  (dict "id" "policy" "en" "Policy Notes" "zh" "政策分析")
+  (dict "id" "thoughts" "en" "Reflections" "zh" "个人思考")
+  (dict "id" "projects" "en" "Projects" "zh" "项目")
+}}
+<div class="question-hub">
+  {{ partial "section-nav.html" (dict "section" "research" "page" .) }}
+  <article class="question-hub-inner">
+    <nav class="article-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ "" | relURL }}">Home</a>
+      <span class="article-breadcrumb-sep">/</span>
+      <a href="{{ "research/questions/" | relURL }}">Research Questions</a>
+      <span class="article-breadcrumb-sep">/</span>
+      <span>{{ .Title | truncate 60 }}</span>
+    </nav>
+
+    <header class="question-hub-header">
+      <div class="question-hub-kicker">Research Question <span>研究问题</span></div>
+      <h1>{{ .Title }}</h1>
+      <div class="question-hub-badges">
+        {{ if .Params.featured_question }}<span class="q-badge q-badge--featured">Featured / 重点</span>{{ end }}
+        {{ partial "question-status.html" .Params.question_status }}
+        {{ range .Params.areas }}<span class="field-tag">{{ . }}</span>{{ end }}
+      </div>
+    </header>
+
+    <section class="question-hub-section">
+      <h2>Question Description <span>问题说明</span></h2>
+      <div class="question-hub-prose">
+        {{ with .Params.question_description }}{{ . | markdownify }}{{ else }}
+        <p class="question-empty">Description not added yet. <span>尚未添加问题说明。</span></p>
+        {{ end }}
+        {{ with .Params.scope }}<h3>Scope <span>研究范围</span></h3>{{ . | markdownify }}{{ end }}
+        {{ with .Params.objectives }}<h3>Research Objectives <span>研究目标</span></h3>{{ . | markdownify }}{{ end }}
+      </div>
+    </section>
+
+    <section class="question-hub-section question-position">
+      <h2>Current Position <span>当前观点</span></h2>
+      <div class="question-hub-prose">
+        {{ with .Params.current_position }}{{ . | markdownify }}{{ else }}
+        <p class="question-empty">Current position not recorded yet. <span>尚未记录当前观点。</span></p>
+        {{ end }}
+      </div>
+      {{ with .Params.position_updated }}
+      <p class="question-position-date">Position updated {{ time.Format "2006-01-02" . }}</p>
+      {{ end }}
+    </section>
+
+    <section class="question-hub-section" id="related-research">
+      <div class="question-section-heading">
+        <h2>Research Status <span>研究进展</span></h2>
+        <a class="question-view-all" href="#question-timeline">View All Related Research / 查看全部相关研究</a>
+      </div>
+      <div class="question-status-summary">
+        <span><strong>{{ len $related }}</strong> Related Entries<br><small>相关条目</small></span>
+        {{ range $sections }}
+          {{ $sectionPages := where $related "Section" .id }}
+          <span><strong>{{ len $sectionPages }}</strong> {{ .en }}<br><small>{{ .zh }}</small></span>
+        {{ end }}
+      </div>
+
+      <div class="question-related-groups">
+        {{ range $sections }}
+          {{ $sectionPages := where $related "Section" .id }}
+          {{ if $sectionPages }}
+          <section class="question-related-group">
+            <h3>{{ .en }} <span>{{ .zh }}</span></h3>
+            <ul>
+              {{ range $sectionPages }}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><time>{{ .Date.Format "2006-01-02" }}</time></li>
+              {{ end }}
+            </ul>
+          </section>
+          {{ end }}
+        {{ end }}
+      </div>
+      {{ if not $related }}
+      <p class="question-empty">No related research has been published yet. <span>尚无相关研究条目。</span></p>
+      {{ end }}
+    </section>
+
+    <section class="question-hub-section" id="question-timeline">
+      <div class="question-section-heading">
+        <h2>Intellectual Timeline <span>研究时间线</span></h2>
+        {{ if $related }}
+        <div class="question-order" aria-label="Timeline order">
+          <button class="question-order-btn is-active" type="button" data-order="desc">Newest <span>最新</span></button>
+          <button class="question-order-btn" type="button" data-order="asc">Oldest <span>最早</span></button>
+        </div>
+        {{ end }}
+      </div>
+      {{ if $related }}
+      <ol class="question-timeline" id="question-timeline-list">
+        {{ range $related }}
+        <li data-date="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+          <time>{{ .Date.Format "2006-01-02" }}</time>
+          <span class="question-timeline-kind">{{ .Section }}</span>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+        {{ end }}
+      </ol>
+      {{ else }}
+      <p class="question-empty">The timeline will grow as related work is published. <span>相关成果发布后，时间线将在此形成。</span></p>
+      {{ end }}
+    </section>
+  </article>
+</div>
+
+{{ if $related }}
+<script>
+(function () {
+  var list = document.getElementById('question-timeline-list');
+  var buttons = document.querySelectorAll('.question-order-btn');
+  if (!list || !buttons.length) return;
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var direction = button.getAttribute('data-order');
+      var items = Array.prototype.slice.call(list.children);
+      items.sort(function (a, b) {
+        var comparison = a.getAttribute('data-date').localeCompare(b.getAttribute('data-date'));
+        return direction === 'asc' ? comparison : -comparison;
+      });
+      items.forEach(function (item) { list.appendChild(item); });
+      buttons.forEach(function (item) { item.classList.remove('is-active'); });
+      button.classList.add('is-active');
+    });
+  });
+})();
+</script>
+{{ end }}
+{{ end }}

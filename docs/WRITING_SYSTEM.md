@@ -6,16 +6,16 @@ Use Hugo archetypes to generate pre-filled front matter:
 
 ```bash
 # Research note
-hugo new research/YYYY-MM-DD-slug.md
+hugo new content research/YYYY-MM-DD-slug.md
 
 # Reading note
-hugo new reading/YYYY-MM-DD-slug.md
+hugo new content reading/YYYY-MM-DD-slug.md
 
 # Policy memo
-hugo new policy/YYYY-MM-DD-slug.md
+hugo new content policy/YYYY-MM-DD-slug.md
 
 # Reflection
-hugo new thoughts/YYYY-MM-DD-slug.md
+hugo new content thoughts/YYYY-MM-DD-slug.md
 ```
 
 Each archetype pre-fills the correct front matter fields for that section.
@@ -46,6 +46,8 @@ fields: ["Field Name"]
 areas: ["area-slug"]
 tags: ["Tag One", "Tag Two"]
 status: ["in-progress"]
+questions: []
+retrospective_notes: []
 ---
 ```
 
@@ -63,6 +65,8 @@ fields: ["Field Name"]
 areas: ["area-slug"]
 tags: ["Tag One"]
 status: ["reading"]
+questions: []
+retrospective_notes: []
 book:
   title: "Book Title"
   author: "Author Name"
@@ -86,6 +90,8 @@ fields: ["Field Name"]
 areas: ["area-slug"]
 tags: ["Tag One", "Tag Two"]
 status: ["draft"]
+questions: []
+retrospective_notes: []
 scope: "Comparative"
 ---
 ```
@@ -104,6 +110,8 @@ fields: ["Field Name"]
 areas: []
 tags: ["Tag One"]
 status: ["draft"]
+questions: []
+retrospective_notes: []
 ---
 ```
 
@@ -127,6 +135,60 @@ Valid area slugs: `technology-governance`, `public-policy`, `political-economy`,
 
 ---
 
+## Creating a Research Question Hub
+
+Create a question page with the dedicated archetype:
+
+```bash
+hugo new content --kind questions research/questions/question-slug.md
+```
+
+Question front matter:
+
+```yaml
+question_id: "question-slug"
+featured_question: false
+question_status: "open"
+areas: []
+question_description: ""
+scope: ""
+objectives: ""
+current_position: ""
+position_updated:
+```
+
+Valid `question_status` values:
+
+- `open`
+- `partial`
+- `closed`
+
+Set `featured_question: true` only for questions that should appear in Featured Questions.
+
+To associate an article or project with one or more Question Hubs:
+
+```yaml
+questions: ["question-slug"]
+```
+
+The Question Hub automatically collects associated Reading Notes, Research Notes, Policy Notes, Reflections, and Projects.
+
+---
+
+## Retrospective Notes
+
+Preserve the original article and append later reflections through front matter:
+
+```yaml
+retrospective_notes:
+  - date: YYYY-MM-DD
+    content: ""
+```
+
+Additional notes can be appended as further dated list items. They are rendered separately from the original article.
+
+---
+
 ## Enabling MathJax
 
 Add to front matter for LaTeX rendering:
@@ -134,18 +196,6 @@ Add to front matter for LaTeX rendering:
 ```yaml
 math: true
 ```
-
----
-
-## Writing Template
-
-A reusable structural template is available at:
-
-```
-content/research/templates/research-template.md
-```
-
-Copy and rename before writing. Do not edit the template directly. It is marked `draft: true` and will never be published by Hugo.
 
 ---
 

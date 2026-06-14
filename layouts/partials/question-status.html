@@ -1,0 +1,8 @@
+{{- $status := . | default "open" -}}
+{{- if eq $status "closed" -}}
+<span class="q-badge q-badge--closed">Closed / 已结题</span>
+{{- else if eq $status "partial" -}}
+<span class="q-badge q-badge--partial">Partially Answered / 部分回答</span>
+{{- else -}}
+<span class="q-badge q-badge--open">Open / 开放</span>
+{{- end -}}

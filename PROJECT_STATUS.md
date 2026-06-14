@@ -47,20 +47,22 @@ All site structure, layouts, navigation, taxonomy, archive system, and deploymen
 | `content/research/_index.md` | Research section index |
 | `content/research/featured.md` | Featured Works page router |
 | `content/research/timeline.md` | Research timeline router |
+| `content/research/questions/_index.md` | Complete Research Questions database |
+| `content/research/questions/featured.md` | Featured Questions page router |
+| `content/research/questions/closed.md` | Closed Questions page router |
 | `content/reading/_index.md` | Reading section index |
 | `content/reading/timeline.md` | Reading timeline router |
 | `content/policy/_index.md` | Policy section index |
 | `content/policy/timeline.md` | Policy timeline router |
 | `content/thoughts/_index.md` | Reflections section index |
-| `content/research/templates/research-template.md` | Writing template (`draft: true`) |
 
 ---
 
 ## Pending
 
-1. Push to GitHub and activate Pages (one-time setup — see `docs/GITHUB_PAGES.md`)
-2. Write first entries using archetypes
-3. Add hero image to `static/assets/` if desired (optional)
+1. Add original research questions using the `questions` archetype
+2. Write original entries using the section archetypes
+3. Associate entries with Question Hubs through the `questions` front matter field
 
 ---
 

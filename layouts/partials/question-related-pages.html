@@ -1,0 +1,10 @@
+{{- $questionID := .questionID -}}
+{{- $pages := partial "real-pages.html" .site.RegularPages -}}
+{{- $related := slice -}}
+{{- range $pages -}}
+  {{- $questionIDs := .Params.questions | default (slice) -}}
+  {{- if or (in $questionIDs $questionID) (eq .Params.question $questionID) -}}
+    {{- $related = $related | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $related -}}

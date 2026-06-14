@@ -18,7 +18,7 @@ menu:
 - Public Policy Design
 - Computational Social Science
 
-## Current Questions
+## Research Questions / 研究问题
 
 - How does AI reshape production relations?
 - How do algorithmic systems influence governance capacity?

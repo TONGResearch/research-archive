@@ -1,0 +1,21 @@
+{{ define "main" }}
+{{ $questions := partial "question-pages.html" . }}
+{{ $featured := where $questions "Params.featured_question" true }}
+<div class="questions-page">
+  {{ partial "section-nav.html" (dict "section" "research" "page" .) }}
+  <div class="questions-wrap">
+    <header class="questions-header">
+      <h1 class="q-title-en">Featured Questions</h1>
+      <p class="q-title-zh">重点问题</p>
+      <p class="q-desc">{{ .Description }}</p>
+    </header>
+    <section class="q-section">
+      {{ partial "question-list.html" (dict
+        "questions" $featured
+        "emptyEn" "No featured questions yet."
+        "emptyZh" "尚未设置重点问题。"
+      ) }}
+    </section>
+  </div>
+</div>
+{{ end }}

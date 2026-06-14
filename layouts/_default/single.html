@@ -8,6 +8,8 @@
   "about"    "About"
 }}
 {{ $sectionLabel := index $sectionLabels .Section | default (.Section | title) }}
+{{ $questionPages := partial "question-pages.html" . }}
+{{ $articleQuestionIDs := .Params.questions | default (slice) }}
 
 <div class="article-page">
 
@@ -23,6 +25,7 @@
   {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
 
   <div class="article-meta">
+    <span class="article-date-label">Published / 发布</span>
     <time>{{ .Date.Format "2006-01-02" }}</time>
     {{ if .Params.status }}
       <span class="article-meta-sep">·</span>
@@ -38,9 +41,23 @@
     {{ end }}
     {{ if .GitInfo }}
       <span class="article-meta-sep">·</span>
-      <span class="article-git-info">Last updated {{ .GitInfo.AuthorDate.Format "2006-01-02" }}</span>
+      <span class="article-git-info">Last updated / 更新 {{ .GitInfo.AuthorDate.Format "2006-01-02" }}</span>
     {{ end }}
   </div>
+
+  {{ if or $articleQuestionIDs .Params.question }}
+  <aside class="article-questions">
+    <span class="article-questions-label">Research Questions <small>关联问题</small></span>
+    <div class="article-question-links">
+      {{ range $questionPages }}
+        {{ $questionID := .Params.question_id }}
+        {{ if or (in $articleQuestionIDs $questionID) (eq $.Params.question $questionID) }}
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{ end }}
+      {{ end }}
+    </div>
+  </aside>
+  {{ end }}
 
   {{ with .Params.book }}
   <aside class="book-meta">
@@ -54,18 +71,39 @@
 
   <div class="article-body">{{ .Content }}</div>
 
+  {{ with .Params.retrospective_notes }}
+  <section class="retrospective-notes">
+    <header class="retrospective-header">
+      <h2>Retrospective Notes</h2>
+      <p>回顾注记</p>
+    </header>
+    <div class="retrospective-list">
+      {{ range sort . "date" "asc" }}
+      <article class="retrospective-note">
+        <time>{{ time.Format "2006-01-02" .date }}</time>
+        <div>{{ .content | markdownify }}</div>
+      </article>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
   <nav class="article-nav" aria-label="Adjacent articles">
     {{ with .PrevInSection }}
+    {{ if not .Params.system_page }}
     <a class="article-nav-link article-nav-prev" href="{{ .Permalink }}">
       <span class="nav-dir">← Previous</span>
       <span class="nav-title">{{ .Title }}</span>
     </a>
     {{ end }}
+    {{ end }}
     {{ with .NextInSection }}
+    {{ if not .Params.system_page }}
     <a class="article-nav-link article-nav-next" href="{{ .Permalink }}">
       <span class="nav-dir">Next →</span>
       <span class="nav-title">{{ .Title }}</span>
     </a>
+    {{ end }}
     {{ end }}
   </nav>
 

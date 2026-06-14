@@ -12,6 +12,7 @@
   "date":    {{ $p.Date.Format "2006-01-02" | jsonify }},
   "tags":    {{ $p.Params.tags | jsonify }},
   "fields":  {{ $p.Params.fields | jsonify }},
+  "questions": {{ $p.Params.questions | jsonify }},
   "status":  {{ $p.Params.status | jsonify }},
   "summary": {{ $p.Summary | plainify | jsonify }}
 }

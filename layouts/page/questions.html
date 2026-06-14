@@ -1,4 +1,5 @@
 {{ define "main" }}
+{{ $questions := partial "question-pages.html" . }}
 <div class="questions-page">
   {{ partial "section-nav.html" (dict "section" "research" "page" .) }}
 
@@ -6,88 +7,93 @@
     <header class="questions-header">
       <h1 class="q-title-en">Research Questions</h1>
       <p class="q-title-zh">研究问题</p>
-      <p class="q-desc">This archive is organised around questions, not articles. Each question drives a thread of reading, research, and policy analysis. Follow any question to trace the full arc of inquiry.</p>
+      <p class="q-desc">The complete question database. Questions remain here across their full lifecycle: featured, long-term, open, partially answered, and closed.</p>
     </header>
 
-    {{/* Active questions — tagged with question_status: active */}}
-    {{ $activeQs := where $.Site.RegularPages "Params.question_status" "active" }}
-    {{ $resolvedQs := where $.Site.RegularPages "Params.question_status" "resolved" }}
-
     <section class="q-section">
       <div class="q-section-header">
-        <h2 class="q-section-en">Current Questions <span class="q-section-zh">进行中的问题</span></h2>
+        <h2 class="q-section-en">Entire Question Database <span class="q-section-zh">完整问题档案</span></h2>
       </div>
-
-      {{ if $activeQs }}
-      <ul class="q-list">
-        {{ range $activeQs }}
-        <li class="q-item">
-          <a class="q-item-link" href="{{ .Permalink }}">
-            <span class="q-item-text">{{ .Title }}</span>
-            <span class="q-item-meta">
-              {{ with .Params.areas }}
-              {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
-              {{ end }}
-            </span>
-          </a>
-        </li>
-        {{ end }}
-      </ul>
-      {{ else }}
-      {{/* Hardcoded current questions from research agenda */}}
-      <ul class="q-list">
-        <li class="q-item q-item--static">
-          <span class="q-item-text">How does AI reshape production relations?</span>
-          <span class="q-badge q-badge--active">Active</span>
-        </li>
-        <li class="q-item q-item--static">
-          <span class="q-item-text">How do algorithmic systems influence governance capacity?</span>
-          <span class="q-badge q-badge--active">Active</span>
-        </li>
-        <li class="q-item q-item--static">
-          <span class="q-item-text">What forms of regulation are appropriate for platform economies?</span>
-          <span class="q-badge q-badge--active">Active</span>
-        </li>
-        <li class="q-item q-item--static">
-          <span class="q-item-text">How should states respond to emerging AI systems?</span>
-          <span class="q-badge q-badge--active">Active</span>
-        </li>
-      </ul>
-      <p class="q-note">To link articles to a question, create a dedicated question page and tag related articles with <code>question: "question-slug"</code>.</p>
-      {{ end }}
-    </section>
-
-    {{ if $resolvedQs }}
-    <section class="q-section">
-      <div class="q-section-header">
-        <h2 class="q-section-en">Resolved Questions <span class="q-section-zh">已解答的问题</span></h2>
+      <div class="question-search-tools">
+        <input id="question-search" class="archive-search" type="search"
+               placeholder="Search questions or research areas…"
+               aria-label="Search research questions" />
+        <div class="question-filter-tabs" id="question-filter-tabs">
+          <button class="tab-btn tab-btn--active" type="button" data-question-filter="all">All / 全部</button>
+          <button class="tab-btn" type="button" data-question-filter="featured">Featured / 重点</button>
+          <button class="tab-btn" type="button" data-question-filter="open">Open / 开放</button>
+          <button class="tab-btn" type="button" data-question-filter="partial">Partial / 部分回答</button>
+          <button class="tab-btn" type="button" data-question-filter="closed">Closed / 已结题</button>
+        </div>
+        <span class="archive-search-count" id="question-search-count"></span>
       </div>
-      <ul class="q-list">
-        {{ range $resolvedQs }}
-        <li class="q-item">
-          <a class="q-item-link" href="{{ .Permalink }}">
-            <span class="q-item-text">{{ .Title }}</span>
-            <span class="q-badge q-badge--resolved">Resolved</span>
-          </a>
-        </li>
-        {{ end }}
-      </ul>
+      {{ partial "question-list.html" (dict
+        "questions" $questions
+        "emptyEn" "No research questions have been added yet."
+        "emptyZh" "尚未添加研究问题。"
+      ) }}
+      <div class="list-empty" id="question-no-results" style="display:none;">
+        <p class="list-empty-en">No questions match this search.</p>
+        <p class="list-empty-zh">没有符合条件的研究问题。</p>
+      </div>
     </section>
-    {{ end }}
 
     <section class="q-how">
-      <h2 class="q-section-en">How This Works <span class="q-section-zh">如何使用</span></h2>
+      <h2 class="q-section-en">Archive Model <span class="q-section-zh">档案结构</span></h2>
       <div class="q-how-body">
-        <p>Each question is a hub page. Tag your notes, readings, and policy memos with the question they address. The question hub then automatically collects:</p>
+        <p>Each question opens a dedicated hub. Related work is collected into a research trail without replacing the original publications.</p>
         <ul>
-          <li><strong>Reading Notes</strong> — what you read to investigate</li>
-          <li><strong>Research Notes</strong> — analysis and hypotheses</li>
-          <li><strong>Policy Notes</strong> — policy implications</li>
-          <li><strong>Conclusions</strong> — where your thinking landed</li>
+          <li><strong>Question Description</strong> — scope, importance, and objectives</li>
+          <li><strong>Current Position</strong> — the present, revisable view</li>
+          <li><strong>Related Research</strong> — reading, research, policy, and projects</li>
+          <li><strong>Timeline</strong> — the question's intellectual development</li>
         </ul>
       </div>
     </section>
 
   </div>
 </div>
+<script>
+(function () {
+  var search = document.getElementById('question-search');
+  var tabs = document.getElementById('question-filter-tabs');
+  var count = document.getElementById('question-search-count');
+  var noResults = document.getElementById('question-no-results');
+  var items = Array.prototype.slice.call(document.querySelectorAll('.q-section .q-item'));
+  if (!search || !tabs || !items.length) return;
+  var query = '';
+  var filter = 'all';
+  function run() {
+    var visible = 0;
+    items.forEach(function (item) {
+      var text = ((item.dataset.questionTitle || '') + ' ' + (item.dataset.questionAreas || ''));
+      var matchesQuery = !query || text.indexOf(query) !== -1;
+      var matchesFilter =
+        filter === 'all' ||
+        (filter === 'featured' && item.dataset.questionFeatured === 'true') ||
+        item.dataset.questionStatus === filter;
+      var show = matchesQuery && matchesFilter;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    if (count) count.textContent = visible + ' / ' + items.length;
+    if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+  }
+  search.addEventListener('input', function () {
+    query = search.value.trim().toLowerCase();
+    run();
+  });
+  tabs.querySelectorAll('[data-question-filter]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      tabs.querySelectorAll('[data-question-filter]').forEach(function (item) {
+        item.classList.remove('tab-btn--active');
+      });
+      button.classList.add('tab-btn--active');
+      filter = button.dataset.questionFilter;
+      run();
+    });
+  });
+  run();
+})();
+</script>
 {{ end }}

@@ -1,6 +1,6 @@
 ---
 title: "Research Questions"
-description: "Ongoing and resolved research questions — the intellectual engine of this archive."
+description: "The complete question database: featured, long-term, open, partially answered, and closed research questions."
 layout: "questions"
 type: "page"
 url: "/research/questions/"
