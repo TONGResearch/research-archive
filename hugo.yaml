@@ -1,5 +1,7 @@
 baseURL: "https://tongresearch.github.io/research-archive/"
 locale: "en"
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
 title: "未竟札記"
 enableRobotsTXT: true
 enableGitInfo: true
@@ -49,6 +51,16 @@ params:
       slug: "finance"
     - name: "Marxism"
       slug: "marxism"
+
+languages:
+  en:
+    label: "English"
+    locale: "en"
+    weight: 1
+  zh:
+    label: "中文"
+    locale: "zh-CN"
+    weight: 2
 
 outputs:
   home:

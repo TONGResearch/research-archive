@@ -24,6 +24,22 @@
   <h1 class="article-title">{{ .Title }}</h1>
   {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
 
+  {{ if or .IsTranslated (eq .Language.Lang "zh") }}
+  <nav class="language-switcher" aria-label="Article language versions">
+    <span class="language-switcher-label">Language / 语言</span>
+    <div class="language-switcher-links">
+      {{ $current := . }}
+      {{ range .AllTranslations }}
+      <a class="language-link{{ if eq .Language.Lang $current.Language.Lang }} language-link--active{{ end }}"
+         href="{{ .RelPermalink }}"
+         hreflang="{{ .Language.Locale }}">
+        {{ if eq .Language.Lang "zh" }}中文{{ else }}English{{ end }}
+      </a>
+      {{ end }}
+    </div>
+  </nav>
+  {{ end }}
+
   <div class="article-meta">
     <span class="article-date-label">Published / 发布</span>
     <time>{{ .Date.Format "2006-01-02" }}</time>

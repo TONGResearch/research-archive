@@ -6,27 +6,88 @@ Use Hugo archetypes to generate pre-filled front matter:
 
 ```bash
 # Research note
-hugo new content research/YYYY-MM-DD-slug.md
+hugo new content research/YYYY-MM-DD-slug/index.md
 
 # Reading note
-hugo new content reading/YYYY-MM-DD-slug.md
+hugo new content reading/YYYY-MM-DD-slug/index.md
 
 # Policy memo
-hugo new content policy/YYYY-MM-DD-slug.md
+hugo new content policy/YYYY-MM-DD-slug/index.md
 
 # Reflection
-hugo new content thoughts/YYYY-MM-DD-slug.md
+hugo new content thoughts/YYYY-MM-DD-slug/index.md
 ```
 
 Each archetype pre-fills the correct front matter fields for that section.
 
 ---
 
-## File Naming Convention
+## Page Bundle Convention
 
 ```
-YYYY-MM-DD-slug-with-hyphens.md
+content/research/YYYY-MM-DD-slug-with-hyphens/
+├── index.md
+├── index.zh.md
+├── figure-1.png
+├── table-1.png
+└── diagram.png
 ```
+
+Use one folder per entry. Put article images, diagrams, tables, and other local assets in the same folder as the article.
+
+English article:
+
+```txt
+index.md
+```
+
+Chinese article:
+
+```txt
+index.zh.md
+```
+
+If both files exist in the same folder, Hugo treats them as translations of the same article and the site displays a language switcher.
+
+---
+
+## Creating English and Chinese Versions
+
+Create the English version first:
+
+```bash
+hugo new content research/YYYY-MM-DD-slug/index.md
+```
+
+Create the Chinese version in the same folder:
+
+```bash
+hugo new content research/YYYY-MM-DD-slug/index.zh.md
+```
+
+The same pattern works for `reading/`, `policy/`, `thoughts/`, and `projects/`.
+
+---
+
+## Adding Images
+
+Place images next to the article:
+
+```txt
+content/research/YYYY-MM-DD-slug/
+├── index.md
+└── figure-1.png
+```
+
+Reference the image from Markdown:
+
+```md
+![Figure 1](figure-1.png)
+```
+
+Use the same image path in `index.md` and `index.zh.md` when both language versions share the same figure.
+
+---
 
 ---
 
@@ -140,7 +201,7 @@ Valid area slugs: `technology-governance`, `public-policy`, `political-economy`,
 Create a question page with the dedicated archetype:
 
 ```bash
-hugo new content --kind questions research/questions/question-slug.md
+hugo new content --kind questions research/questions/question-slug/index.md
 ```
 
 Question front matter:

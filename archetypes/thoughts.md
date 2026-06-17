@@ -1,5 +1,7 @@
+{{- $slug := .File.ContentBaseName -}}
+{{- if or (eq $slug "index") (hasPrefix $slug "index.") -}}{{- $slug = path.Base .File.Dir -}}{{- end -}}
 ---
-title: "{{ replace .File.ContentBaseName "-" " " | title }}"
+title: "{{ replace $slug "-" " " | title }}"
 subtitle: ""
 date: {{ .Date }}
 draft: false
@@ -12,23 +14,3 @@ status: ["draft"]
 questions: []
 retrospective_notes: []
 ---
-
-## The Question
-
-
-
----
-
-## Where I Am Now
-
-
-
----
-
-## What I Don't Know Yet
-
-
-
----
-
-*Written: {{ .Date | time.Format "2006-01-02" }}. Provisional.*
