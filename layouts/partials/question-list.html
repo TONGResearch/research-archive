@@ -11,6 +11,9 @@
       <span class="q-item-main">
         <span class="q-item-text">{{ .Title }}</span>
         {{ with .Description }}<span class="q-item-desc">{{ . }}</span>{{ end }}
+        <time class="q-item-date" datetime="{{ .Date.Format "2006-01-02" }}">
+          Published / 发布 {{ .Date.Format "2006-01-02" }}
+        </time>
       </span>
       <span class="q-item-meta">
         {{ if .Params.featured_question }}<span class="q-badge q-badge--featured">Featured / 重点</span>{{ end }}

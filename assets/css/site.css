@@ -1232,6 +1232,11 @@ a.about-contact-val:hover { color: var(--ink); }
 .q-item-text { font-size: .95rem; color: var(--ink-2); line-height: 1.5; flex: 1; }
 .q-item-main { display: flex; flex-direction: column; gap: var(--s1); flex: 1; }
 .q-item-desc { font-size: .78rem; color: var(--ink-4); line-height: 1.55; }
+.q-item-date {
+  font-family: var(--mono);
+  font-size: .58rem;
+  color: var(--ink-4);
+}
 .q-item-meta { display: flex; gap: var(--s1); flex-wrap: wrap; flex-shrink: 0; }
 
 .q-badge {
