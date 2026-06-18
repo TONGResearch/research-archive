@@ -1330,6 +1330,17 @@ a.about-contact-val:hover { color: var(--ink); }
   line-height: 1.25;
   color: var(--ink);
 }
+.question-hub-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-bottom: var(--s4);
+  font-family: var(--mono);
+  font-size: .6rem;
+  color: var(--ink-4);
+}
+.question-hub-meta-sep { color: var(--rule); }
 .question-hub-badges { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .question-hub-section {
   margin-bottom: var(--s12);
