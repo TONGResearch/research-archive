@@ -30,6 +30,22 @@
       </div>
     </header>
 
+    {{ if or .IsTranslated (eq .Language.Lang "zh") }}
+    <nav class="language-switcher" aria-label="Question language versions">
+      <span class="language-switcher-label">Language / 语言</span>
+      <div class="language-switcher-links">
+        {{ $current := . }}
+        {{ range .AllTranslations }}
+        <a class="language-link{{ if eq .Language.Lang $current.Language.Lang }} language-link--active{{ end }}"
+           href="{{ .RelPermalink }}"
+           hreflang="{{ .Language.Locale }}">
+          {{ if eq .Language.Lang "zh" }}中文{{ else }}English{{ end }}
+        </a>
+        {{ end }}
+      </div>
+    </nav>
+    {{ end }}
+
     <section class="question-hub-section">
       <h2>Question Description <span>问题说明</span></h2>
       <div class="question-hub-prose">
