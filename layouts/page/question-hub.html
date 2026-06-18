@@ -26,10 +26,6 @@
       <div class="question-hub-meta">
         <span>Published / 发布</span>
         <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
-        {{ with .GitInfo }}
-        <span class="question-hub-meta-sep">·</span>
-        <span>Last updated / 更新 {{ .AuthorDate.Format "2006-01-02" }}</span>
-        {{ end }}
       </div>
       <div class="question-hub-badges">
         {{ if .Params.featured_question }}<span class="q-badge q-badge--featured">Featured / 重点</span>{{ end }}

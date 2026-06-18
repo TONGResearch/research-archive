@@ -55,10 +55,6 @@
       <span class="article-meta-sep">·</span>
       {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
     {{ end }}
-    {{ if .GitInfo }}
-      <span class="article-meta-sep">·</span>
-      <span class="article-git-info">Last updated / 更新 {{ .GitInfo.AuthorDate.Format "2006-01-02" }}</span>
-    {{ end }}
   </div>
 
   {{ if or $articleQuestionIDs .Params.question }}

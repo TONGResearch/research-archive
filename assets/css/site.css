@@ -517,7 +517,6 @@ a.nav-item.nav-item--active { color: var(--ink); border-bottom-color: var(--ink)
                 padding-bottom: var(--s6); border-bottom: 1px solid var(--rule);
                 margin-bottom: var(--s8); }
 .article-meta-sep { color: var(--rule); }
-.article-git-info { font-family: var(--mono); font-size: .58rem; color: var(--ink-4); }
 
 /* Book meta */
 .book-meta { background: var(--bg); border-left: 2px solid var(--rule);
@@ -1345,7 +1344,6 @@ a.about-contact-val:hover { color: var(--ink); }
   font-size: .6rem;
   color: var(--ink-4);
 }
-.question-hub-meta-sep { color: var(--rule); }
 .question-hub-badges { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .question-hub-section {
   margin-bottom: var(--s12);
