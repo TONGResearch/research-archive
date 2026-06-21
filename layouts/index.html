@@ -26,10 +26,22 @@
       <span class="home-hero-sub">Unfinished Notes</span>
       <p class="home-hero-desc">{{ .Site.Params.description }}</p>
       <div class="home-pillars">
-        <span class="home-pillar">Research Archive</span>
-        <span class="home-pillar">Reading Archive</span>
-        <span class="home-pillar">Policy Archive</span>
-        <span class="home-pillar">Intellectual Development Log</span>
+        <a class="home-pillar" href="{{ "research/" | relURL }}">
+          <span class="home-pillar-en">Research Archive</span>
+          <span class="home-pillar-zh">研究档案</span>
+        </a>
+        <a class="home-pillar" href="{{ "reading/" | relURL }}">
+          <span class="home-pillar-en">Reading Archive</span>
+          <span class="home-pillar-zh">读书档案</span>
+        </a>
+        <a class="home-pillar" href="{{ "policy/" | relURL }}">
+          <span class="home-pillar-en">Policy Archive</span>
+          <span class="home-pillar-zh">政策档案</span>
+        </a>
+        <a class="home-pillar" href="{{ "archive-timeline/" | relURL }}">
+          <span class="home-pillar-en">Intellectual Development</span>
+          <span class="home-pillar-zh">思想历程</span>
+        </a>
       </div>
     </div>
     <div class="home-hero-counts">
@@ -69,10 +81,10 @@
         <span class="hsl-en">Featured Questions</span>
         <span class="hsl-zh">重点问题</span>
       </div>
-      <a class="home-section-more" href="{{ "research/questions/featured/" | relURL }}">View all →</a>
+      <a class="home-section-more" href="{{ "research/questions/" | relURL }}">All questions →</a>
     </div>
     {{ partial "question-list.html" (dict
-      "questions" $featuredQuestions
+      "questions" (first 6 $featuredQuestions)
       "emptyEn" "No featured questions yet."
       "emptyZh" "尚未设置重点问题。"
     ) }}
@@ -142,15 +154,10 @@
       </div>
     </div>
     <div class="home-discovery">
-      <a class="disc-item disc-item--primary" href="{{ "research/questions/featured/" | relURL }}">
-        <span class="disc-en">Featured Questions</span>
-        <span class="disc-zh">重点问题</span>
-        <span class="disc-desc">Priority research programmes</span>
-      </a>
-      <a class="disc-item" href="{{ "research/questions/" | relURL }}">
-        <span class="disc-en">Research Questions</span>
+      <a class="disc-item disc-item--primary" href="{{ "research/questions/" | relURL }}">
+        <span class="disc-en">Questions</span>
         <span class="disc-zh">研究问题</span>
-        <span class="disc-desc">The complete question database</span>
+        <span class="disc-desc">Featured, open, partial, and closed questions</span>
       </a>
       <a class="disc-item" href="{{ "research/featured/" | relURL }}">
         <span class="disc-en">Featured Works</span>

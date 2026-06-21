@@ -15,7 +15,7 @@
         id="archive-search"
         class="archive-search"
         type="search"
-        placeholder="Search title, question, tag, or field…"
+        placeholder="Search title, question, tag, or field… / 搜索标题、问题、标签或领域"
         aria-label="Search archive"
       />
       <span class="archive-search-count" id="search-count"></span>
@@ -23,11 +23,12 @@
 
     {{/* Section tabs */}}
     <div class="archive-tabs" id="section-tabs">
-      <button class="tab-btn tab-btn--active" data-section="all">All</button>
-      <button class="tab-btn" data-section="research">Research</button>
-      <button class="tab-btn" data-section="reading">Reading</button>
-      <button class="tab-btn" data-section="policy">Policy</button>
-      <button class="tab-btn" data-section="thoughts">Reflections</button>
+      <button class="tab-btn tab-btn--active" data-section="all">All / 全部</button>
+      <button class="tab-btn" data-section="questions">Questions / 问题</button>
+      <button class="tab-btn" data-section="research">Research / 研究</button>
+      <button class="tab-btn" data-section="reading">Reading / 阅读</button>
+      <button class="tab-btn" data-section="policy">Policy / 政策</button>
+      <button class="tab-btn" data-section="thoughts">Reflections / 思考</button>
     </div>
 
     {{/* Tag cloud */}}
@@ -35,6 +36,9 @@
     {{ $realPages := partial "real-pages.html" .Site.RegularPages }}
     {{ $questionPages := partial "question-pages.html" . }}
     {{ $all := where $realPages "Section" "in" $sections }}
+    {{ range $questionPages }}
+      {{ $all = $all | append . }}
+    {{ end }}
     {{ $all = sort $all "Date" "desc" }}
 
     {{ $allTags := slice }}
@@ -77,16 +81,24 @@
           {{ $questionSearchTerms = $questionSearchTerms | append .Title }}
         {{ end }}
       {{ end }}
+      {{ $entrySection := .Section }}
+      {{ $entrySectionLabel := .Section }}
+      {{ if .Params.question_id }}
+        {{ $entrySection = "questions" }}
+        {{ $entrySectionLabel = "Question / 问题" }}
+        {{ $entryQuestionIDs = $entryQuestionIDs | append .Params.question_id }}
+        {{ $questionSearchTerms = $questionSearchTerms | append .Title }}
+      {{ end }}
       <li class="archive-entry"
           data-title="{{ .Title | lower }}"
-          data-section="{{ .Section }}"
+          data-section="{{ $entrySection }}"
           data-tags="{{ delimit (.Params.tags | default (slice)) " " | lower }}"
           data-fields="{{ delimit (.Params.fields | default (slice)) " " | lower }}"
           data-questions="{{ delimit $entryQuestionIDs " " | lower }} {{ delimit $questionSearchTerms " " | lower }}"
           data-year="{{ .Date.Format "2006" }}"
       >
         <a class="archive-entry-link" href="{{ .Permalink }}">
-          <span class="archive-entry-section">{{ .Section }}</span>
+          <span class="archive-entry-section">{{ $entrySectionLabel }}</span>
           <span class="archive-entry-title">{{ .Title }}</span>
           <time class="archive-entry-date">{{ .Date.Format "2006-01-02" }}</time>
         </a>
