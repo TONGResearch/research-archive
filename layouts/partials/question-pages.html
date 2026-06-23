@@ -4,4 +4,4 @@
     {{- $questions = $questions | append . -}}
   {{- end -}}
 {{- end -}}
-{{- return $questions -}}
+{{- return (sort $questions "Date" "desc") -}}

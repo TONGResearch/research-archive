@@ -1,7 +1,7 @@
 {{- $questions := .questions -}}
 {{- if $questions -}}
 <ul class="q-list">
-  {{- range sort $questions "Title" "asc" -}}
+  {{- range sort $questions "Date" "desc" -}}
   <li class="q-item"
       data-question-title="{{ .Title | lower }}"
       data-question-status="{{ .Params.question_status | default "open" }}"
