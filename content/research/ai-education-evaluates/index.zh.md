@@ -4,7 +4,7 @@ subtitle: "人工智能时代，教育究竟应该评价什么？"
 description: "从一场 AI in Education 论坛出发，思考人工智能时代的过程评价、人类判断力与情境化评价标准。"
 date: 2026-06-15
 draft: false
-featured: false
+featured: true
 
 categories:
   - "Research"

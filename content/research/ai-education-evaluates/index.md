@@ -4,7 +4,7 @@ subtitle: "What Should Education Evaluate in the Age of AI?"
 description: "A reflection on process-based assessment, human judgment, and context-sensitive standards for evaluating AI-assisted work."
 date: 2026-06-15
 draft: false
-featured: false
+featured: true
 
 categories:
   - "Research"
