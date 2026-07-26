@@ -11,7 +11,7 @@ system_page: true
 question_id: "should-education-adapt-to-ai-or-shape-it"
 url: "/research/questions/should-education-adapt-to-ai-or-shape-it/"
 
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:

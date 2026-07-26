@@ -11,7 +11,7 @@ system_page: true
 question_id: "can-classical-political-thought-still-explain-the-age-of-ai"
 url: "/research/questions/can-classical-political-thought-still-explain-the-age-of-ai/"
 
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:

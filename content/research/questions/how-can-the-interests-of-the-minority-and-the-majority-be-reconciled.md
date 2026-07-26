@@ -8,7 +8,7 @@ layout: question-hub
 system_page: true
 question_id: how-can-the-interests-of-the-minority-and-the-majority-be-reconciled
 url: /research/questions/how-can-the-interests-of-the-minority-and-the-majority-be-reconciled/
-featured_question: true
+featured_question: false
 question_status: open
 areas:
   - public-policy

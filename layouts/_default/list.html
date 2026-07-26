@@ -26,49 +26,79 @@
       {{ with .Content }}<div class="list-desc">{{ . }}</div>{{ end }}
     </header>
 
-    {{ if eq .Section "research" }}
-      {{ $questionPages := partial "question-pages.html" . }}
-      {{ $featuredQuestions := where $questionPages "Params.featured_question" true }}
-      <section class="research-featured-questions">
-        <div class="q-section-header research-question-header">
-          <h2 class="q-section-en">Featured Questions <span class="q-section-zh">重点问题</span></h2>
-          <a href="{{ "research/questions/" | relURL }}">Entire Question Database / 完整问题档案 →</a>
-        </div>
-        {{ partial "question-list.html" (dict
-          "questions" $featuredQuestions
-          "emptyEn" "No featured questions yet."
-          "emptyZh" "尚未设置重点问题。"
-        ) }}
-      </section>
-    {{ end }}
-
     {{/* Filter out system pages — only show real content entries */}}
     {{ $realPages := partial "real-pages.html" .Pages }}
     {{ $realPages = sort $realPages "Date" "desc" }}
 
-    <ul class="list-entries">
-      {{ range $realPages }}
-      <li class="list-entry">
-        <a class="list-entry-link" href="{{ .Permalink }}">
-          <div class="list-entry-top">
-            <span class="list-entry-title">{{ .Title }}</span>
-            <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
-          </div>
-          {{ with .Params.subtitle }}<p class="list-entry-sub">{{ . }}</p>{{ end }}
-          {{ with .Summary }}<p class="list-entry-excerpt">{{ . | plainify }}</p>{{ end }}
-          <div class="list-entry-tags">
-            {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
-            {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
-          </div>
-        </a>
-      </li>
-      {{ else }}
-      <li class="list-empty">
-        <p class="list-empty-en">No entries yet.</p>
-        <p class="list-empty-zh">暂无内容。</p>
-      </li>
-      {{ end }}
-    </ul>
+    {{ if eq .Section "research" }}
+      <section class="research-entry-section">
+        <div class="q-section-header research-question-header">
+          <h2 class="q-section-en">Research Entries <span class="q-section-zh">研究文章</span></h2>
+          <a href="{{ "archive/" | relURL }}">Full Archive / 完整归档 →</a>
+        </div>
+        <ul class="list-entries">
+          {{ range $realPages }}
+          <li class="list-entry">
+            <a class="list-entry-link" href="{{ .Permalink }}">
+              <div class="list-entry-top">
+                <span class="list-entry-title">{{ .Title }}</span>
+                <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
+              </div>
+              {{ with .Params.subtitle }}<p class="list-entry-sub">{{ . }}</p>{{ end }}
+              {{ with .Summary }}<p class="list-entry-excerpt">{{ . | plainify }}</p>{{ end }}
+              <div class="list-entry-tags">
+                {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+                {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
+              </div>
+            </a>
+          </li>
+          {{ else }}
+          <li class="list-empty">
+            <p class="list-empty-en">No research entries yet.</p>
+            <p class="list-empty-zh">暂无研究文章。</p>
+          </li>
+          {{ end }}
+        </ul>
+      </section>
+
+      {{ $questionPages := partial "question-pages.html" . }}
+      {{ $featuredQuestions := where $questionPages "Params.featured_question" true }}
+      <section class="research-featured-questions">
+        <div class="q-section-header research-question-header">
+          <h2 class="q-section-en">Representative Questions <span class="q-section-zh">代表性问题</span></h2>
+          <a href="{{ "research/questions/" | relURL }}">Entire Question Database / 完整问题档案 →</a>
+        </div>
+        {{ partial "question-list.html" (dict
+          "questions" $featuredQuestions
+          "emptyEn" "No representative questions yet."
+          "emptyZh" "尚未设置代表性问题。"
+        ) }}
+      </section>
+    {{ else }}
+      <ul class="list-entries">
+        {{ range $realPages }}
+        <li class="list-entry">
+          <a class="list-entry-link" href="{{ .Permalink }}">
+            <div class="list-entry-top">
+              <span class="list-entry-title">{{ .Title }}</span>
+              <time class="list-entry-date">{{ .Date.Format "2006-01-02" }}</time>
+            </div>
+            {{ with .Params.subtitle }}<p class="list-entry-sub">{{ . }}</p>{{ end }}
+            {{ with .Summary }}<p class="list-entry-excerpt">{{ . | plainify }}</p>{{ end }}
+            <div class="list-entry-tags">
+              {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+              {{ range .Params.fields }}<span class="field-tag">{{ . }}</span>{{ end }}
+            </div>
+          </a>
+        </li>
+        {{ else }}
+        <li class="list-empty">
+          <p class="list-empty-en">No entries yet.</p>
+          <p class="list-empty-zh">暂无内容。</p>
+        </li>
+        {{ end }}
+      </ul>
+    {{ end }}
   </div>
 </div>
 {{ end }}

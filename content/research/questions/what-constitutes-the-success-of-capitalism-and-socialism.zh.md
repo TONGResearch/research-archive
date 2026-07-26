@@ -8,7 +8,7 @@ layout: question-hub
 system_page: true
 question_id: what-constitutes-the-success-of-capitalism-and-socialism
 url: /research/questions/what-constitutes-the-success-of-capitalism-and-socialism/
-featured_question: true
+featured_question: false
 question_status: open
 areas:
   - political-economy

@@ -11,7 +11,7 @@ system_page: true
 question_id: "how-should-we-read-classical-political-thought-today"
 url: "/research/questions/how-should-we-read-classical-political-thought-today/"
 
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:

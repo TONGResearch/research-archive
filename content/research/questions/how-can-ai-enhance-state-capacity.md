@@ -10,7 +10,7 @@ system_page: true
 
 question_id: "how-can-ai-enhance-state-capacity"
 url: "/research/questions/how-can-ai-enhance-state-capacity/"
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:

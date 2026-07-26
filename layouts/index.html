@@ -188,7 +188,7 @@
   </section>
 
   {{/* ── 7. TIMELINE SNAPSHOT — real entries only ───── */}}
-  {{ $realForTimeline := $all }}
+  {{ $realForTimeline := where $all "Params.timeline_exclude" "ne" true }}
 
   {{ $years := slice }}
   {{ range $realForTimeline }}

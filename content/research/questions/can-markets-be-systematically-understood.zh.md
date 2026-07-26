@@ -10,7 +10,7 @@ system_page: true
 
 question_id: "can-markets-be-systematically-understood"
 url: "/zh/research/questions/can-markets-be-systematically-understood/"
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:

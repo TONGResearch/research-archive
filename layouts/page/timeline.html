@@ -9,6 +9,7 @@
 {{ else }}
   {{ $pages = where $realPages "Section" $filter }}
 {{ end }}
+{{ $pages = where $pages "Params.timeline_exclude" "ne" true }}
 {{ $pages = sort $pages "Date" "desc" }}
 
 {{/* Build year list (newest first) */}}

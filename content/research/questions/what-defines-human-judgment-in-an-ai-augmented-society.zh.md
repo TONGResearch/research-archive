@@ -10,7 +10,7 @@ system_page: true
 
 question_id: "what-defines-human-judgment-in-an-ai-augmented-society"
 url: "/zh/research/questions/what-defines-human-judgment-in-an-ai-augmented-society/"
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:

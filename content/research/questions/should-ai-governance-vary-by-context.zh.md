@@ -11,7 +11,7 @@ system_page: true
 question_id: "should-ai-governance-vary-by-context"
 url: "/research/questions/should-ai-governance-vary-by-context/"
 
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:

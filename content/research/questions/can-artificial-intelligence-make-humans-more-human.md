@@ -8,7 +8,7 @@ layout: question-hub
 system_page: true
 question_id: can-artificial-intelligence-make-humans-more-human
 url: /research/questions/can-artificial-intelligence-make-humans-more-human/
-featured_question: true
+featured_question: false
 question_status: open
 areas:
   - artificial-intelligence

@@ -5,6 +5,7 @@ date: 2026-07-02
 draft: false
 type: reading
 featured: false
+timeline_exclude: true
 areas:
   - political-economy
   - political-philosophy

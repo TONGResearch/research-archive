@@ -10,7 +10,7 @@ system_page: true
 
 question_id: "who-should-govern-artificial-intelligence"
 url: "/zh/research/questions/who-should-govern-artificial-intelligence/"
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:

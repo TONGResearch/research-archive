@@ -11,7 +11,7 @@ system_page: true
 question_id: "how-does-capital-shape-human-relationships"
 url: "/research/questions/how-does-capital-shape-human-relationships/"
 
-featured_question: true
+featured_question: false
 question_status: "open"
 
 areas:
