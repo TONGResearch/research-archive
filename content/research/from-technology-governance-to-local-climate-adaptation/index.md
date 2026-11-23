@@ -21,6 +21,8 @@ retrospective_notes: []
 
 In the summer of 2026, I attended the Global Public Policy Summer School at Fudan University in Shanghai, studying technology governance and public policy with Professor Dan Guttman. The programme was jointly organised by Fudan University's Institute for Global Public Policy and the Fudan-LSE Research Centre for Global Public Policy.
 
+Professor Guttman is a **Fellow of the U.S. National Academy of Public Administration (NAPA)**, an affiliation documented by [Fudan's official summer school faculty page](https://igpp.fudan.edu.cn/summer_school/2026n/list.htm) and his [official NAPA profile](https://napawash.org/fellow/27275/daniel-guttman). For me, his teaching and feedback provided a concrete entry point for bringing my computer science interests into public policy research.
+
 My initial interest was AI governance. As a university student majoring in computer science, I wanted to understand how societies should establish rules as technical capabilities advance, and what problems technology can actually help public institutions solve.
 
 One important change I took away from the course was a greater insistence on specificity: which technology are we discussing, whom does it serve, which decision should it support, and who must take responsibility for its consequences?
@@ -42,6 +44,20 @@ For a computer science student, this also changes the boundary of the system und
 I originally wanted to compare climate governance and AI governance. That remains a meaningful direction, but my initial framing was too broad to make clear what the comparison would explain.
 
 Professor Guttman's emphasis on local climate adaptation offered a more specific entry point. Mitigation concerns reducing greenhouse gas emissions or enhancing sinks; adaptation concerns responding to actual or expected climate impacts. They are related, but implementing adaptation requires knowing where risks occur, who is affected, and what action is locally possible.
+
+## How an Email Exchange Helped Me Develop a Research Design
+
+In correspondence about the course paper, I explained my research interests to Professor Guttman and expressed an interest in engaging with comparative climate adaptation research. He described ongoing work with colleagues in China, the United States, and Australia, including colleagues at Fudan. He welcomed my interest and offered to discuss the ideas further. I understood this as an opportunity for further conversation and learning, not as establishing formal membership of a research team.
+
+His response went beyond encouragement by suggesting situations that could make the question concrete. When choosing a city in which to work after graduation, how might someone investigate its climate impacts? What knowledge would be needed when considering a factory location or the possible impacts on a particular home over a specified number of years? These were examples of entry points he proposed, not scenarios I claim to have investigated in full.
+
+Taking the city-choice example, I understand his suggestions as three connected questions:
+
+1. What scientific expertise do local decision-makers rely on to predict or project climate impacts?
+2. What assessments and advice do scientists provide to those decision-makers?
+3. Will the decision-makers act on that advice?
+
+These questions changed how I understood the research task. My original framing could stop at whether AI or science could supply a more accurate answer. I now needed to trace who supplied that answer, how it entered a decision, and which conditions made action possible. Local focus meant more than narrowing a map: it required a clear connection between the object of study, sources of knowledge, and actual decisions.
 
 My course paper consequently focused on the subdistrict level in Xinghualing District, Taiyuan, and took the form of a policy memo for a local policy implementer. This was my first formal course paper. It introduced an important writing constraint: the intended reader needed analysis that could help them understand risks and organise work, rather than a comprehensive discussion of AI's future.
 
@@ -76,6 +92,8 @@ This archive is intended to preserve that process: how questions become more foc
 ## Sources and Further Reading
 
 - Dan Guttman, 2026 summer course syllabus and slides. The course overview above summarises these materials rather than quoting his remarks verbatim.
+- Email correspondence with Professor Guttman about the course paper. I paraphrase feedback relevant to the development of the research question rather than reproduce private correspondence; the interpretation of its research implications is my own.
+- [Fudan's 2026 summer school faculty and course page](https://igpp.fudan.edu.cn/summer_school/2026n/list.htm) and [NAPA's official Daniel Guttman profile](https://napawash.org/fellow/27275/daniel-guttman), for verification of his affiliation.
 - [Fudan IGPP: review of the 2026 Global Public Policy International Summer School](https://igpp.fudan.edu.cn/igppen/09/3a/c18419a788794/page.htm).
 - Bu et al., 2024, [comparative report on climate adaptation governance in Australia, China, and the United States](https://napawash.org/news/adapting-to-the-impacts-of-climate-change-a-comparative-study-of-governance-processes-in-australia-china-and-the-united-states).
 
