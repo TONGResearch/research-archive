@@ -1,13 +1,13 @@
 ---
 title: "在人工智能辅助决策中，哪些情况应当触发强制人工介入？"
 description: "探讨人工监督何时必须转化为实质性介入，以及怎样把这一要求落实为可执行的系统流程。"
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
 question_id: "when-should-ai-assisted-decisions-require-human-intervention"
-url: "/research/questions/when-should-ai-assisted-decisions-require-human-intervention/"
+url: "/zh/research/questions/when-should-ai-assisted-decisions-require-human-intervention/"
 featured_question: false
 question_status: "open"
 areas:
@@ -39,5 +39,5 @@ current_position: >-
   单一的置信度分数或最后一步的确认按钮，本身不足以满足这一要求。后果严重或难以逆转的决策，
   可能需要在行动之前接受复核；低风险、可逆的操作则可能适合有限自主运行。如果无法提供有效的
   人工复核，系统应进入预先规定的安全替代程序，而不是把无人响应默认为同意。
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

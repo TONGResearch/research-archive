@@ -1,13 +1,13 @@
 ---
 title: "机器学习模型的预测准确性，在什么条件下能够转化为更好的公共决策？"
 description: "探讨机器学习预测能力的提高，何时能够改善公共决策，而不只是改善模型评分。"
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
 question_id: "when-does-predictive-accuracy-improve-public-decisions"
-url: "/research/questions/when-does-predictive-accuracy-improve-public-decisions/"
+url: "/zh/research/questions/when-does-predictive-accuracy-improve-public-decisions/"
 featured_question: false
 question_status: "open"
 areas:
@@ -39,5 +39,5 @@ current_position: >-
   并且有能够采取行动的制度与组织承接时，预测准确性的提高才更有可能改善公共决策。
   因此，模型评分提高本身不足以证明决策改善，还需要同时考察不确定性、错误成本、执行能力，
   以及究竟是谁从中受益。这一判断仍有待通过进一步阅读与案例分析修正。
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

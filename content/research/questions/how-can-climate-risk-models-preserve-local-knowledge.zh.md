@@ -1,13 +1,13 @@
 ---
 title: "如何把地方知识纳入气候风险模型，而不在数据标准化中丢失其意义？"
 description: "探讨气候风险建模如何使用地方经验，同时避免把具体情境压缩为失真或脱离背景的数据。"
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
 question_id: "how-can-climate-risk-models-preserve-local-knowledge"
-url: "/research/questions/how-can-climate-risk-models-preserve-local-knowledge/"
+url: "/zh/research/questions/how-can-climate-risk-models-preserve-local-knowledge/"
 featured_question: false
 question_status: "open"
 areas:
@@ -39,5 +39,5 @@ current_position: >-
   并允许当事人质疑系统对其处境的描述。某些知识可能更适合以可追溯的定性证据保留，
   或作为启动人工复核的理由，而不是被压缩成一个分数。我希望进一步研究这种做法的适用条件
   及其在实际操作中面临的限制。
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

@@ -1,13 +1,13 @@
 ---
 title: "地方气候适应决策支持系统应该如何评价：预测准确性、实际效果，还是公共问责？"
 description: "为辅助地方气候适应决策的系统建立兼顾技术表现、实际效果与公共问责的评价思路。"
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
 question_id: "how-should-local-climate-adaptation-decision-support-systems-be-evaluated"
-url: "/research/questions/how-should-local-climate-adaptation-decision-support-systems-be-evaluated/"
+url: "/zh/research/questions/how-should-local-climate-adaptation-decision-support-systems-be-evaluated/"
 featured_question: false
 question_status: "open"
 areas:
@@ -40,5 +40,5 @@ current_position: >-
   但仅有程序保障也不足以证明气候适应效果已经改善。评价应当公开不同目标之间的取舍，
   明确哪些要求不可被其他收益抵消，以及谁有权判断系统是否合格。系统应当帮助改善公共判断，
   而不只是让一项建议呈现出更有说服力的技术外观。
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

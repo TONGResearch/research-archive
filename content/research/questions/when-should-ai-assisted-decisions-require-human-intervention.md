@@ -1,8 +1,8 @@
 ---
 title: "What Conditions Should Trigger Mandatory Human Intervention in AI-Assisted Decision-Making?"
 description: "Investigating when human oversight must become meaningful intervention, and how that requirement should be designed."
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
@@ -49,5 +49,5 @@ current_position: >-
   reversible actions may permit bounded autonomy. If effective review is unavailable,
   the system should have a defined safe fallback rather than silently treating that absence
   as approval.
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

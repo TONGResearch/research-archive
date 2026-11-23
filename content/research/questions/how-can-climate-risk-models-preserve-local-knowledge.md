@@ -1,8 +1,8 @@
 ---
 title: "How Can Local Knowledge Be Incorporated into Climate Risk Models Without Losing Its Meaning Through Data Standardisation?"
 description: "Exploring how climate risk modelling can use local experience without reducing it to misleading or context-free data."
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
@@ -49,5 +49,5 @@ current_position: >-
   may be better retained as linked qualitative evidence or a reason for human review than
   converted into a single score. I want to investigate where this approach is useful and
   what practical limits it faces.
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

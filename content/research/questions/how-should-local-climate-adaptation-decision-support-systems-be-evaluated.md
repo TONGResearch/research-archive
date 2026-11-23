@@ -1,8 +1,8 @@
 ---
 title: "How Should Local Climate Adaptation Decision Support Systems Be Evaluated: Predictive Accuracy, Real-World Outcomes, or Public Accountability?"
 description: "Developing a multi-dimensional approach to evaluating systems that support local climate adaptation decisions."
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
@@ -49,5 +49,5 @@ current_position: >-
   Evaluation should make trade-offs visible, identify which requirements are non-negotiable,
   and specify who has authority to judge performance. A system should support better
   public judgement rather than merely produce a more persuasive technical presentation.
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

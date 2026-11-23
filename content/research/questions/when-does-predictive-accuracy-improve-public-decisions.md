@@ -1,8 +1,8 @@
 ---
 title: "Under What Conditions Does Predictive Accuracy in Machine Learning Translate into Better Public Decisions?"
 description: "Investigating when improvements in machine-learning predictions lead to better decisions, rather than merely better model scores."
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
@@ -50,5 +50,5 @@ current_position: >-
   evidence of a better public decision. I would therefore examine uncertainty, error
   costs, implementation capacity, and who benefits alongside predictive performance.
   This position remains open to revision through further reading and case analysis.
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

@@ -1,13 +1,13 @@
 ---
 title: "当人工智能系统的优化目标与地方公共利益不一致时，谁有权修改目标？"
 description: "探讨服务地方公共事务的人工智能系统，应由谁设定和修改目标、约束与利益取舍。"
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
 question_id: "who-can-revise-ai-objectives-that-conflict-with-local-public-interests"
-url: "/research/questions/who-can-revise-ai-objectives-that-conflict-with-local-public-interests/"
+url: "/zh/research/questions/who-can-revise-ai-objectives-that-conflict-with-local-public-interests/"
 featured_question: false
 question_status: "open"
 areas:
@@ -39,5 +39,5 @@ current_position: >-
   不确定性和可能后果，而实质性的目标变化需要符合公共机构法定职责的问责程序，并让受影响者
   有实质表达意见的机会。公共部门或某个参与群体，也不能被自动视为公共利益的唯一代表。
   经授权的修改应当保留记录，能够受到质疑，并接受后续复核。
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---

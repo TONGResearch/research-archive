@@ -1,8 +1,8 @@
 ---
 title: "Who Should Have the Authority to Revise an AI System's Objectives When They Conflict with Local Public Interests?"
 description: "Examining who sets and revises AI objectives, constraints, and trade-offs when a system serves a local public purpose."
-date: 2026-11-21
-draft: true
+date: 2026-08-20
+draft: false
 type: "page"
 layout: "question-hub"
 system_page: true
@@ -49,5 +49,5 @@ current_position: >-
   to be heard. Neither a public official nor a participating group should automatically
   be treated as the sole voice of the public interest. Authorised changes should remain
   documented, contestable, and subject to review.
-position_updated: 2026-11-21
+position_updated: 2026-08-20
 ---
